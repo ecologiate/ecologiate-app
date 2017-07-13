@@ -26,7 +26,7 @@ import cz.msebera.android.httpclient.Header;
 
 public class TestActivity extends AppCompatActivity {
 
-    static final String SERVER_URL = "https://young-sea-26572.herokuapp.com";
+    static final String SERVER_URL = "https://ecologiate.herokuapp.com";
 
     // Progress Dialog Object
     ProgressDialog prgDialog;

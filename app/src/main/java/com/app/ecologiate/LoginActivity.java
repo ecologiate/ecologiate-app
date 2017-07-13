@@ -39,6 +39,12 @@ import com.facebook.FacebookSdk;
 import com.facebook.appevents.AppEventsLogger;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
+import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.auth.api.signin.GoogleSignInResult;
+import com.google.android.gms.common.SignInButton;
+import com.google.android.gms.common.api.GoogleApiClient;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -60,11 +66,10 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
      * TODO: remove after connecting to a real authentication system.
      */
     private static final String[] DUMMY_CREDENTIALS = new String[]{
-            "foo@example.com:hello", "ecologi@te:ecologiate", "@@@@:@@@@"
+            "foo@example.com:hello", "ecologi@te:ecologiate", "@@@@:@@@@@"
     };
-    /**
-     * Keep track of the login task to ensure we can cancel it if requested.
-     */
+
+    //Keep track of the login task to ensure we can cancel it if requested.
     private UserLoginTask mAuthTask = null;
 
     // UI references.
@@ -75,6 +80,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
     //Facebook
     CallbackManager mFacebookCallbackManager;
+    //Google OAuth
+    GoogleApiClient mGoogleApiClient;
+    private static final int GOOGLE_RC_SIGN_IN = 9001;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,11 +119,14 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
 
+        //Facebook's binding
         mFacebookCallbackManager = CallbackManager.Factory.create();
         LoginButton fbLoginButton = (LoginButton) findViewById(R.id.fb_login_button);
         fbLoginButton.registerCallback(mFacebookCallbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
+                Toast.makeText(getApplicationContext(), "Logueado con Facebook: "+loginResult.getAccessToken().getUserId(),
+                        Toast.LENGTH_LONG).show();
                 goToNextActivity();
             }
             @Override
@@ -128,6 +139,30 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 Toast.makeText(getApplicationContext(), "ERROR: "+exception.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
+        //Google's binding
+        SignInButton mGoogleSignInButton = (SignInButton)findViewById(R.id.google_sign_in_button);
+        mGoogleSignInButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                signInWithGoogle();
+            }
+        });
+    }
+
+    private void signInWithGoogle() {
+        if(mGoogleApiClient != null) {
+            mGoogleApiClient.disconnect();
+        }
+
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail()
+                .build();
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
+                .build();
+
+        final Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
+        startActivityForResult(signInIntent, GOOGLE_RC_SIGN_IN);
     }
 
     private void populateAutoComplete() {
@@ -309,7 +344,24 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        mFacebookCallbackManager.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == GOOGLE_RC_SIGN_IN) {
+            //Google's activity result
+            GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
+            if(result.isSuccess()) {
+                //handleSignInResult(...)
+                final GoogleApiClient client = mGoogleApiClient;
+                GoogleSignInAccount account = result.getSignInAccount();
+                Toast.makeText(getApplicationContext(), "Logueado con Google: "+account.getEmail(),
+                        Toast.LENGTH_LONG).show();
+                goToNextActivity();
+            } else {
+                //handleSignInResult(...); fails?
+            }
+        } else {
+            //Facebook's activity result
+            mFacebookCallbackManager.onActivityResult(requestCode, resultCode, data);
+        }
+
     }
 
     private void addEmailsToAutoComplete(List<String> emailAddressCollection) {

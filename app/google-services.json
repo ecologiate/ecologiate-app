@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "775389596315",
+    "project_id": "firebase-ecologiate"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:775389596315:android:b9601bd9f64e8837",
+        "android_client_info": {
+          "package_name": "com.app.ecologiate"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "775389596315-g77vmf35fqtu2t57ec5h2qmhlnkiia0m.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "775389596315-0722g3jdvnvuvjtljbglj25i8of9q6cl.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.app.ecologiate",
+            "certificate_hash": "49f7313ef842ee2f0bc0304588d78767e2267b70"
+          }
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD1SSYQivdSz6kLxhPQ-dlpveKHmsDrmhI"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
