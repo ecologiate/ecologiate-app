@@ -108,7 +108,12 @@ public class TestActivity extends AppCompatActivity {
                     if(response.has("title")){
                         String msg = "Producto encontrado: "+response.getString("title");
                         outputMsg.setText(msg);
-                        outputMsg.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.msgOk));
+                        //seteo color segun status
+                        if(response.has("status") && "PENDING".equals(response.getString("status"))){
+                            outputMsg.setTextColor(Color.rgb(204,204,0)); //amarillo oscuro
+                        }else{
+                            outputMsg.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.msgOk));
+                        }
                         Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
                         // Navigate to Home screen
                         //navigatetoHomeActivity();
