@@ -66,7 +66,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
      * TODO: remove after connecting to a real authentication system.
      */
     private static final String[] DUMMY_CREDENTIALS = new String[]{
-            "foo@example.com:hello", "ecologi@te:ecologiate", "@@@@:@@@@@"
+            "foo@example.com:hello", "ecologi@te:ecologiate", "@@@@:@@@@@", "admin:admin"
     };
 
     //Keep track of the login task to ensure we can cancel it if requested.
@@ -263,7 +263,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
     private boolean isEmailValid(String email) {
         //TODO: Replace this with your own logic
-        return email.contains("@");
+        return email.contains("@") || email=="admin";
     }
 
     private boolean isPasswordValid(String password) {
@@ -355,7 +355,10 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                         Toast.LENGTH_LONG).show();
                 goToNextActivity();
             } else {
-                //handleSignInResult(...); fails?
+                //failed
+                String msg = result.getStatus().getStatusMessage()+" - "+result.getStatus().toString();
+                Toast.makeText(getApplicationContext(), "Error: "+msg,
+                        Toast.LENGTH_LONG).show();
             }
         } else {
             //Facebook's activity result
