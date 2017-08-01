@@ -93,7 +93,7 @@ public class TestScanActivity extends AppCompatActivity {
         prgDialog.show();
 
         AsyncHttpClient client = new AsyncHttpClient();
-        String url = SERVER_URL + "/api/item/" + code;
+        String url = SERVER_URL + "/api/items/" + code;
 
         //LLAMO A UN GET!
         client.get(url, new JsonHttpResponseHandler() {

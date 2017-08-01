@@ -94,7 +94,7 @@ public class TestActivity extends AppCompatActivity {
         prgDialog.show();
         // Make RESTful webservice call using AsyncHttpClient object
         AsyncHttpClient client = new AsyncHttpClient();
-        String url = SERVER_URL + "/api/item/" + code;
+        String url = SERVER_URL + "/api/items/" + code;
 
         //LLAMO A UN GET!
         client.get(url, new JsonHttpResponseHandler() {
