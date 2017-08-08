@@ -263,7 +263,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
     private boolean isEmailValid(String email) {
         //TODO: Replace this with your own logic
-        return email.contains("@") || email=="admin";
+        return true;
     }
 
     private boolean isPasswordValid(String password) {
@@ -377,9 +377,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     }
 
     public void goToNextActivity(){
-        Intent scanIntent = new Intent(getApplicationContext(),TestScanActivity.class);
-        scanIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(scanIntent);
+        Intent menuIntent = new Intent(getApplicationContext(),MenuActivity.class);
+        menuIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(menuIntent);
     }
 
 

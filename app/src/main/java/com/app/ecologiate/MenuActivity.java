@@ -20,8 +20,8 @@ public class MenuActivity extends AppCompatActivity {
         reciclar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent reciclar = new Intent(MenuActivity.this, TestScanActivity.class);
-                startActivity(reciclar);
+                Intent reciclarIntent = new Intent(MenuActivity.this, TestScanActivity.class);
+                startActivity(reciclarIntent);
             }
         });
     }
