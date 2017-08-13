@@ -17,4 +17,14 @@
     <string name="error_field_required">This field is required</string>
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."</string>
+    <string name="title_activity_reciclar">ReciclarActivity</string>
+    <string name="title_activity_resultado">ResultadoActivity</string>
+    <string name="title_activity_mapa">Map</string>
+    <string name="title_activity_punto_recoleccion">PuntoRecoleccionActivity</string>
+    <string name="title_activity_alta_punto_recoleccion">AltaPuntoRecoleccionActivity</string>
+    <string name="title_activity_alta_articulo">AltaArticuloActivity</string>
+    <string name="title_activity_estado">EstadoActivity</string>
+    <string name="title_activity_trivia">TriviaActivity</string>
+    <string name="title_activity_grupo">GrupoActivity</string>
+    <string name="title_activity_alta_grupo">AltaGrupoActivity</string>
 </resources>
