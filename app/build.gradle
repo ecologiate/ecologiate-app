@@ -46,6 +46,6 @@ dependencies {
     compile 'com.journeyapps:zxing-android-embedded:3.5.0'
     compile 'com.facebook.android:facebook-android-sdk:[4,5)'
     compile 'com.google.android.gms:play-services-auth:9.0.0'
-    compile 'com.google.android.gms:play-services-maps:11.0.2'
+    compile 'com.google.android.gms:play-services-maps:9.0.0'
     testCompile 'junit:junit:4.12'
 }
