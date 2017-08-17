@@ -93,7 +93,7 @@ public class TestScanActivity extends AppCompatActivity {
         prgDialog.show();
 
         AsyncHttpClient client = new AsyncHttpClient();
-        String url = SERVER_URL + "/api/items/" + code;
+        String url = SERVER_URL + "/api/producto/" + code;
 
         //LLAMO A UN GET!
         client.get(url, new JsonHttpResponseHandler() {
@@ -104,9 +104,8 @@ public class TestScanActivity extends AppCompatActivity {
                 prgDialog.hide();
                 try {
                     // si me trajo algo
-                    if(response.has("title")){
-                        String msg = "Title: "+response.getString("title")+
-                                "\nDescription: "+ (response.has("description") ? response.getString("description") : "No tiene");
+                    if(response.has("id")){
+                        String msg = "Nombre: "+response.getString("nombre_producto");
                         outputMsg.setText(msg);
                         //seteo color segun status
                         if(response.has("status") && "PENDING".equals(response.getString("status"))){
@@ -115,9 +114,9 @@ public class TestScanActivity extends AppCompatActivity {
                             outputMsg.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.msgOk));
                         }
 
-                        if(response.has("img_link")){
+                        if(response.has("imagen")){
                             imgView.setVisibility(View.VISIBLE);
-                            new ImageLoadTask(response.getString("img_link"), imgView).execute();
+                            new ImageLoadTask(response.getString("imagen"), imgView).execute();
                         }else{
                             //ocultar
                             imgView.setVisibility(View.INVISIBLE);
@@ -128,9 +127,9 @@ public class TestScanActivity extends AppCompatActivity {
                     }
                     // Else display error message
                     else{
-                        String errorMsg = "Item no encontrado";
-                        if(response.has("message")) {
-                            errorMsg = response.getString("message");
+                        String errorMsg = "Producto no encontrado";
+                        if(response.has("mensaje")) {
+                            errorMsg = response.getString("mensaje");
                         }
                         outputMsg.setText(errorMsg);
                         //outputMsg.setTextColor(Color.RED);
