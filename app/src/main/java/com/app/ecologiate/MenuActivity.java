@@ -8,6 +8,7 @@ import android.widget.Button;
 
 public class MenuActivity extends AppCompatActivity {
 
+    Button reciclarOld;
     Button reciclar;
 
     @Override
@@ -15,12 +16,22 @@ public class MenuActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
 
-        reciclar = (Button)findViewById(R.id.btn1);
+        reciclarOld = (Button)findViewById(R.id.btn1);
+
+        reciclarOld.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent reciclarIntent = new Intent(MenuActivity.this, TestScanActivity.class);
+                startActivity(reciclarIntent);
+            }
+        });
+
+        reciclar = (Button)findViewById(R.id.btnReciclar);
 
         reciclar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent reciclarIntent = new Intent(MenuActivity.this, TestScanActivity.class);
+                Intent reciclarIntent = new Intent(MenuActivity.this, ScanActivity.class);
                 startActivity(reciclarIntent);
             }
         });

@@ -5,7 +5,6 @@
     <!-- Facebook -->
     <string name="facebook_app_id">149676695596008</string>
     <string name="fb_login_protocol_scheme">fb149676695596008</string>
-
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password (optional)</string>
@@ -17,6 +16,7 @@
     <string name="error_field_required">This field is required</string>
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."</string>
+    <!-- menu -->
     <string name="title_activity_reciclar">ReciclarActivity</string>
     <string name="title_activity_resultado">ResultadoActivity</string>
     <string name="title_activity_mapa">Map</string>
@@ -27,4 +27,7 @@
     <string name="title_activity_trivia">TriviaActivity</string>
     <string name="title_activity_grupo">GrupoActivity</string>
     <string name="title_activity_alta_grupo">AltaGrupoActivity</string>
+    <!-- scan activity -->
+    <string name="turn_on_flashlight">Encender linterna</string>
+    <string name="turn_off_flashlight">Apagar linterna</string>
 </resources>
