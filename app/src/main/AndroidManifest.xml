@@ -34,10 +34,6 @@
 
         <activity android:name=".TestScanActivity" />
         <activity
-            android:name=".TestActivity"
-            android:label="@string/title_activity_test"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
             android:name="com.journeyapps.barcodescanner.CaptureActivity"
             android:screenOrientation="fullSensor"
             tools:replace="screenOrientation" />
@@ -67,7 +63,10 @@
             </intent-filter>
         </activity>
         <activity android:name=".MenuActivity" />
-        <activity android:name=".ScanActivity"></activity>
+        <activity android:name=".ScanActivity" />
+        <activity android:name=".ResultadoActivity" />
+        <activity android:name=".ProductoNoEncontradoActivity" />
+        <activity android:name=".AltaProductoActivity"></activity>
     </application>
 
 </manifest>

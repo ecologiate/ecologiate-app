@@ -65,9 +65,7 @@ public class TestScanActivity extends AppCompatActivity {
     }
 
     public void goManualInput(View view){
-        Intent manualIntent = new Intent(getApplicationContext(),TestActivity.class);
-        manualIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(manualIntent);
+
     }
 
     // Get the results:
@@ -88,7 +86,7 @@ public class TestScanActivity extends AppCompatActivity {
         }
     }
 
-    public void getItem(String code){
+    public void getItem(final String code){
         // Show Progress Dialog
         prgDialog.show();
 
@@ -104,7 +102,20 @@ public class TestScanActivity extends AppCompatActivity {
                 prgDialog.hide();
                 try {
                     // si me trajo algo
-                    if(response.has("id")){
+                    if(response.has("producto")){
+                        JSONObject productoJson = response.getJSONObject("producto");
+                        JSONObject materialJson = response.getJSONObject("material");
+                        JSONObject categoriaJson = response.getJSONObject("categoria");
+                        String nombreProducto = productoJson.getString("nombre_producto");
+                        String categoria = categoriaJson.getString("descripcion");
+                        String material = materialJson.getString("descripcion");
+                        String impacto = String.valueOf(productoJson.getString("cant_material")); //TODO HARDCODEADO
+
+                        startActivity(ResultadoActivity.crearIntentParaResultado(TestScanActivity.this,
+                                nombreProducto,categoria,material,impacto));
+
+
+                        /*
                         String msg = "Nombre: "+response.getString("nombre_producto");
                         outputMsg.setText(msg);
                         //seteo color segun status
@@ -124,17 +135,27 @@ public class TestScanActivity extends AppCompatActivity {
                         Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
                         // Navigate to other screen
                         //navigatetoHomeActivity();
+                        */
                     }
                     // Else display error message
                     else{
-                        String errorMsg = "Producto no encontrado";
+
+                        Intent noEncontradoIntent = new Intent(TestScanActivity.this, ProductoNoEncontradoActivity.class);
+                        noEncontradoIntent.putExtra("codigo", code);
+                        startActivity(noEncontradoIntent);
+
+
+
+                        /* String errorMsg = "Producto no encontrado";
                         if(response.has("mensaje")) {
                             errorMsg = response.getString("mensaje");
                         }
                         outputMsg.setText(errorMsg);
                         //outputMsg.setTextColor(Color.RED);
                         outputMsg.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.msgError));
-                        Toast.makeText(getApplicationContext(), errorMsg, Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), errorMsg, Toast.LENGTH_LONG).show();*/
+
+
                     }
                 } catch (JSONException e) {
                     // TODO Auto-generated catch block

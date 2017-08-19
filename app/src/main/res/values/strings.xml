@@ -16,7 +16,7 @@
     <string name="error_field_required">This field is required</string>
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."</string>
-     <!-- scan activity -->
+    <!-- scan activity -->
     <string name="turn_on_flashlight">Encender linterna</string>
     <string name="turn_off_flashlight">Apagar linterna</string>
 </resources>
