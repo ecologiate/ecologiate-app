@@ -1,6 +1,8 @@
 package com.app.ecologiate;
 
 import android.content.pm.PackageManager;
+import android.graphics.Color;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.KeyEvent;
@@ -15,7 +17,8 @@ public class ScanActivity extends AppCompatActivity implements
 
     private CaptureManager capture;
     private DecoratedBarcodeView barcodeScannerView;
-    private Button switchFlashlightButton;
+    private FloatingActionButton switchFlashlightButton;
+    Boolean flashLightOn = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,7 +28,7 @@ public class ScanActivity extends AppCompatActivity implements
         barcodeScannerView = (DecoratedBarcodeView)findViewById(R.id.zxing_barcode_scanner);
         barcodeScannerView.setTorchListener(this);
 
-        switchFlashlightButton = (Button)findViewById(R.id.switch_flashlight);
+        switchFlashlightButton = (FloatingActionButton)findViewById(R.id.switch_flashlight);
 
         // if the device does not have flashlight in its camera,
         // then remove the switch flashlight button...
@@ -78,20 +81,28 @@ public class ScanActivity extends AppCompatActivity implements
     }
 
     public void switchFlashlight(View view) {
-        if (getString(R.string.turn_on_flashlight).equals(switchFlashlightButton.getText())) {
+        if (!flashLightOn) {
             barcodeScannerView.setTorchOn();
         } else {
             barcodeScannerView.setTorchOff();
         }
     }
 
+    public void goManualInput(View view){
+        //nada todavía
+    }
+
     @Override
     public void onTorchOn() {
-        switchFlashlightButton.setText(R.string.turn_off_flashlight);
+        flashLightOn = true;
+        switchFlashlightButton.setBackgroundColor(Color.GRAY);
+        //switchFlashlightButton.setText(R.string.turn_off_flashlight);
     }
 
     @Override
     public void onTorchOff() {
-        switchFlashlightButton.setText(R.string.turn_on_flashlight);
+        flashLightOn = false;
+        switchFlashlightButton.setBackgroundColor(Color.WHITE);
+        //switchFlashlightButton.setText(R.string.turn_on_flashlight);
     }
 }

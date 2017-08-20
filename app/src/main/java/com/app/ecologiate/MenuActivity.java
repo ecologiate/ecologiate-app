@@ -16,7 +16,7 @@ public class MenuActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
 
-        reciclarOld = (Button)findViewById(R.id.btn1);
+        reciclarOld = (Button)findViewById(R.id.btnMenuReciclar);
 
         reciclarOld.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -26,7 +26,7 @@ public class MenuActivity extends AppCompatActivity {
             }
         });
 
-        reciclar = (Button)findViewById(R.id.btnReciclar);
+        reciclar = (Button)findViewById(R.id.btnMenuReciclar2);
 
         reciclar.setOnClickListener(new View.OnClickListener() {
             @Override

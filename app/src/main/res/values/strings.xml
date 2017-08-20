@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Ecologiate-App</string>
     <string name="title_activity_test">Test de ingreso manual</string>
-    <string name="title_activity_login">Ingresar</string>
+    <string name="title_activity_login">Ecologiate</string>
     <!-- Facebook -->
     <string name="facebook_app_id">149676695596008</string>
     <string name="fb_login_protocol_scheme">fb149676695596008</string>

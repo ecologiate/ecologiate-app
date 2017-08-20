@@ -34,10 +34,10 @@ public class ResultadoActivity extends AppCompatActivity {
         String material = getIntent().getStringExtra("material");
         String impacto = getIntent().getStringExtra("impacto");
 
-        String mensajeResultado = "<li><b>Nombre del producto</b><br/> "+ nombreProducto + "<br/><br/>"+
-                "<li><b>Categoría</b><br/> "+ categoria + "<br/><br/>"+
-                "<li><b>Material</b><br/> "+ material + "<br/><br/>"+
-                "<li><b>Impacto</b><br/> "+ impacto;
+        String mensajeResultado = "<b>Nombre del producto</b><br/> "+ nombreProducto + "<br/><br/>"+
+                "<b>Categoría</b><br/> "+ categoria + "<br/><br/>"+
+                "<b>Material</b><br/> "+ material + "<br/><br/>"+
+                "<b>Impacto</b><br/> "+ impacto;
 
         tvResultado.setText(Html.fromHtml(mensajeResultado));
 

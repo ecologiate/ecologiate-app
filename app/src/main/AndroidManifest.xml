@@ -66,7 +66,7 @@
         <activity android:name=".ScanActivity" />
         <activity android:name=".ResultadoActivity" />
         <activity android:name=".ProductoNoEncontradoActivity" />
-        <activity android:name=".AltaProductoActivity"></activity>
+        <activity android:name=".AltaProductoActivity" />
     </application>
 
 </manifest>
