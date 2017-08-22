@@ -30,10 +30,22 @@
             android:id="@+id/btnAltaProducto"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Alta de Producto" />
+            android:layout_gravity="center"
+            android:background="@drawable/borde_redondo"
+            android:paddingEnd="20dp"
+            android:paddingStart="20dp"
+            android:text="Alta de Producto"
+            android:textColor="@android:color/white"
+            app:backgroundTint="@color/colorBoton" />
 
         <Button
             android:id="@+id/btnVolverBuscar"
+            android:textColor="@android:color/white"
+            app:backgroundTint="@color/colorBoton"
+            android:background="@drawable/borde_redondo"
+            android:layout_gravity="center"
+            android:paddingEnd="20dp"
+            android:paddingStart="20dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Volver a Buscar" />

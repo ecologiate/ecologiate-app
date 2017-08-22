@@ -7,4 +7,5 @@
     <color name="colorEcoOpaque">#93d6a7</color>
     <color name="msgOk">#ec3bdc63</color>
     <color name="msgError">#f1ff4640</color>
+    <color name="colorBoton">#ec057614</color>
 </resources>

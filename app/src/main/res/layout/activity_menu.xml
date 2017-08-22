@@ -13,28 +13,49 @@
         android:id="@+id/btnMenuReciclar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Reciclar" />
+        android:layout_marginBottom="4dp"
+        android:background="@drawable/borde_redondo"
+        android:text="Reciclar"
+        android:textColor="@android:color/white"
+        app:backgroundTint="@color/colorBoton" />
 
     <Button
         android:id="@+id/btnMenuMapa"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Mapa" />
+        android:background="@drawable/borde_redondo"
+        android:layout_marginBottom="4dp"
+        android:text="Mapa"
+        android:textColor="@android:color/white"
+        app:backgroundTint="@color/colorBoton"
+        />
 
     <Button
         android:id="@+id/btnMenuMiEstado"
+        android:textColor="@android:color/white"
+        app:backgroundTint="@color/colorBoton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="@drawable/borde_redondo"
+        android:layout_marginBottom="4dp"
         android:text="Mi Estado" />
 
     <Button
         android:id="@+id/btnMenuTrivia"
+        android:textColor="@android:color/white"
+        app:backgroundTint="@color/colorBoton"
+        android:background="@drawable/borde_redondo"
+        android:layout_marginBottom="4dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Trivia" />
 
     <Button
         android:id="@+id/btnMenuGrupos"
+        android:textColor="@android:color/white"
+        app:backgroundTint="@color/colorBoton"
+        android:background="@drawable/borde_redondo"
+        android:layout_marginBottom="4dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Grupos" />
@@ -43,12 +64,24 @@
         android:id="@+id/btnMenuConfig"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Configuración" />
+        android:background="@drawable/borde_redondo"
+        android:textColor="@android:color/white"
+        app:backgroundTint="@color/colorBoton"
+        android:layout_marginBottom="4dp"
+        android:paddingEnd="10dp"
+        android:paddingStart="10dp"
+        android:text="Configuración"/>
 
     <Button
         android:id="@+id/btnMenuReciclar2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Reciclar 2.0" />
+        android:layout_marginBottom="4dp"
+        android:background="@drawable/borde_redondo"
+        android:paddingEnd="10dp"
+        android:paddingStart="10dp"
+        android:text="Reciclar 2.0"
+        android:textColor="@android:color/white"
+        app:backgroundTint="@color/colorBoton" />
 
 </LinearLayout>

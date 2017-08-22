@@ -31,12 +31,20 @@
             android:id="@+id/btnResultReciclar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="@android:color/white"
+            app:backgroundTint="@color/colorBoton"
+            android:background="@drawable/borde_redondo"
+            android:layout_marginBottom="4dp"
             android:text="Reciclar" />
 
         <Button
             android:id="@+id/btnResultVerPdR"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="@android:color/white"
+            app:backgroundTint="@color/colorBoton"
+            android:background="@drawable/borde_redondo"
+            android:layout_marginBottom="4dp"
             android:text="Mapa" />
 
     </LinearLayout>
