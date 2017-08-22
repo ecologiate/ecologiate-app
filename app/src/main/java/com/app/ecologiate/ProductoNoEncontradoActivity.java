@@ -33,11 +33,14 @@ public class ProductoNoEncontradoActivity extends AppCompatActivity {
         volver.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                Intent scanIntent = new Intent(ProductoNoEncontradoActivity.this, ScanHandlerActivity.class);
+                scanIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(scanIntent);
             }
         });
 
         tvNoEncontrado = (TextView) findViewById(R.id.textViewNoEncontrado);
-        // tvNoEncontrado.setText(getIntent().getStringExtra("codigo")); //TODO MOSTRABA EL CODIGO DE BARRAS
+        String codigoNoEncontrado = getIntent().getStringExtra("codigo");
+        tvNoEncontrado.setText("Producto "+codigoNoEncontrado+" no encontrado");
     }
 }

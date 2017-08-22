@@ -95,7 +95,7 @@ public class ScanActivity extends AppCompatActivity implements
     @Override
     public void onTorchOn() {
         flashLightOn = true;
-        switchFlashlightButton.setBackgroundColor(Color.GRAY);
+        switchFlashlightButton.setBackgroundColor(Color.TRANSPARENT);
         //switchFlashlightButton.setText(R.string.turn_off_flashlight);
     }
 

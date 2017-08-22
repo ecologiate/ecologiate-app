@@ -15,7 +15,9 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="4dp"
         android:background="@drawable/borde_redondo"
-        android:text="Reciclar"
+        android:paddingEnd="10dp"
+        android:paddingStart="10dp"
+        android:text="Reciclar 2.0"
         android:textColor="@android:color/white"
         app:backgroundTint="@color/colorBoton" />
 
@@ -72,16 +74,5 @@
         android:paddingStart="10dp"
         android:text="Configuración"/>
 
-    <Button
-        android:id="@+id/btnMenuReciclar2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="4dp"
-        android:background="@drawable/borde_redondo"
-        android:paddingEnd="10dp"
-        android:paddingStart="10dp"
-        android:text="Reciclar 2.0"
-        android:textColor="@android:color/white"
-        app:backgroundTint="@color/colorBoton" />
 
 </LinearLayout>

@@ -39,7 +39,8 @@
             tools:replace="screenOrientation" />
         <activity
             android:name=".LoginActivity"
-            android:label="@string/title_activity_login">
+            android:label="@string/title_activity_login"
+            android:noHistory="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -67,6 +68,7 @@
         <activity android:name=".ResultadoActivity" />
         <activity android:name=".ProductoNoEncontradoActivity" />
         <activity android:name=".AltaProductoActivity" />
+        <activity android:name=".ScanHandlerActivity" />
     </application>
 
 </manifest>
