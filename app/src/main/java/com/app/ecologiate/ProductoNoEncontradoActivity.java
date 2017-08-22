@@ -38,6 +38,6 @@ public class ProductoNoEncontradoActivity extends AppCompatActivity {
         });
 
         tvNoEncontrado = (TextView) findViewById(R.id.textViewNoEncontrado);
-        tvNoEncontrado.setText(getIntent().getStringExtra("codigo"));
+        // tvNoEncontrado.setText(getIntent().getStringExtra("codigo")); //TODO MOSTRABA EL CODIGO DE BARRAS
     }
 }
