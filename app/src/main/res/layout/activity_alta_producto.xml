@@ -9,4 +9,53 @@
     app:layout_scrollFlags="scroll"
     tools:context="com.app.ecologiate.AltaProductoActivity">
 
+    <AutoCompleteTextView
+        android:id="@+id/nombreProducto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:gravity="bottom"
+        android:hint="@string/prompt_email"
+        android:inputType="textEmailAddress"
+        android:maxLines="1"
+        android:singleLine="true"
+        android:text="Nombre del Producto"
+        android:layout_margin="15dp"/>
+
+    <CheckBox
+        android:id="@+id/checkBox2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Tratable"
+        android:layout_margin="15dp"/>
+
+
+    <AutoCompleteTextView
+        android:id="@+id/pesoGramos"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/prompt_email"
+        android:inputType="textEmailAddress"
+        android:maxLines="1"
+        android:singleLine="true"
+        android:text="Peso aproximado"
+        android:layout_margin="15dp"/>
+
+
+    <TextView
+        android:id="@+id/tvCategoria"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Categoria"
+        android:layout_margin="15dp"/>
+
+    <Spinner
+        android:id="@+id/spinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
+
+
 </LinearLayout>
+
+

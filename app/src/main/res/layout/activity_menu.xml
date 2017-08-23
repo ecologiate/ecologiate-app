@@ -11,7 +11,7 @@
 
     <Button
         android:id="@+id/btnMenuReciclar"
-        android:layout_width="wrap_content"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="4dp"
         android:background="@drawable/borde_redondo"
@@ -23,7 +23,7 @@
 
     <Button
         android:id="@+id/btnMenuMapa"
-        android:layout_width="wrap_content"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:background="@drawable/borde_redondo"
         android:layout_marginBottom="4dp"
@@ -36,7 +36,7 @@
         android:id="@+id/btnMenuMiEstado"
         android:textColor="@android:color/white"
         app:backgroundTint="@color/colorBoton"
-        android:layout_width="wrap_content"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:background="@drawable/borde_redondo"
         android:layout_marginBottom="4dp"
@@ -48,7 +48,7 @@
         app:backgroundTint="@color/colorBoton"
         android:background="@drawable/borde_redondo"
         android:layout_marginBottom="4dp"
-        android:layout_width="wrap_content"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:text="Trivia" />
 
@@ -58,13 +58,13 @@
         app:backgroundTint="@color/colorBoton"
         android:background="@drawable/borde_redondo"
         android:layout_marginBottom="4dp"
-        android:layout_width="wrap_content"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:text="Grupos" />
 
     <Button
         android:id="@+id/btnMenuConfig"
-        android:layout_width="wrap_content"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:background="@drawable/borde_redondo"
         android:textColor="@android:color/white"
