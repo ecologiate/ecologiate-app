@@ -8,7 +8,6 @@ import android.widget.Button;
 
 public class MenuActivity extends AppCompatActivity {
 
-    Button reciclarOld;
     Button reciclar;
 
     @Override

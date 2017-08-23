@@ -1,13 +1,13 @@
 package com.app.ecologiate;
 
 import android.content.pm.PackageManager;
+import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
-import android.widget.Button;
 
 import com.journeyapps.barcodescanner.CaptureManager;
 import com.journeyapps.barcodescanner.DecoratedBarcodeView;
@@ -95,14 +95,14 @@ public class ScanActivity extends AppCompatActivity implements
     @Override
     public void onTorchOn() {
         flashLightOn = true;
-        switchFlashlightButton.setBackgroundColor(Color.TRANSPARENT);
+        switchFlashlightButton.setBackgroundTintList(ColorStateList.valueOf(Color.YELLOW));
         //switchFlashlightButton.setText(R.string.turn_off_flashlight);
     }
 
     @Override
     public void onTorchOff() {
         flashLightOn = false;
-        switchFlashlightButton.setBackgroundColor(Color.WHITE);
+        switchFlashlightButton.setBackgroundTintList(ColorStateList.valueOf(Color.WHITE));
         //switchFlashlightButton.setText(R.string.turn_on_flashlight);
     }
 }

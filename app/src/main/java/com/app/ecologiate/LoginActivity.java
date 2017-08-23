@@ -135,7 +135,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             }
             @Override
             public void onError(FacebookException exception) {
-                Log.d(LoginActivity.class.getCanonicalName(), exception.getMessage());
+                Log.e(LoginActivity.class.getCanonicalName(), exception.getMessage());
                 Toast.makeText(getApplicationContext(), "ERROR: "+exception.getMessage(), Toast.LENGTH_LONG).show();
             }
         });

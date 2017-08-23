@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     android:gravity="center"
     android:orientation="vertical"
-    app:layout_scrollFlags="scroll"
     tools:context="com.app.ecologiate.ResultadoActivity">
 
 
@@ -32,7 +31,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@android:color/white"
-            app:backgroundTint="@color/colorBoton"
+            android:backgroundTint="@color/colorBoton"
             android:background="@drawable/borde_redondo"
             android:layout_marginBottom="4dp"
             android:text="Reciclar" />
@@ -46,7 +45,7 @@
             android:background="@drawable/borde_redondo"
             android:text="Mapa"
             android:textColor="@android:color/white"
-            app:backgroundTint="@color/colorBoton" />
+            android:backgroundTint="@color/colorBoton" />
 
     </LinearLayout>
 </LinearLayout>

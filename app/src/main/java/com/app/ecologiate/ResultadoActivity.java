@@ -18,7 +18,6 @@ public class ResultadoActivity extends AppCompatActivity {
         resutadoIntent.putExtra("categoria", categoria);
         resutadoIntent.putExtra("material", material);
         resutadoIntent.putExtra("impacto", impacto);
-        resutadoIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         return resutadoIntent;
     }
 

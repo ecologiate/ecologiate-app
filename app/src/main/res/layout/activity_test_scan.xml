@@ -21,7 +21,7 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:textColor="@android:color/white"
-        app:backgroundTint="@color/colorBoton"
+        android:backgroundTint="@color/colorBoton"
         android:background="@drawable/borde_redondo"
         />
 
@@ -38,7 +38,7 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btn_scan"
         android:textColor="@android:color/white"
-        app:backgroundTint="@color/colorBoton"
+        android:backgroundTint="@color/colorBoton"
         android:background="@drawable/borde_redondo"
         />
 

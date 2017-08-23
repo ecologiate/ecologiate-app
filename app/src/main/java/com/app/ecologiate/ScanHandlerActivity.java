@@ -29,6 +29,8 @@ public class ScanHandlerActivity extends AppCompatActivity {
 
     static final String SERVER_URL = "https://ecologiate.herokuapp.com";
 
+    private boolean firstTime = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,6 +45,8 @@ public class ScanHandlerActivity extends AppCompatActivity {
 
         outputMsg = (TextView)findViewById(R.id.scan_output);
 
+        firstTime = true;
+
         IntentIntegrator integrator = new IntentIntegrator(this);
         integrator.setCaptureActivity(ScanActivity.class);
         integrator.setDesiredBarcodeFormats(IntentIntegrator.PRODUCT_CODE_TYPES);
@@ -50,15 +54,23 @@ public class ScanHandlerActivity extends AppCompatActivity {
         integrator.initiateScan();
     }
 
+    @Override
+    protected void onResume(){
+        super.onResume();
+        //no debería poder volver a esta pantalla, solamente desde el menú
+        if(!firstTime)
+            finish();
+    }
+
 
     // Get the results:
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-
         IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
         if(result != null) {
             if(result.getContents() == null) {
-                Toast.makeText(this, "Cancelado", Toast.LENGTH_LONG).show();
+                //Toast.makeText(this, "Cancelado", Toast.LENGTH_LONG).show();
+                finish(); //vuelvo al menú
             } else {
                 //Toast.makeText(this, "Scanned: " + result.getContents(), Toast.LENGTH_LONG).show();
                 String code = result.getContents();
@@ -83,6 +95,7 @@ public class ScanHandlerActivity extends AppCompatActivity {
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 // Hide Progress Dialog
                 prgDialog.hide();
+                firstTime = false; //para que en el prox onResume se cierre y vaya al menu
                 try {
                     // si me trajo algo
                     if(response.has("producto")){
@@ -125,6 +138,7 @@ public class ScanHandlerActivity extends AppCompatActivity {
 
                         Intent noEncontradoIntent = new Intent(ScanHandlerActivity.this, ProductoNoEncontradoActivity.class);
                         noEncontradoIntent.putExtra("codigo", code);
+                        //noEncontradoIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(noEncontradoIntent);
 
 

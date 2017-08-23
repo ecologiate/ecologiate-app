@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     android:gravity="center"
     android:orientation="vertical"
-    app:layout_scrollFlags="scroll"
     tools:context="com.app.ecologiate.ScanActivity">
 
 
@@ -27,10 +26,9 @@
             android:id="@+id/switch_flashlight"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="top|end"
+            android:layout_gravity="bottom|end"
             android:layout_margin="19dp"
             android:onClick="switchFlashlight"
-            android:text="@string/turn_on_flashlight"
             app:backgroundTint="@android:color/white"
             app:fabSize="mini"
             app:srcCompat="@drawable/ic_flash_on_black_24dp" />
