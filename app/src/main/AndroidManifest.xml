@@ -50,7 +50,7 @@
         <activity
             android:name="com.facebook.FacebookActivity"
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
-            android:label= 'Ecologiate' />
+            android:label="Ecologiate" />
         <activity
             android:name="com.facebook.CustomTabActivity"
             android:exported="true">
@@ -69,6 +69,10 @@
         <activity android:name=".ProductoNoEncontradoActivity" />
         <activity android:name=".AltaProductoActivity" />
         <activity android:name=".ScanHandlerActivity" />
+        <activity
+            android:name=".MenuLateralActivity"
+            android:label="@string/title_activity_menu_lateral"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

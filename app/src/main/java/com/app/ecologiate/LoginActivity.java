@@ -380,7 +380,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     }
 
     public void goToNextActivity(){
-        Intent menuIntent = new Intent(getApplicationContext(),MenuActivity.class);
+        Intent menuIntent = new Intent(getApplicationContext(),MenuLateralActivity.class);
         menuIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(menuIntent);
     }
