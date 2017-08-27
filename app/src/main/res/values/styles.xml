@@ -18,4 +18,21 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
+    <style name="ecoButtonStyle">
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:background">@drawable/borde_redondo</item>
+        <item name="backgroundTint">@color/colorBoton</item>
+        <item name="android:paddingRight">20dp</item>
+        <item name="android:paddingLeft">20dp</item>
+    </style>
+
+    <style name="torchOn">
+        <item name="backgroundTint">@android:color/white</item>
+        <item name="android:tint">@android:color/black</item>
+    </style>
+
+    <style name="torchOff">
+        <item name="backgroundTint">@android:color/transparent</item>
+        <item name="android:tint">@android:color/white</item>
+    </style>
 </resources>

@@ -9,7 +9,7 @@
     tools:openDrawer="start">
 
     <include
-        layout="@layout/app_bar_menu_lateral"
+        layout="@layout/content_menu_principal"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
@@ -19,7 +19,8 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
-        app:headerLayout="@layout/nav_header_menu_lateral"
-        app:menu="@menu/activity_menu_lateral_drawer" />
+        app:itemIconTint="@android:color/holo_green_dark"
+        app:headerLayout="@layout/cabecera_menu_drawer"
+        app:menu="@menu/menu_lateral_drawer" />
 
 </android.support.v4.widget.DrawerLayout>

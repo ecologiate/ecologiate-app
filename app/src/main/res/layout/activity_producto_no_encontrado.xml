@@ -30,26 +30,17 @@
             android:id="@+id/btnAltaProducto"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:background="@drawable/borde_redondo"
-            android:paddingEnd="20dp"
-            android:paddingStart="20dp"
-            android:text="Alta de Producto"
-            android:textColor="@android:color/white"
-            app:backgroundTint="@color/colorBoton" />
+            style="@style/ecoButtonStyle"
+            android:layout_marginRight="10dp"
+            android:text="Alta de Producto"/>
 
         <Button
             android:id="@+id/btnVolverBuscar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
+            style="@style/ecoButtonStyle"
             android:layout_marginLeft="10dp"
-            android:background="@drawable/borde_redondo"
-            android:paddingEnd="20dp"
-            android:paddingStart="20dp"
-            android:text="Volver a Buscar"
-            android:textColor="@android:color/white"
-            app:backgroundTint="@color/colorBoton" />
+            android:text="Volver a Buscar"/>
 
     </LinearLayout>
 </LinearLayout>

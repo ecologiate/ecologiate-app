@@ -3,6 +3,7 @@ package com.app.ecologiate;
 import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -33,7 +34,7 @@ public class ScanActivity extends AppCompatActivity implements
         // if the device does not have flashlight in its camera,
         // then remove the switch flashlight button...
         if (!hasFlash()) {
-            switchFlashlightButton.setVisibility(View.GONE);
+            //switchFlashlightButton.setVisibility(View.GONE);
         }
 
         capture = new CaptureManager(this, barcodeScannerView);
@@ -95,14 +96,14 @@ public class ScanActivity extends AppCompatActivity implements
     @Override
     public void onTorchOn() {
         flashLightOn = true;
-        switchFlashlightButton.setBackgroundTintList(ColorStateList.valueOf(Color.YELLOW));
-        //switchFlashlightButton.setText(R.string.turn_off_flashlight);
+        switchFlashlightButton.setBackgroundTintList(ColorStateList.valueOf(Color.WHITE));
+        switchFlashlightButton.setColorFilter(Color.BLACK);
     }
 
     @Override
     public void onTorchOff() {
         flashLightOn = false;
-        switchFlashlightButton.setBackgroundTintList(ColorStateList.valueOf(Color.WHITE));
-        //switchFlashlightButton.setText(R.string.turn_on_flashlight);
+        switchFlashlightButton.setBackgroundTintList(ColorStateList.valueOf(Color.TRANSPARENT));
+        switchFlashlightButton.setColorFilter(Color.WHITE);
     }
 }

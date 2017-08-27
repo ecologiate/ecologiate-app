@@ -1,0 +1,64 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.app.ecologiate.EscaneoFragment">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        tools:context="com.app.ecologiate.ScanActivity">
+
+
+        <android.support.design.widget.CoordinatorLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.journeyapps.barcodescanner.DecoratedBarcodeView
+                android:id="@+id/zxing_barcode_scanner"
+                android:layout_width="match_parent"
+                android:layout_height="350dp"
+                app:zxing_scanner_layout="@layout/custom_barcode_scanner"
+                tools:layout_editor_absoluteY="56dp"
+                tools:layout_editor_absoluteX="8dp">
+            </com.journeyapps.barcodescanner.DecoratedBarcodeView>
+
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/switch_flashlight"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|end"
+                app:fabSize="mini"
+                android:layout_margin="19dp"
+                android:onClick="switchFlashlight"
+                style="@style/torchOff"
+                app:srcCompat="@drawable/ic_flash_on_black_24dp"/>
+
+        </android.support.design.widget.CoordinatorLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center">
+
+            <Button
+                android:id="@+id/btnScanGoManual"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                style="@style/ecoButtonStyle"
+                android:drawableLeft="@android:drawable/ic_menu_search"
+                android:text="Búsqueda Manual"
+                android:onClick="goManualInput"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</FrameLayout>

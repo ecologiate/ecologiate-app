@@ -15,24 +15,20 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
-public class MenuLateralActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, AltaProducto.OnFragmentInteractionListener, Reciclar.OnFragmentInteractionListener {
+public class WelcomeMenuActivity extends AppCompatActivity
+        implements NavigationView.OnNavigationItemSelectedListener,
+        AltaProductoFragment.OnFragmentInteractionListener,
+        ReciclarFragment.OnFragmentInteractionListener,
+        InicioFragment.OnFragmentInteractionListener,
+        EscaneoFragment.OnFragmentInteractionListener,
+        ManualFragment.OnFragmentInteractionListener{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_menu_lateral);
+        setContentView(R.layout.activity_welcome_menu);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -42,6 +38,9 @@ public class MenuLateralActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        Fragment inicioFragment = new InicioFragment();
+        getSupportFragmentManager().beginTransaction().replace(R.id.contentFragment, inicioFragment).commit();
     }
 
     @Override
@@ -57,7 +56,7 @@ public class MenuLateralActivity extends AppCompatActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_lateral, menu);
+        getMenuInflater().inflate(R.menu.menu_lateral_settings, menu);
         return true;
     }
 
@@ -83,29 +82,25 @@ public class MenuLateralActivity extends AppCompatActivity
         int id = item.getItemId();
 
         Fragment fragment = null;
-        Boolean FragmentoSeleccionado = false;
 
-        if (id == R.id.nav_reciclar) {
-
-            fragment = new Reciclar();
-            FragmentoSeleccionado = true;
-
+        if(id == R.id.nav_inicio){
+            fragment = new InicioFragment();
+        }else if (id == R.id.nav_reciclar) {
+            fragment = new ReciclarFragment();
         } else if (id == R.id.nav_mapa) {
 
         } else if (id == R.id.nav_trivia) {
 
         } else if (id == R.id.nav_alta) {
-            fragment = new AltaProducto();
-            FragmentoSeleccionado = true;
-
+            fragment = new AltaProductoFragment();
         } else if (id == R.id.nav_share) {
 
         } else if (id == R.id.nav_send) {
 
         }
 
-        if (FragmentoSeleccionado) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.contenedor,fragment).commit();
+        if (fragment != null) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.contentFragment, fragment).commit();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

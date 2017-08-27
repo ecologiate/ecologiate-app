@@ -13,7 +13,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:gravity="center"
             android:orientation="vertical">
 
@@ -21,65 +21,47 @@
                 android:id="@+id/btnMenuReciclar"
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="4dp"
-                android:background="@drawable/borde_redondo"
-                android:paddingEnd="10dp"
-                android:paddingStart="10dp"
-                android:text="Reciclar"
-                android:textColor="@android:color/white"
-                app:backgroundTint="@color/colorBoton" />
+                android:layout_marginBottom="10dp"
+                style="@style/ecoButtonStyle"
+                android:text="Reciclar"/>
 
             <Button
                 android:id="@+id/btnMenuMapa"
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
-                android:background="@drawable/borde_redondo"
-                android:layout_marginBottom="4dp"
-                android:text="Mapa"
-                android:textColor="@android:color/white"
-                app:backgroundTint="@color/colorBoton"
-                />
+                android:layout_marginBottom="10dp"
+                style="@style/ecoButtonStyle"
+                android:text="Mapa"/>
 
             <Button
                 android:id="@+id/btnMenuMiEstado"
-                android:textColor="@android:color/white"
-                app:backgroundTint="@color/colorBoton"
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
-                android:background="@drawable/borde_redondo"
-                android:layout_marginBottom="4dp"
+                android:layout_marginBottom="10dp"
+                style="@style/ecoButtonStyle"
                 android:text="Mi Estado" />
 
             <Button
                 android:id="@+id/btnMenuTrivia"
-                android:textColor="@android:color/white"
-                app:backgroundTint="@color/colorBoton"
-                android:background="@drawable/borde_redondo"
-                android:layout_marginBottom="4dp"
+                android:layout_marginBottom="10dp"
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
+                style="@style/ecoButtonStyle"
                 android:text="Trivia" />
 
             <Button
                 android:id="@+id/btnMenuGrupos"
-                android:textColor="@android:color/white"
-                app:backgroundTint="@color/colorBoton"
-                android:background="@drawable/borde_redondo"
-                android:layout_marginBottom="4dp"
+                android:layout_marginBottom="10dp"
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
+                style="@style/ecoButtonStyle"
                 android:text="Grupos" />
 
             <Button
                 android:id="@+id/btnMenuConfig"
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
-                android:background="@drawable/borde_redondo"
-                android:textColor="@android:color/white"
-                app:backgroundTint="@color/colorBoton"
-                android:layout_marginBottom="4dp"
-                android:paddingEnd="10dp"
-                android:paddingStart="10dp"
+                style="@style/ecoButtonStyle"
                 android:text="Configuración"/>
 
         </LinearLayout>

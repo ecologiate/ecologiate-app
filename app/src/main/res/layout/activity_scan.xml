@@ -27,11 +27,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|end"
+            app:fabSize="mini"
             android:layout_margin="19dp"
             android:onClick="switchFlashlight"
-            app:backgroundTint="@android:color/white"
-            app:fabSize="mini"
-            app:srcCompat="@drawable/ic_flash_on_black_24dp" />
+            style="@style/torchOff"
+            app:srcCompat="@drawable/ic_flash_on_black_24dp"/>
 
     </android.support.design.widget.CoordinatorLayout>
 
@@ -45,6 +45,10 @@
             android:id="@+id/btnScanGoManual"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            style="@style/ecoButtonStyle"
+            android:drawableLeft="@android:drawable/ic_menu_search"
             android:text="Búsqueda Manual"
             android:onClick="goManualInput"/>
 

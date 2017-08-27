@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Ecologiate-App</string>
+    <string name="app_name">Ecologiate</string>
     <string name="title_activity_test">Test de ingreso manual</string>
     <string name="title_activity_login">Ecologiate</string>
     <!-- Facebook -->

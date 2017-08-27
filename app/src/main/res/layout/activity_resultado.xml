@@ -11,7 +11,7 @@
 
     <TextView
         android:id="@+id/textViewResultado"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"
         android:layout_marginTop="40dp"
@@ -30,22 +30,17 @@
             android:id="@+id/btnResultReciclar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@android:color/white"
-            app:backgroundTint="@color/colorBoton"
-            android:background="@drawable/borde_redondo"
-            android:layout_marginBottom="4dp"
+            style="@style/ecoButtonStyle"
+            android:layout_marginRight="10dp"
             android:text="Reciclar" />
 
         <Button
             android:id="@+id/btnResultVerPdR"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="4dp"
-            android:layout_marginLeft="4dp"
-            android:background="@drawable/borde_redondo"
-            android:text="Mapa"
-            android:textColor="@android:color/white"
-            app:backgroundTint="@color/colorBoton" />
+            style="@style/ecoButtonStyle"
+            android:layout_marginLeft="10dp"
+            android:text="Mapa"/>
 
     </LinearLayout>
 </LinearLayout>

@@ -19,7 +19,6 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -108,13 +107,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             }
         });
 
-        Button mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
-        mEmailSignInButton.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                attemptLogin();
-            }
-        });
 
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
@@ -380,9 +372,19 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     }
 
     public void goToNextActivity(){
-        Intent menuIntent = new Intent(getApplicationContext(),MenuLateralActivity.class);
+        Intent menuIntent = new Intent(getApplicationContext(),WelcomeMenuActivity.class);
         menuIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(menuIntent);
+    }
+
+    public void goToMenuViejo(View view){
+        Intent menuIntent = new Intent(getApplicationContext(),MenuActivity.class);
+        menuIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(menuIntent);
+    }
+
+    public void goToNextActivity(View view){
+        goToNextActivity();
     }
 
 
