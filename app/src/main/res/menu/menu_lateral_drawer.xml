@@ -4,36 +4,33 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_inicio"
-            android:icon="@android:drawable/ic_menu_myplaces"
+            android:icon="@drawable/ic_inicio"
             android:title="Inicio" />
         <item
             android:id="@+id/nav_reciclar"
-            android:icon="@drawable/ic_menu_camera"
+            android:icon="@drawable/ic_reciclaje"
             android:title="Reciclar" />
         <item
             android:id="@+id/nav_mapa"
-            android:icon="@drawable/ic_menu_gallery"
+            android:icon="@drawable/ic_mapa"
             android:title="Mapa" />
         <item
-            android:id="@+id/nav_trivia"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="Trivia" />
-        <item
-            android:id="@+id/nav_alta"
-            android:icon="@drawable/ic_menu_manage"
-            android:title="Alta" />
+            android:id="@+id/nav_enterate"
+            android:icon="@drawable/ic_enterate"
+            android:title="Enterate" />
+
     </group>
 
-    <item android:title="Communicate">
+    <item android:title="Comunicate">
         <menu>
             <item
-                android:id="@+id/nav_share"
-                android:icon="@drawable/ic_menu_share"
-                android:title="Share" />
+                android:id="@+id/nav_micuenta"
+                android:icon="@drawable/ic_usuario"
+                android:title="Mi Cuenta" />
             <item
-                android:id="@+id/nav_send"
-                android:icon="@drawable/ic_menu_send"
-                android:title="Send" />
+                android:id="@+id/nav_ajustes"
+                android:icon="@drawable/ic_ajustes"
+                android:title="Ajustes" />
         </menu>
     </item>
 

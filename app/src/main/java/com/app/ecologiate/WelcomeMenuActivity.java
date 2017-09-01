@@ -2,10 +2,7 @@ package com.app.ecologiate;
 
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -21,7 +18,12 @@ public class WelcomeMenuActivity extends AppCompatActivity
         ReciclarFragment.OnFragmentInteractionListener,
         InicioFragment.OnFragmentInteractionListener,
         EscaneoFragment.OnFragmentInteractionListener,
-        ManualFragment.OnFragmentInteractionListener{
+        ManualFragment.OnFragmentInteractionListener,
+        EnterateFragment.OnFragmentInteractionListener,
+        TriviaFragment.OnFragmentInteractionListener,
+        TipsFragment.OnFragmentInteractionListener,
+        MapaFragment.OnFragmentInteractionListener ,
+MiCuentaFragmente.OnFragmentInteractionListener{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,17 +87,20 @@ public class WelcomeMenuActivity extends AppCompatActivity
 
         if(id == R.id.nav_inicio){
             fragment = new InicioFragment();
+
         }else if (id == R.id.nav_reciclar) {
             fragment = new ReciclarFragment();
+
         } else if (id == R.id.nav_mapa) {
+            fragment = new MapaFragment();
 
-        } else if (id == R.id.nav_trivia) {
+        } else if (id == R.id.nav_enterate) {
+            fragment = new EnterateFragment();
 
-        } else if (id == R.id.nav_alta) {
-            fragment = new AltaProductoFragment();
-        } else if (id == R.id.nav_share) {
+        } else if (id == R.id.nav_micuenta) {
+            fragment = new MiCuentaFragmente();
 
-        } else if (id == R.id.nav_send) {
+        } else if (id == R.id.nav_ajustes) {
 
         }
 
@@ -103,6 +108,7 @@ public class WelcomeMenuActivity extends AppCompatActivity
             getSupportFragmentManager().beginTransaction().replace(R.id.contentFragment, fragment).commit();
         }
 
+        setTitle(item.getTitle());
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;

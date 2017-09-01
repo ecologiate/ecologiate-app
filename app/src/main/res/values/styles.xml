@@ -35,4 +35,11 @@
         <item name="backgroundTint">@android:color/transparent</item>
         <item name="android:tint">@android:color/white</item>
     </style>
+
+    <style name="Etiquetas">
+        <item name="android:background">@drawable/borde_redondo</item>
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
+
 </resources>

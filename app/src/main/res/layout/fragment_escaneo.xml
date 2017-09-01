@@ -46,16 +46,14 @@
             android:layout_height="match_parent"
             android:gravity="center">
 
-            <Button
-                android:id="@+id/btnScanGoManual"
+            <TextView
+                android:id="@+id/tvExplicacion"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
-                style="@style/ecoButtonStyle"
-                android:drawableLeft="@android:drawable/ic_menu_search"
-                android:text="Búsqueda Manual"
-                android:onClick="goManualInput"/>
+                android:gravity="center"
+                android:paddingTop="20dp"
+                android:text="Apunte al codigo de Barras para Escanear"
+                android:textSize="16dp" />
 
         </LinearLayout>
 
