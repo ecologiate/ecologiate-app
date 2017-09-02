@@ -16,7 +16,7 @@
     <ImageView
         android:layout_width="150dp"
         android:layout_height="150dp"
-        app:srcCompat="@drawable/eco_icon_actionbar"/>
+        app:srcCompat="@drawable/rsz_ecologiate_icon_2_big"/>
 
     <TextView
         android:id="@+id/tvResumenUsuario"

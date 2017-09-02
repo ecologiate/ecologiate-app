@@ -15,10 +15,10 @@
 
         <ImageView
             android:id="@+id/imageViewMenuLateral"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            app:srcCompat="@drawable/eco_icon_actionbar"
-            android:tint="@android:color/white"/>
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_margin="20dp"
+            app:srcCompat="@drawable/rsz_ecologiate_icon_2"/>
 
         <TextView
             android:layout_width="wrap_content"
