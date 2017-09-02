@@ -23,7 +23,10 @@ public class WelcomeMenuActivity extends AppCompatActivity
         TriviaFragment.OnFragmentInteractionListener,
         TipsFragment.OnFragmentInteractionListener,
         MapaFragment.OnFragmentInteractionListener ,
-MiCuentaFragmente.OnFragmentInteractionListener{
+        MiCuentaFragmente.OnFragmentInteractionListener,
+        PerfilFragment.OnFragmentInteractionListener,
+        GruposFragment.OnFragmentInteractionListener,
+        AjustesFragment.OnFragmentInteractionListener{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,7 +104,7 @@ MiCuentaFragmente.OnFragmentInteractionListener{
             fragment = new MiCuentaFragmente();
 
         } else if (id == R.id.nav_ajustes) {
-
+            fragment = new AjustesFragment();
         }
 
         if (fragment != null) {

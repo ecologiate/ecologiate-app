@@ -1,6 +1,5 @@
 package com.app.ecologiate;
 
-
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
@@ -10,7 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 
-public class TipsFragment extends Fragment {
+public class AjustesFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
@@ -18,15 +17,16 @@ public class TipsFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-             }
+        }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
-        return inflater.inflate(R.layout.fragment_tips, container, false);
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_ajustes, container, false);
     }
 
+    // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);
@@ -50,7 +50,9 @@ public class TipsFragment extends Fragment {
         mListener = null;
     }
 
+
     public interface OnFragmentInteractionListener {
+        // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
 }

@@ -20,41 +20,15 @@ import java.util.List;
 
 public class MiCuentaFragmente extends Fragment {
 
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
     private AppBarLayout appBar;
     private TabLayout pestanias;
     private ViewPager viewPager;
     private OnFragmentInteractionListener mListener;
 
 
-    private String mParam1;
-    private String mParam2;
-
-
-    public MiCuentaFragmente() {
-        // Required empty public constructor
-    }
-
-    // TODO: Rename and change types and number of parameters
-    public static MiCuentaFragmente newInstance(String param1, String param2) {
-        MiCuentaFragmente fragment = new MiCuentaFragmente();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+    public void onCreate(Bundle savedInstanceState) {super.onCreate(savedInstanceState);
         }
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -70,13 +44,6 @@ public class MiCuentaFragmente extends Fragment {
         return view;
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
-    }
-
 
     private void insertarTabs(ViewGroup container) {
         View padre = (View) container.getParent();
@@ -88,11 +55,16 @@ public class MiCuentaFragmente extends Fragment {
 
     private void poblarViewPager(ViewPager viewPager) {
         AdaptadorSecciones adapter = new AdaptadorSecciones(getFragmentManager());
-        adapter.addFragment(new TipsFragment(), "Perfil");
-        adapter.addFragment(new TipsFragment(), "Grupos");
+        adapter.addFragment(new PerfilFragment(), "Perfil");
+        adapter.addFragment(new GruposFragment(), "Grupos");
         viewPager.setAdapter(adapter);
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        appBar.removeView(pestanias);
+    }
 
     @Override
     public void onAttach(Context context) {
@@ -143,7 +115,7 @@ public class MiCuentaFragmente extends Fragment {
 
 
     public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
+
         void onFragmentInteraction(Uri uri);
     }
 }

@@ -19,11 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-/**
- * A simple {@link Fragment} subclass.
- */
 public class EnterateFragment extends Fragment {
-
 
     private AppBarLayout appBar;
     private TabLayout pestanias;
@@ -60,7 +56,7 @@ public class EnterateFragment extends Fragment {
 
     private void poblarViewPager(ViewPager viewPager) {
         AdaptadorSecciones adapter = new AdaptadorSecciones(getFragmentManager());
-        adapter.addFragment(new TipsFragment(), "Trivia");
+        adapter.addFragment(new TriviaFragment(), "Trivia");
         adapter.addFragment(new TipsFragment(), "Tips");
         viewPager.setAdapter(adapter);
     }
@@ -71,7 +67,7 @@ public class EnterateFragment extends Fragment {
         appBar.removeView(pestanias);
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
+
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);
@@ -96,7 +92,6 @@ public class EnterateFragment extends Fragment {
     }
 
     public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
 
