@@ -12,6 +12,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import java.util.Stack;
+
 public class WelcomeMenuActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
         AltaProductoFragment.OnFragmentInteractionListener,
@@ -27,6 +29,7 @@ public class WelcomeMenuActivity extends AppCompatActivity
         PerfilFragment.OnFragmentInteractionListener,
         GruposFragment.OnFragmentInteractionListener,
         AjustesFragment.OnFragmentInteractionListener{
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +49,10 @@ public class WelcomeMenuActivity extends AppCompatActivity
 
         //selecciono el inicioFragment por default
         Fragment inicioFragment = new InicioFragment();
-        getSupportFragmentManager().beginTransaction().replace(R.id.contentFragment, inicioFragment).commit();
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.contentFragment, inicioFragment)
+                .addToBackStack(String.valueOf(inicioFragment.getId()))
+                .commit();
         navigationView.setCheckedItem(R.id.nav_inicio);
     }
 
@@ -56,7 +62,14 @@ public class WelcomeMenuActivity extends AppCompatActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+            int count = getFragmentManager().getBackStackEntryCount();
+
+            if (count == 0) {
+                super.onBackPressed();
+                //additional code
+            } else {
+                getFragmentManager().popBackStack();
+            }
         }
     }
 
@@ -110,7 +123,10 @@ public class WelcomeMenuActivity extends AppCompatActivity
         }
 
         if (fragment != null) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.contentFragment, fragment).commit();
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.contentFragment, fragment)
+                    .addToBackStack(String.valueOf(fragment.getId()))
+                    .commit();
         }
 
         setTitle(item.getTitle());
@@ -123,4 +139,5 @@ public class WelcomeMenuActivity extends AppCompatActivity
     public void onFragmentInteraction(Uri uri) {
 
     }
+
 }
