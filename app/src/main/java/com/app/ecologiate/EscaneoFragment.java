@@ -16,15 +16,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.app.ecologiate.service.ApiCallService;
+import com.app.ecologiate.service.SoundService;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.ResultPoint;
-import com.google.zxing.client.android.BeepManager;
 import com.journeyapps.barcodescanner.BarcodeCallback;
 import com.journeyapps.barcodescanner.BarcodeResult;
 import com.journeyapps.barcodescanner.DecoderFactory;
 import com.journeyapps.barcodescanner.DecoratedBarcodeView;
 import com.journeyapps.barcodescanner.DefaultDecoderFactory;
-import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
 import org.json.JSONException;
@@ -39,32 +39,33 @@ import cz.msebera.android.httpclient.Header;
 public class EscaneoFragment extends Fragment implements
         DecoratedBarcodeView.TorchListener{
 
-    static final String SERVER_URL = "https://ecologiate.herokuapp.com";
+    private ApiCallService apiCallService = new ApiCallService();
 
     private OnFragmentInteractionListener mListener;
 
-    //private CaptureManager capture;
     private DecoratedBarcodeView barcodeScannerView;
     private FloatingActionButton switchFlashlightButton;
     Boolean flashLightOn = false;
-    private BeepManager beepManager;
+    private SoundService soundService;
     ProgressDialog prgDialog;
-    Boolean buscando = false;
+    Boolean scanEnabled = true;
 
     private BarcodeCallback callback = new BarcodeCallback() {
         @Override
         public void barcodeResult(BarcodeResult result) {
-            if(result.getText() == null || buscando) {
+            if(result.getText() == null || !scanEnabled) {
                 //previene múltiples escaneos si está todavía buscando el producto
                 return;
             }
 
             String code = result.getText();
-            barcodeScannerView.setStatusText(result.getText());
-            beepManager.playBeepSoundAndVibrate();
+            //barcodeScannerView.setStatusText(result.getText());
+            barcodeScannerView.pause();
+            scanEnabled = false;
+            soundService.playBastaChicos(true);
+            getProducto(code);
             //mensaje emergente
-            Toast.makeText(getContext(), code, Toast.LENGTH_LONG).show();
-            getItem(code);
+            //Toast.makeText(getContext(), code, Toast.LENGTH_LONG).show();
         }
 
         @Override
@@ -102,7 +103,7 @@ public class EscaneoFragment extends Fragment implements
         final DecoderFactory factory = new DefaultDecoderFactory(decodeFormats,null , null, false);
         barcodeScannerView.getBarcodeView().setDecoderFactory(factory);
         barcodeScannerView.decodeContinuous(callback);
-        beepManager = new BeepManager(getActivity());
+        soundService = new SoundService(getActivity());
 
         switchFlashlightButton = (FloatingActionButton)view.findViewById(R.id.fr_switch_flashlight);
         switchFlashlightButton.setOnClickListener(new View.OnClickListener() {
@@ -116,10 +117,6 @@ public class EscaneoFragment extends Fragment implements
         if (!hasFlash()) {
             switchFlashlightButton.setVisibility(View.GONE);
         }
-
-        //capture = new CaptureManager(getActivity(), barcodeScannerView);
-        //capture.initializeFromIntent(getActivity().getIntent(), savedInstanceState);
-        //capture.decode();
 
         return view;
     }
@@ -158,18 +155,13 @@ public class EscaneoFragment extends Fragment implements
     public void onResume() {
         super.onResume();
         barcodeScannerView.resume();
-        //capture.onResume();
+        scanEnabled = true;
     }
 
     @Override
     public void onPause() {
         super.onPause();
         barcodeScannerView.pause();
-        //capture.onPause();
-    }
-
-    public void triggerScan(View view) {
-        barcodeScannerView.decodeSingle(callback);
     }
 
     @Override
@@ -223,22 +215,18 @@ public class EscaneoFragment extends Fragment implements
         switchFlashlightButton.setColorFilter(Color.WHITE);
     }
 
-    public void getItem(final String code){
-        // Show Progress Dialog
+    public void getProducto(final String codigo){
+        // muestro el mensaje de "Buscando..."
         prgDialog.show();
-        buscando = true;
 
-        AsyncHttpClient client = new AsyncHttpClient();
-        String url = SERVER_URL + "/api/producto/" + code;
-
-        //LLAMO A UN GET!
-        client.get(url, new JsonHttpResponseHandler() {
-            // When the response returned by REST has Http response code '200'
+        //Creo el responseHandler, que va a tener el código a ejecutar cuando vuelve del backend
+        //tanto en caso de éxito como en caso de falla
+        JsonHttpResponseHandler responseHandler = new JsonHttpResponseHandler() {
+            //si vuelve sin errores del backend se ejecuta el "onSuccess"
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                // Hide Progress Dialog
+                //Dejo de mostrar el cartel de "Buscando"
                 prgDialog.hide();
-                buscando = false;
                 try {
                     // si me trajo algo
                     if(response.has("producto")){
@@ -250,81 +238,48 @@ public class EscaneoFragment extends Fragment implements
                         String material = materialJson.getString("descripcion");
                         String impacto = String.valueOf(productoJson.getString("cant_material")); //TODO HARDCODEADO
 
-                        startActivity(ResultadoActivity.crearIntentParaResultado(getActivity(),
-                                nombreProducto,categoria,material,impacto));
+                        startActivity(ResultadoActivity.crearIntentParaResultado(
+                                getActivity(), nombreProducto, categoria,
+                                material, impacto));
 
-                    }
-                    // Else display error message
-                    else{
-
+                    }else{
+                        //si no encontró un producto con ese código
                         Intent noEncontradoIntent = new Intent(getActivity(), ProductoNoEncontradoActivity.class);
-                        noEncontradoIntent.putExtra("codigo", code);
-                        //noEncontradoIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        noEncontradoIntent.putExtra("codigo", codigo);
                         startActivity(noEncontradoIntent);
-
-
-
-                        /* String errorMsg = "Producto no encontrado";
-                        if(response.has("mensaje")) {
-                            errorMsg = response.getString("mensaje");
-                        }
-                        outputMsg.setText(errorMsg);
-                        //outputMsg.setTextColor(Color.RED);
-                        outputMsg.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.msgError));
-                        Toast.makeText(getApplicationContext(), errorMsg, Toast.LENGTH_LONG).show();*/
-
-
                     }
                 } catch (JSONException e) {
-                    // TODO Auto-generated catch block
-                    Toast.makeText(getContext(), "Error Occured [Server's JSON response might be invalid]!", Toast.LENGTH_LONG).show();
+                    //Error parseando el json
+                    Toast.makeText(getContext(), "Error en formato de json", Toast.LENGTH_LONG).show();
                     e.printStackTrace();
                 }
             }
-            // When the response returned by REST has Http response code other than '200'
 
+            //Cuando no vuelve con un status code "200" del backend, o sea, una falla
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                 // Hide Progress Dialog
                 prgDialog.hide();
-                buscando = false;
+                scanEnabled = true;
+                barcodeScannerView.resume();
                 // When Http response code is '404'
                 if(statusCode == 404){
-                    Toast.makeText(getContext(), "Requested resource not found", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(), "Url no encontrada", Toast.LENGTH_LONG).show();
                 }
                 // When Http response code is '500'
                 else if(statusCode == 500){
-                    Toast.makeText(getContext(), "Something went wrong at server end", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(), "Error en el backend", Toast.LENGTH_LONG).show();
                 }
                 // When Http response code other than 404, 500
                 else{
                     Toast.makeText(getContext(), throwable.getLocalizedMessage(), Toast.LENGTH_LONG).show();
                     Log.e("API_ERROR","Error inesperado ["+statusCode+"]", throwable);
-                    //outputMsg.setText(throwable.getLocalizedMessage());
-                    //outputMsg.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.msgError));
                 }
             }
 
-            @Override
-            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                // Hide Progress Dialog
-                prgDialog.hide();
-                buscando = false;
-                // When Http response code is '404'
-                if(statusCode == 404){
-                    Toast.makeText(getContext(), "Requested resource not found", Toast.LENGTH_LONG).show();
-                }
-                // When Http response code is '500'
-                else if(statusCode == 500){
-                    Toast.makeText(getContext(), "Something went wrong at server end", Toast.LENGTH_LONG).show();
-                }
-                // When Http response code other than 404, 500
-                else{
-                    Toast.makeText(getContext(), throwable.getLocalizedMessage(), Toast.LENGTH_LONG).show();
-                    Log.e("API_ERROR","Error inesperado ["+statusCode+"]", throwable);
-                    //outputMsg.setText(throwable.getLocalizedMessage());
-                }
-            }
-        });
+        };
+
+        apiCallService.getProductoPorCodigo(codigo, responseHandler);
+
     }
 }

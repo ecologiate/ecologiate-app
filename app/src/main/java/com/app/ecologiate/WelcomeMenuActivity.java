@@ -23,7 +23,7 @@ public class WelcomeMenuActivity extends AppCompatActivity
         TriviaFragment.OnFragmentInteractionListener,
         TipsFragment.OnFragmentInteractionListener,
         MapaFragment.OnFragmentInteractionListener ,
-        MiCuentaFragmente.OnFragmentInteractionListener,
+        MiCuentaFragment.OnFragmentInteractionListener,
         PerfilFragment.OnFragmentInteractionListener,
         GruposFragment.OnFragmentInteractionListener,
         AjustesFragment.OnFragmentInteractionListener{
@@ -44,8 +44,10 @@ public class WelcomeMenuActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        //selecciono el inicioFragment por default
         Fragment inicioFragment = new InicioFragment();
         getSupportFragmentManager().beginTransaction().replace(R.id.contentFragment, inicioFragment).commit();
+        navigationView.setCheckedItem(R.id.nav_inicio);
     }
 
     @Override
@@ -101,7 +103,7 @@ public class WelcomeMenuActivity extends AppCompatActivity
             fragment = new EnterateFragment();
 
         } else if (id == R.id.nav_micuenta) {
-            fragment = new MiCuentaFragmente();
+            fragment = new MiCuentaFragment();
 
         } else if (id == R.id.nav_ajustes) {
             fragment = new AjustesFragment();

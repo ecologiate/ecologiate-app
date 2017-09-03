@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class MiCuentaFragmente extends Fragment {
+public class MiCuentaFragment extends Fragment {
 
     private AppBarLayout appBar;
     private TabLayout pestanias;
@@ -49,7 +49,7 @@ public class MiCuentaFragmente extends Fragment {
         View padre = (View) container.getParent();
         appBar = (AppBarLayout) padre.findViewById(R.id.appbar);
         pestanias = new TabLayout(getActivity());
-        pestanias.setTabTextColors(Color.parseColor("#FFFFFF"), Color.parseColor("#FFFFFF"));
+        pestanias.setTabTextColors(Color.parseColor("#FFFFFF"), Color.parseColor("#0051FF"));
         appBar.addView(pestanias);
     }
 
