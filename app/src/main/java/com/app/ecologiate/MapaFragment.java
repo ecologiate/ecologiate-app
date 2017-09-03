@@ -31,7 +31,6 @@ public class MapaFragment extends Fragment {
     }
 
 
-    // TODO: Rename and change types and number of parameters
     public static MapaFragment newInstance(String param1, String param2) {
         MapaFragment fragment = new MapaFragment();
         Bundle args = new Bundle();
@@ -57,7 +56,6 @@ public class MapaFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_mapa, container, false);
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);
@@ -82,7 +80,6 @@ public class MapaFragment extends Fragment {
     }
 
     public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
 }

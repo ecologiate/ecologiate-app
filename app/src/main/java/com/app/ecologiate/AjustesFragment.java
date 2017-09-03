@@ -26,7 +26,6 @@ public class AjustesFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_ajustes, container, false);
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);
@@ -52,7 +51,6 @@ public class AjustesFragment extends Fragment {
 
 
     public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
 }
