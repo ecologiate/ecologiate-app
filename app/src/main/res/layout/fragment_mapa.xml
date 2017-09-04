@@ -1,18 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     xmlns:fab="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:context=".MapaFragment">
 
-    <TextView
-        android:id="@+id/tvExplicacion"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:paddingTop="20dp"
-        android:text="MAPAAA"
-        android:textSize="16dp" />
-
+    <com.google.android.gms.maps.MapView
+        android:id="@+id/mapa"
+        android:name="com.google.android.gms.maps.MapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 
     <com.github.clans.fab.FloatingActionMenu
         android:id="@+id/material_design_android_floating_action_menu"
@@ -27,12 +25,12 @@
         fab:menu_backgroundColor="@android:color/transparent"
         fab:menu_buttonSpacing="0dp"
         fab:menu_colorNormal="@color/colorBoton"
-        fab:menu_colorPressed="@color/colorBoton"
+        fab:menu_colorPressed="@color/colorPrimaryLight"
         fab:menu_colorRipple="#99d4d4d4"
         fab:menu_fab_size="normal"
         fab:menu_icon="@drawable/fab_add"
-        fab:menu_labels_colorNormal="#333"
-        fab:menu_labels_colorPressed="#444"
+        fab:menu_labels_colorNormal="@color/colorPrimaryDark"
+        fab:menu_labels_colorPressed="@color/colorPrimaryLight"
         fab:menu_labels_colorRipple="#66efecec"
         fab:menu_labels_cornerRadius="3dp"
         fab:menu_labels_ellipsize="none"
@@ -44,7 +42,7 @@
         fab:menu_labels_showAnimation="@anim/fab_slide_in_from_right"
         fab:menu_labels_showShadow="true"
         fab:menu_labels_singleLine="false"
-        fab:menu_labels_textColor="#f2f1f1"
+        fab:menu_labels_textColor="@android:color/white"
         fab:menu_labels_textSize="15sp"
         fab:menu_openDirection="up"
         fab:menu_shadowColor="#66aff198"
@@ -57,8 +55,9 @@
             android:id="@+id/buscarEnMapa"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_menu_send"
+            android:src="@android:drawable/ic_menu_search"
             fab:fab_colorNormal="@color/colorBoton"
+            fab:fab_colorPressed="@color/colorPrimaryLight"
             fab:fab_label="Buscar"
             fab:fab_size="mini" />
 
@@ -68,7 +67,8 @@
             android:layout_height="wrap_content"
             android:src="@drawable/ic_mapa"
             fab:fab_colorNormal="@color/colorBoton"
-            fab:fab_label="Agregar Punto de Recoleccion"
+            fab:fab_colorPressed="@color/colorPrimaryLight"
+            fab:fab_label="Punto de Recoleccion"
             fab:fab_size="mini" />
 
 

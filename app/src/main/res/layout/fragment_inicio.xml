@@ -1,46 +1,55 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.app.ecologiate.InicioFragment">
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
+    <LinearLayout
         android:orientation="vertical"
         android:gravity="center"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/welcomeLayout">
+        android:layout_height="match_parent">
 
         <TextView
+            android:layout_weight="0.1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Bienvenido a Ecologiate"
-            android:padding="20dp"
+            android:padding="10dp"
             android:textSize="25dp"/>
         <ImageView
+            android:layout_weight="0.5"
             android:layout_width="150dp"
             android:layout_height="150dp"
             app:srcCompat="@drawable/rsz_ecologiate_icon_2_big"/>
 
-        <TextView
-            android:id="@+id/tvResumenUsuario"
+        <LinearLayout
+            android:layout_weight="0.4"
+            android:orientation="vertical"
+            android:gravity="center"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Nivel 1"
-            android:paddingTop="20dp"
-            android:textSize="25dp"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Puntos obtenidos: 350"
-            android:padding="20dp"
-            android:textSize="25dp"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Medallas obtenidas: 4"
-            android:textSize="25dp"/>
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/tvResumenUsuario"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Nivel 1"
+                android:paddingTop="20dp"
+                android:textSize="25dp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Puntos obtenidos: 350"
+                android:padding="20dp"
+                android:textSize="25dp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Medallas obtenidas: 4"
+                android:textSize="25dp"/>
+        </LinearLayout>
+
 
     </LinearLayout>
 
