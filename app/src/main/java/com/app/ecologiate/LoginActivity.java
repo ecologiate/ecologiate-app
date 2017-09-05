@@ -190,11 +190,6 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(menuIntent);
     }
 
-    public void goToMenuViejo(View view){
-        Intent menuIntent = new Intent(getApplicationContext(),MenuActivity.class);
-        menuIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(menuIntent);
-    }
 
     public void goToNextActivity(View view){
         goToNextActivity();

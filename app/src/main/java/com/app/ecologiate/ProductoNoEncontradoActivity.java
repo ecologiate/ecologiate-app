@@ -33,7 +33,7 @@ public class ProductoNoEncontradoActivity extends AppCompatActivity {
         volver.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent scanIntent = new Intent(ProductoNoEncontradoActivity.this, ScanHandlerActivity.class);
+                Intent scanIntent = new Intent(ProductoNoEncontradoActivity.this, WelcomeMenuActivity.class);
                 scanIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(scanIntent);
             }

@@ -36,17 +36,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:text="Menu Nuevo"
+                android:text="Menu"
                 android:drawableLeft="@drawable/rsz_ecologiate_icon_2"
                 android:onClick="goToNextActivity"/>
-
-            <Button
-                style="@style/ecoButtonStyle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:text="Menu Viejo"
-                android:onClick="goToMenuViejo"/>
 
             <com.facebook.login.widget.LoginButton
                 android:id="@+id/fb_login_button"

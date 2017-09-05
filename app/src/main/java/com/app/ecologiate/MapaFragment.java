@@ -8,10 +8,13 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
+import com.app.ecologiate.service.ApiCallService;
 import com.github.clans.fab.FloatingActionButton;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -19,16 +22,29 @@ import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.loopj.android.http.JsonHttpResponseHandler;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+
+import cz.msebera.android.httpclient.Header;
 
 
 public class MapaFragment extends Fragment implements OnMapReadyCallback{
 
+
+    private ApiCallService apiCallService = new ApiCallService();
 
     private OnFragmentInteractionListener mListener;
 
     private Context context;
     private GoogleMap gMap;
     private MapView mapView;
+
+    private Boolean modoAlta = false;
 
     public MapaFragment() {}
 
@@ -84,33 +100,93 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback{
             // Show rationale and request permission.
         }
 
-        // Add a marker in Sydney and move the camera
         LatLng utn = new LatLng(-34.598684, -58.419960);
-                /*
-                CameraPosition cameraPosition = new CameraPosition.Builder()
-                        .target(utn)
-                        .zoom(15f)
-                        .bearing(90f) //orientacion hacia al este
-                        .tilt(30f) //inclinacion
-                        .build();
-                */
-        gMap.addMarker(new MarkerOptions().position(utn).title("UTN"));
-        gMap.animateCamera(CameraUpdateFactory.newLatLngZoom(utn, 15.0f));
+        //gMap.addMarker(new MarkerOptions().position(utn).title("UTN"));
+        gMap.animateCamera(CameraUpdateFactory.newLatLngZoom(utn, 11.0f));
+        /*
+        CameraPosition cameraPosition = new CameraPosition.Builder()
+                .target(utn)
+                .zoom(15f)
+                .bearing(90f) //orientacion hacia al este
+                .tilt(30f) //inclinacion
+                .build();
+        */
         //mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
 
         gMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
             @Override
             public void onMapClick(LatLng latLng) {
-                gMap.addMarker(new MarkerOptions().position(latLng).title("Nuevo"));
+                if(modoAlta) {
+                    gMap.addMarker(new MarkerOptions().position(latLng).title("Nuevo"));
+                }
             }
         });
 
         gMap.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
             @Override
             public void onMapLongClick(LatLng latLng) {
-                gMap.addMarker(new MarkerOptions().position(latLng).title("Nuevo"));
+                if(modoAlta) {
+                    gMap.addMarker(new MarkerOptions().position(latLng).title("Nuevo"));
+                }
             }
         });
+
+        getPuntosDeRecoleccion();
+    }
+
+    private void getPuntosDeRecoleccion(){
+
+        JsonHttpResponseHandler responseHandler = new JsonHttpResponseHandler() {
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
+                try {
+                    // si me trajo algo
+                    if(response != null){
+                        for(int i = 0; i < response.length(); i++){
+                            JSONObject pdr = response.getJSONObject(i);
+                            LatLng pdrLatLng = new LatLng(pdr.getDouble("latitud"), pdr.getDouble("longitud"));
+                            String title = pdr.getString("descripcion");
+                            String direccion = pdr.getString("direccion");
+                            gMap.addMarker(new MarkerOptions().position(pdrLatLng).title(title).snippet(direccion));
+                        }
+                    }else{
+                        Toast.makeText(getContext(), "No se encontró ningún punto de recolección", Toast.LENGTH_LONG).show();
+                    }
+                } catch (JSONException e) {
+                    //Error parseando el json
+                    Toast.makeText(getContext(), "Error en formato de json", Toast.LENGTH_LONG).show();
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                ArrayList<JSONObject> list = new ArrayList<>();
+                list.add(response);
+                this.onSuccess(statusCode,headers,new JSONArray(list));
+            }
+
+            //Cuando no vuelve con un status code "200" del backend, o sea, una falla
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                if(statusCode == 404){
+                    Toast.makeText(getContext(), "Url no encontrada", Toast.LENGTH_LONG).show();
+                }
+                // When Http response code is '500'
+                else if(statusCode == 500){
+                    Toast.makeText(getContext(), "Error en el backend", Toast.LENGTH_LONG).show();
+                }
+                // When Http response code other than 404, 500
+                else{
+                    Toast.makeText(getContext(), throwable.getLocalizedMessage(), Toast.LENGTH_LONG).show();
+                    Log.e("API_ERROR","Error inesperado ["+statusCode+"]", throwable);
+                }
+            }
+
+        };
+
+        apiCallService.getPuntosDeRecoleccion(null, responseHandler);
     }
 
     public void onButtonPressed(Uri uri) {

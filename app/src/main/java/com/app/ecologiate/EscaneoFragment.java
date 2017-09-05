@@ -77,7 +77,9 @@ public class EscaneoFragment extends Fragment implements
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        prgDialog = new ProgressDialog(getContext());
+        prgDialog.setMessage("Buscando");
+        prgDialog.setCancelable(false);
     }
 
     @Override
@@ -85,10 +87,6 @@ public class EscaneoFragment extends Fragment implements
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_escaneo, container, false);
-
-        prgDialog = new ProgressDialog(getContext());
-        prgDialog.setMessage("Buscando");
-        prgDialog.setCancelable(false);
 
         barcodeScannerView = (DecoratedBarcodeView)view.findViewById(R.id.fr_zxing_barcode_scanner);
         barcodeScannerView.setTorchListener(this);
@@ -175,13 +173,6 @@ public class EscaneoFragment extends Fragment implements
         super.onSaveInstanceState(outState);
         //capture.onSaveInstanceState(outState);
     }
-
-    /*
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        return barcodeScannerView.onKeyDown(keyCode, event) || super.onKeyDown(keyCode, event);
-    }
-    */
 
 
     /**
