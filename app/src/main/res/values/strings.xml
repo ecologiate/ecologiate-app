@@ -29,4 +29,30 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_maps">Map</string>
+
+    /*Mensajes generales*/
+    <string name="enviar">Enviar</string>
+    <string name="buscar">Buscar</string>
+
+
+    /*Strings de alta de punto de recoleccion*/
+    <string name="direccion_punto_rec">Dirección del punto de recolección</string>
+    <string name="seleccion_materiales">Seleccione los Materiales:</string>
+    <string name="seleccion_categoria">Seleccione la Categoria:</string>
+    <string name="reciclable">Reciclable</string>
+    <string name="no_tratables">No Tratables</string>
+    <string name="organicos">Orgánicos</string>
+    <string name="aceite">Aceite</string>
+    <string name="bronce">Bronce</string>
+    <string name="electronicos">Electrónicos</string>
+    <string name="metales">Metales</string>
+    <string name="neumaticos">Neumáticos</string>
+    <string name="papel_carton">Papel y Carton</string>
+    <string name="pilas">Pilas</string>
+    <string name="plastico">Plástico</string>
+    <string name="tapitas">Tapitas</string>
+    <string name="telgopor">Telgopor</string>
+    <string name="tetra">Tetra-brik</string>
+    <string name="textiles">Textiles</string>
+    <string name="vidrio">Vidrio</string>
 </resources>

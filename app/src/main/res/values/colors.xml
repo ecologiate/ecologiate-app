@@ -12,4 +12,7 @@
     <color name="msgOk">#66bb6a</color>
     <color name="msgError">#d32f2f</color>
     <color name="colorBoton">#388e3c</color>
+    <color name="colorTexto">#1c7b21</color>
+    <color name="textoOscuro">#0e6012</color>
+    <color name="colorcheckbox">#69706a</color>
 </resources>
