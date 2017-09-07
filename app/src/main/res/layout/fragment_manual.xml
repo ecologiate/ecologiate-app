@@ -35,6 +35,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/tvIngreseProducto"
             android:layout_marginTop="61dp"
+            android:hint="Nombre de producto"
             android:ems="10"
             android:text=""
             android:inputType="text" />

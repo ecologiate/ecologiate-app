@@ -1,0 +1,184 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.app.ecologiate.AltaPuntoRecoleccionFragment"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+<EditText
+    android:id="@+id/etDireccion"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_column="0"
+    android:layout_marginBottom="40dp"
+    android:layout_marginTop="20dp"
+    android:layout_row="0"
+    android:hint="Direccion del Punto de Recoleccion"
+    android:inputType="text" />
+
+<GridLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:columnCount="12"
+    android:rowCount="10"
+    android:alignmentMode="alignBounds">
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_column="0"
+        android:layout_row="1"
+        android:text="Seleccione los materiales:"
+        android:textColor="@color/colorBoton"
+        android:textSize="18dp" />
+
+
+    <CheckBox
+        android:id="@+id/checkAceite"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_column="0"
+        android:layout_row="2"
+        android:text="Aceite"
+        android:textColor="@color/colorBoton"
+        android:textSize="16sp" />
+
+    <CheckBox
+        android:id="@+id/checkBronce"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_column="0"
+        android:layout_row="3"
+        android:text="Bronce"
+        android:textColor="@color/colorBoton"
+        android:textSize="16sp"/>
+
+    <CheckBox
+        android:id="@+id/checkElectronicos"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_column="0"
+        android:layout_row="4"
+        android:text="Electrónicos"
+        android:textColor="@color/colorBoton"
+        android:textSize="16sp"/>
+
+    <CheckBox
+        android:id="@+id/checkMetales"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_column="0"
+        android:layout_row="5"
+        android:text="Metales"
+        android:textColor="@color/colorBoton"
+        android:textSize="16sp"/>
+
+    <CheckBox
+        android:id="@+id/checkNeumaticos"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_column="0"
+        android:layout_row="6"
+        android:text="Neumáticos"
+        android:textColor="@color/colorBoton"
+        android:textSize="16sp" />
+
+    <CheckBox
+        android:id="@+id/checkPapel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_column="0"
+        android:layout_row="7"
+        android:text="Papel y Carton"
+        android:textColor="@color/colorBoton"
+        android:textSize="16sp"/>
+
+    <CheckBox
+        android:id="@+id/checkPilas"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_column="0"
+        android:layout_row="8"
+        android:text="Pilas"
+        android:textColor="@color/colorBoton"
+        android:textSize="16sp"/>
+
+    <CheckBox
+        android:id="@+id/checkPlastico"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_column="1"
+        android:layout_row="2"
+        android:text="Plástico"
+        android:textColor="@color/colorBoton"
+        android:textSize="16sp"/>
+
+    <CheckBox
+        android:id="@+id/checkTapitas"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_column="1"
+        android:layout_row="3"
+        android:text="Tapitas"
+        android:textColor="@color/colorBoton"
+        android:textSize="16sp"/>
+
+    <CheckBox
+        android:id="@+id/checkTelgopor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_column="1"
+        android:layout_row="4"
+        android:text="Telgopor"
+        android:textColor="@color/colorBoton"
+        android:textSize="16sp" />
+
+    <CheckBox
+        android:id="@+id/checkTetra"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_column="1"
+        android:layout_row="5"
+        android:text="Tetra-brik"
+        android:textColor="@color/colorBoton"
+        android:textSize="16sp"/>
+
+    <CheckBox
+        android:id="@+id/checkTextiles"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_column="1"
+        android:layout_row="6"
+        android:text="Textiles"
+        android:textColor="@color/colorBoton"
+        android:textSize="16sp"/>
+
+    <CheckBox
+        android:id="@+id/checkVidrio"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_column="1"
+        android:layout_row="7"
+        android:text="Vidrio"
+        android:textColor="@color/colorBoton"
+        android:textSize="16sp"/>
+
+
+</GridLayout>
+
+    <Button
+        android:id="@+id/btnEviar"
+        style="@style/ecoButtonStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="80dp"
+        android:layout_marginStart="80dp"
+        android:layout_marginTop="60dp"
+        android:text="Enviar" />
+
+</LinearLayout>

@@ -10,9 +10,18 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.app.ecologiate.AltaProductoActivity">
+    tools:context="com.app.ecologiate.AltaProductoActivity"
+    android:weightSum="1">
 
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+      <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
     <AutoCompleteTextView
         android:id="@+id/nombreProducto"
@@ -21,11 +30,9 @@
         android:layout_gravity="bottom"
         android:layout_margin="20dp"
         android:gravity="bottom"
-        android:hint="@string/prompt_email"
+        android:hint="Nombre del Producto"
         android:inputType="textEmailAddress"
         android:maxLines="1"
-        android:singleLine="true"
-        android:text="Nombre del Producto"
         android:textSize="20sp" />
 
 
@@ -37,7 +44,8 @@
         android:elevation="0dp"
         android:text="Categoria"
         android:textColor="@android:color/black"
-        android:textSize="18sp" />
+        android:textSize="18sp"
+        android:layout_weight="0.03" />
 
     <Spinner
         android:id="@+id/spinnerCategoria"
@@ -45,7 +53,8 @@
         android:layout_height="wrap_content"
         android:textColor="@android:color/black"
         android:scrollbarSize="20dp"
-        android:layout_margin="15dp"/>
+        android:layout_margin="15dp"
+        android:layout_weight="0.11" />
 
     <TextView
         android:id="@+id/tvMaterial"
@@ -54,7 +63,8 @@
         android:layout_margin="8dp"
         android:text="Material"
         android:textColor="@android:color/black"
-        android:textSize="18sp" />
+        android:textSize="18sp"
+        android:layout_weight="0.03" />
 
     <Spinner
         android:id="@+id/spinnerMaterial"
@@ -62,22 +72,23 @@
         android:layout_height="wrap_content"
         android:textColor="@android:color/black"
         android:scrollbarSize="20dp"
-        android:layout_margin="15dp"/>
+        android:layout_margin="15dp"
+        android:layout_weight="0.09" />
 
 
     <AutoCompleteTextView
         android:id="@+id/pesoGramos"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/prompt_email"
+        android:layout_margin="15dp"
+        android:hint="Peso Aproximado"
         android:inputType="textEmailAddress"
         android:maxLines="1"
         android:singleLine="true"
-        android:text="Peso aproximado"
-        android:textSize="20sp"
-        android:layout_margin="15dp"/>
+        android:textSize="20sp" />
 
-
+        </LinearLayout>
+    </ScrollView>
 
 </LinearLayout>
 

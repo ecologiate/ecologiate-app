@@ -28,7 +28,8 @@ public class WelcomeMenuActivity extends AppCompatActivity
         MiCuentaFragment.OnFragmentInteractionListener,
         PerfilFragment.OnFragmentInteractionListener,
         GruposFragment.OnFragmentInteractionListener,
-        AjustesFragment.OnFragmentInteractionListener{
+        AjustesFragment.OnFragmentInteractionListener,
+        AltaPuntoRecoleccionFragment.OnFragmentInteractionListener{
 
 
     @Override
