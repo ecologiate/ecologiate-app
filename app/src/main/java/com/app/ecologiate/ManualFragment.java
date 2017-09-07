@@ -30,6 +30,7 @@ public class ManualFragment extends Fragment {
     //DVP: Defino Barra de progreso y ApiCall.
     ProgressDialog prgDialog;
     ApiCallService apiCallService = new ApiCallService();
+    EditText et;
 
     public ManualFragment() {
         // Required empty public constructor
@@ -52,10 +53,12 @@ public class ManualFragment extends Fragment {
         //a la función que invocará al servicio del back.
         View view = inflater.inflate(R.layout.fragment_manual, container, false);
         Button botonBuscaManual = (Button) view.findViewById(R.id.btnBuscaManual);
+        et = (EditText) view.findViewById(R.id.etProductoBuscado);
+
         botonBuscaManual.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                EditText et = (EditText) view.findViewById(R.id.etProductoBuscado);
+               // EditText et = (EditText) view.findViewById(R.id.etProductoBuscado);
                 getProductoManual(et.getText().toString());
             }
         });
