@@ -99,8 +99,8 @@ public class ManualFragment extends Fragment {
         prgDialog.show();
         //DVP: agrego el código a ejecutar cuando vuelve del Back.
         JsonHttpResponseHandler responseHandler = new JsonHttpResponseHandler(){
-            //@Override
-            public void onSucces(int statusCode, Header[] headers, JSONObject response){
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response){
                 //DVP: oculto el "Buscando".
                 prgDialog.hide();
                 try {
