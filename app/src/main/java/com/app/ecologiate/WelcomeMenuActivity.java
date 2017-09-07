@@ -48,12 +48,14 @@ public class WelcomeMenuActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         //selecciono el inicioFragment por default
-        Fragment inicioFragment = new InicioFragment();
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.contentFragment, inicioFragment)
-                .addToBackStack(String.valueOf(inicioFragment.getId()))
-                .commit();
-        navigationView.setCheckedItem(R.id.nav_inicio);
+        if(savedInstanceState == null){
+            Fragment inicioFragment = new InicioFragment();
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.contentFragment, inicioFragment)
+                    .addToBackStack(String.valueOf(inicioFragment.getId()))
+                    .commit();
+            navigationView.setCheckedItem(R.id.nav_inicio);
+        }
     }
 
     @Override

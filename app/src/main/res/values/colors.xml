@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#63d24a</color>
-    <color name="colorPrimaryDark">#398917</color>
-    <color name="colorAccent">#FF4081</color>
-    <color name="colorEco">#83bfff40</color>
-    <color name="colorEcoOpaque">#05c93f</color>
-    <color name="msgOk">#ec3bdc63</color>
-    <color name="msgError">#f1ff4640</color>
-    <color name="colorBoton">#ec057614</color>
+    <color name="colorPrimary">#4caf50</color>
+    <color name="colorPrimaryDark">#388e3c</color>
+    <color name="colorAccent">#CDDC39</color>
+    <color name="colorPrimaryText">#1b5e20</color>
+    <color name="colorPrimaryLight">#C8E6C9</color>
+    <color name="colorSecondaryText">#757575</color>
+    <color name="colorIcons">#ffffff</color>
+    <color name="colorDivider">#bdbdbd</color>
+
+    <color name="msgOk">#66bb6a</color>
+    <color name="msgError">#d32f2f</color>
+    <color name="colorBoton">#388e3c</color>
 </resources>

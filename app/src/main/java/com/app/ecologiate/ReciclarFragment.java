@@ -36,13 +36,13 @@ public class ReciclarFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragmento_paginado, container, false);
-        if(savedInstanceState == null){
-            insertarTabs(container);
-            //setear adaptador al viewpager
-            viewPager = (ViewPager) view.findViewById(R.id.pager);
-            poblarViewPager(viewPager);
-            pestanias.setupWithViewPager(viewPager);
-        }
+
+        insertarTabs(container);
+        //setear adaptador al viewpager
+        viewPager = (ViewPager) view.findViewById(R.id.pager);
+        poblarViewPager(viewPager);
+        pestanias.setupWithViewPager(viewPager);
+
         return view;
     }
 
