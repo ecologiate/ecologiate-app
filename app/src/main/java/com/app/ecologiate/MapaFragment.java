@@ -45,6 +45,7 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback{
     private GoogleMap gMap;
     private MapView mapView;
     private Boolean modoAlta = false;
+    private static int REQUEST_GEO = 567;
 
     public MapaFragment() {}
 
@@ -104,8 +105,9 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback{
                 == PackageManager.PERMISSION_GRANTED) {
             gMap.setMyLocationEnabled(true);
         } else {
-            // Show rationale and request permission.
+            requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_GEO);
         }
+
 
         LatLng utn = new LatLng(-34.598684, -58.419960);
         //gMap.addMarker(new MarkerOptions().position(utn).title("UTN"));
@@ -194,6 +196,19 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback{
         };
 
         apiCallService.getPuntosDeRecoleccion(null, responseHandler);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        if (requestCode == REQUEST_GEO) {
+            for (int i = 0; i < permissions.length; i++) {
+                if (permissions[i].equals(Manifest.permission.ACCESS_FINE_LOCATION)
+                        && grantResults[i] == PackageManager.PERMISSION_GRANTED) {
+
+                    onMapReady(gMap);
+                }
+            }
+        }
     }
 
     public void onButtonPressed(Uri uri) {

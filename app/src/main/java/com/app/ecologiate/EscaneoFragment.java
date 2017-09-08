@@ -10,6 +10,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -49,6 +50,7 @@ public class EscaneoFragment extends Fragment implements
     private SoundService soundService;
     ProgressDialog prgDialog;
     Boolean scanEnabled = true;
+    private static int REQUEST_CAMERA = 2067;
 
     private BarcodeCallback callback = new BarcodeCallback() {
         @Override
@@ -152,8 +154,28 @@ public class EscaneoFragment extends Fragment implements
     @Override
     public void onResume() {
         super.onResume();
-        barcodeScannerView.resume();
-        scanEnabled = true;
+
+        String cameraPermission = android.Manifest.permission.CAMERA;
+        int permissionCheck = ContextCompat.checkSelfPermission(getActivity(), cameraPermission);
+        if (permissionCheck == PackageManager.PERMISSION_GRANTED) {
+            barcodeScannerView.resume();
+            scanEnabled = true;
+        } else {
+            requestPermissions(new String[]{cameraPermission}, REQUEST_CAMERA);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        if (requestCode == REQUEST_CAMERA) {
+            for (int i = 0; i < permissions.length; i++) {
+                if (permissions[i].equals(android.Manifest.permission.CAMERA)
+                        && grantResults[i] == PackageManager.PERMISSION_GRANTED) {
+                    barcodeScannerView.resume();
+                    scanEnabled = true;
+                }
+            }
+        }
     }
 
     @Override
