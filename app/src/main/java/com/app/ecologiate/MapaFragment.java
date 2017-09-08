@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -43,7 +44,6 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback{
     private Context context;
     private GoogleMap gMap;
     private MapView mapView;
-
     private Boolean modoAlta = false;
 
     public MapaFragment() {}
@@ -56,16 +56,30 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_mapa, container, false);
         context = view.getContext();
         FloatingActionButton fabBuscar = (FloatingActionButton) view.findViewById(R.id.buscarEnMapa);
-        fabBuscar.setOnClickListener(new View.OnClickListener() {
+        fabBuscar.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
+            }
+        });
+        FloatingActionButton fabAltaPunto = (FloatingActionButton) view.findViewById(R.id.agregarPuntoRecoleccion);
+        fabAltaPunto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Fragment fragment = new AltaPuntoRecoleccionFragment();
+                getActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.contentFragment, fragment)
+                        .addToBackStack(String.valueOf(fragment.getId()))
+                        .commit();
 
             }
         });
+
+
         return view;
     }
 
@@ -81,14 +95,7 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback{
         }
     }
 
-    /**
-     * Manipulates the map once available.
-     * This callback is triggered when the map is ready to be used.
-     * This is where we can add markers or lines, add listeners or move the camera.
-     * If Google Play services is not installed on the device, the user will be prompted to install
-     * it inside the SupportMapFragment. This method will only be triggered once the user has
-     * installed Google Play services and returned to the app.
-     */
+
     @Override
     public void onMapReady(GoogleMap googleMap) {
         gMap = googleMap;
