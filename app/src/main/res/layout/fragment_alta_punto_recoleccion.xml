@@ -12,9 +12,20 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="10dp"
         android:layout_marginStart="10dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:hint="@string/direccion_punto_rec"
         android:inputType="text" />
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:orientation="vertical">
+
 
     <GridLayout
         android:layout_width="match_parent"
@@ -36,6 +47,7 @@
             android:textColor="@color/textoOscuro"
             android:textSize="18sp" />
 
+        <RadioGroup>
 
         <RadioButton
             android:id="@+id/radioReciclable"
@@ -46,7 +58,7 @@
             android:text="@string/reciclable"
             android:textColor="@color/colorTexto"
             android:textSize="16sp"
-            app:buttonTint="@color/colorcheckbox" />
+            app:buttonTint="@color/colorcheckbox"/>
 
         <RadioButton
             android:id="@+id/radioNoTratable"
@@ -57,7 +69,7 @@
             android:text="@string/no_tratables"
             android:textColor="@color/colorTexto"
             android:textSize="16sp"
-            app:buttonTint="@color/colorcheckbox" />
+            app:buttonTint="@color/colorcheckbox"/>
 
         <RadioButton
             android:id="@+id/radioOrganicos"
@@ -68,8 +80,9 @@
             android:text="@string/organicos"
             android:textColor="@color/colorTexto"
             android:textSize="16sp"
-            app:buttonTint="@color/colorcheckbox" />
+            app:buttonTint="@color/colorcheckbox"/>
 
+        </RadioGroup>
 
         <TextView
             android:layout_width="wrap_content"
@@ -237,5 +250,9 @@
         android:layout_marginStart="80dp"
         android:layout_marginTop="15dp"
         android:text="@string/enviar"/>
+
+    </LinearLayout>
+
+    </ScrollView>
 
 </LinearLayout>
