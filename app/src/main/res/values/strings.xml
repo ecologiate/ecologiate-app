@@ -37,6 +37,7 @@
 
     /*Strings de alta de punto de recoleccion*/
     <string name="direccion_punto_rec">Dirección del punto de recolección</string>
+    <string name="descripcion_punto_rec">Descripción del punto de recolección</string>
     <string name="seleccion_materiales">Seleccione los Materiales:</string>
     <string name="seleccion_categoria">Seleccione la Categoria:</string>
     <string name="reciclable">Reciclable</string>
