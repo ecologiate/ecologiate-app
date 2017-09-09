@@ -1,13 +1,21 @@
 package com.app.ecologiate.service;
 
+import android.content.Context;
 import android.text.TextUtils;
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
+import com.loopj.android.http.ResponseHandlerInterface;
+
+import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.List;
+
+import cz.msebera.android.httpclient.Header;
+import cz.msebera.android.httpclient.HttpEntity;
 
 
 public class ApiCallService {
@@ -42,6 +50,11 @@ public class ApiCallService {
         get(url, responseHandler);
     }
 
+    public void postPuntosDeRecoleccion(RequestParams params, JsonHttpResponseHandler responseHandler){
+        String url = SERVER_URL + "/api/pdr";
+        post(url, params, responseHandler);
+    }
+
 
 
     /**
@@ -59,6 +72,10 @@ public class ApiCallService {
         }
         client = new AsyncHttpClient();
         client.get(url, responseHandler);
+    }
+
+    public void post(String url, RequestParams params, JsonHttpResponseHandler responseHandler){
+        client.post(url, params, responseHandler);
     }
 
 

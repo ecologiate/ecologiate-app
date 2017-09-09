@@ -244,7 +244,7 @@
         </GridLayout>
 
     <Button
-        android:id="@+id/btnEviar"
+        android:id="@+id/btnEnviar"
         style="@style/ecoButtonStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

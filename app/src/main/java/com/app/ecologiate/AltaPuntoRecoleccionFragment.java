@@ -4,51 +4,128 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.EditText;
+import android.widget.Toast;
 
+import com.app.ecologiate.service.ApiCallService;
+import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
+
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import cz.msebera.android.httpclient.Header;
 
 
 public class AltaPuntoRecoleccionFragment extends Fragment {
 
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    ApiCallService apiCallService = new ApiCallService();
 
-
-    private String mParam1;
-    private String mParam2;
+    private String direccionSugerida;
+    private double latitud;
+    private double longitud;
 
     private OnFragmentInteractionListener mListener;
 
-    public AltaPuntoRecoleccionFragment() {
-        // Required empty public constructor
-    }
+    private View myView;
 
 
-    public static AltaPuntoRecoleccionFragment newInstance(String param1, String param2) {
+    public AltaPuntoRecoleccionFragment() {}
+
+
+    public static AltaPuntoRecoleccionFragment newInstance(double latitud, double longitud, String direccion) {
         AltaPuntoRecoleccionFragment fragment = new AltaPuntoRecoleccionFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
+        fragment.latitud = latitud;
+        fragment.longitud = longitud;
+        fragment.direccionSugerida = direccion;
         return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_alta_punto_recoleccion, container, false);
+        myView = inflater.inflate(R.layout.fragment_alta_punto_recoleccion, container, false);
+
+        Button botonEnviar = (Button) myView.findViewById(R.id.btnEnviar);
+        botonEnviar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                guardarPuntoRecoleccion();
+            }
+        });
+
+        if(direccionSugerida != null && direccionSugerida.length() > 0){
+            ((EditText) myView.findViewById(R.id.etDireccion)).setText(direccionSugerida);
+        }
+
+        return myView;
+    }
+
+    private void guardarPuntoRecoleccion(){
+        String descripcion = ((EditText) myView.findViewById(R.id.etDescripcion)).getText().toString();
+        String direccion = ((EditText) myView.findViewById(R.id.etDireccion)).getText().toString();
+        double latitud = this.latitud;
+        double longitud = this.longitud;
+        Long usuarioId = 1L;
+        List<Long> materialIds = new ArrayList<>();
+        CheckBox checkPapelYCarton = (CheckBox) myView.findViewById(R.id.checkPapel);
+        if(checkPapelYCarton.isChecked()){
+            materialIds.add(1L);
+        }
+        CheckBox checkVidrio = (CheckBox) myView.findViewById(R.id.checkVidrio);
+        if(checkVidrio.isChecked()){
+            materialIds.add(2L);
+        }
+        CheckBox checkPlastico = (CheckBox) myView.findViewById(R.id.checkPlastico);
+        if(checkPlastico.isChecked()){
+            materialIds.add(3L);
+        }
+        RequestParams params = new RequestParams();
+        params.put("descripcion", descripcion);
+        params.put("direccion", direccion);
+        params.put("latitud", latitud);
+        params.put("longitud", longitud);
+        params.put("usuario", usuarioId);
+        params.put("materiales", materialIds);
+
+
+        JsonHttpResponseHandler responseHandler = new JsonHttpResponseHandler(){
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response){
+                    if(response != null){
+                        Toast.makeText(getContext(), "Punto creado", Toast.LENGTH_LONG).show();
+                    }else {
+                        Toast.makeText(getContext(), "Punto no creado", Toast.LENGTH_LONG).show();
+                    }
+            }
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable){
+                if (statusCode == 404){
+                    Toast.makeText(getContext(), "URL no encontrada", Toast.LENGTH_LONG).show();
+                }else if (statusCode == 500){
+                    Toast.makeText(getContext(), "Error en el Backend", Toast.LENGTH_LONG).show();
+                }else{
+                    Toast.makeText(getContext(), throwable.getLocalizedMessage(), Toast.LENGTH_LONG).show();
+                    Log.e("API_ERROR", "Error Inesperado ["+statusCode+"]", throwable);
+                }
+            }
+        };
+
+        apiCallService.postPuntosDeRecoleccion(params, responseHandler);
     }
 
 

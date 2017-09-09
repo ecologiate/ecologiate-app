@@ -3,11 +3,12 @@ package com.app.ecologiate;
 import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -30,6 +31,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 import cz.msebera.android.httpclient.Header;
 
@@ -41,11 +43,15 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback{
 
     private OnFragmentInteractionListener mListener;
 
+    private static int REQUEST_GEO = 567;
+
     private Context context;
     private GoogleMap gMap;
     private MapView mapView;
     private Boolean modoAlta = false;
-    private static int REQUEST_GEO = 567;
+    private Geocoder geocoder;
+    private Address address;
+
 
     public MapaFragment() {}
 
@@ -65,6 +71,7 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback{
         fabBuscar.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
+                modoAlta = !modoAlta;
             }
         });
         FloatingActionButton fabAltaPunto = (FloatingActionButton) view.findViewById(R.id.agregarPuntoRecoleccion);
@@ -108,10 +115,10 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback{
             requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_GEO);
         }
 
+        geocoder = new Geocoder(getContext(), Locale.getDefault());
 
         LatLng utn = new LatLng(-34.598684, -58.419960);
-        //gMap.addMarker(new MarkerOptions().position(utn).title("UTN"));
-        gMap.animateCamera(CameraUpdateFactory.newLatLngZoom(utn, 11.0f));
+        gMap.animateCamera(CameraUpdateFactory.newLatLngZoom(utn, 12.0f));
         /*
         CameraPosition cameraPosition = new CameraPosition.Builder()
                 .target(utn)
@@ -119,14 +126,40 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback{
                 .bearing(90f) //orientacion hacia al este
                 .tilt(30f) //inclinacion
                 .build();
+        mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
         */
-        //mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
 
         gMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
             @Override
             public void onMapClick(LatLng latLng) {
                 if(modoAlta) {
-                    gMap.addMarker(new MarkerOptions().position(latLng).title("Nuevo"));
+                    try {
+                        address = (Address) geocoder.getFromLocation(latLng.latitude, latLng.longitude, 1).get(0);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        Toast.makeText(getContext(), "Error obteniendo dirección", Toast.LENGTH_LONG).show();
+                    }
+                    //obtengo dirección, ciudad, país, CP, etc
+                    String infoMarker =
+                            "Dirección: "+address.getAddressLine(0) + "\n" +
+                            "Admin Area: "+address.getAdminArea() + "\n" +
+                            "Cod Pais: "+address.getCountryCode() + "\n" +
+                            "Pais nombre: "+address.getCountryName() + "\n" +
+                            "Feature Name: "+address.getFeatureName() + "\n" +
+                            "Localidad: "+address.getLocality() + "\n" +
+                            "CP: "+address.getPostalCode() + "\n" +
+                            "Premises: "+address.getPremises() + "\n" +
+                            "Sub Admin Area: "+address.getSubAdminArea() + "\n" +
+                            "Sub Locality: "+address.getSubLocality() + "\n" +
+                            "getSubThoroughfare: "+address.getSubThoroughfare();
+                    Toast.makeText(getContext(), infoMarker, Toast.LENGTH_LONG).show();
+                    gMap.addMarker(new MarkerOptions().position(latLng).title("Nuevo").snippet(address.getAddressLine(0)));
+
+                    Fragment fragment = AltaPuntoRecoleccionFragment.newInstance(latLng.latitude, latLng.longitude, address.getAddressLine(0));
+                    getActivity().getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.contentFragment, fragment)
+                            .addToBackStack(String.valueOf(fragment.getId()))
+                            .commit();
                 }
             }
         });
@@ -134,9 +167,6 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback{
         gMap.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
             @Override
             public void onMapLongClick(LatLng latLng) {
-                if(modoAlta) {
-                    gMap.addMarker(new MarkerOptions().position(latLng).title("Nuevo"));
-                }
             }
         });
 
