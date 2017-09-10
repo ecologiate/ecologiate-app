@@ -65,7 +65,7 @@ public class ManualFragment extends Fragment {
         return view;
     }
 
-    // TODO: Rename method, update argument and hook method UI event
+
     public void onButtonPressed(Uri uri){
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);

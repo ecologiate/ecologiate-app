@@ -36,45 +36,6 @@
         android:layout_width="match_parent"
         android:orientation="vertical">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_column="0"
-            android:layout_marginLeft="15dp"
-            android:layout_marginTop="6dp"
-            android:layout_row="1"
-            android:text="@string/seleccion_categoria"
-            android:textColor="@color/textoOscuro"
-            android:textSize="18sp" />
-
-        <RadioGroup
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="15dp"
-            android:orientation="horizontal">
-
-
-            <RadioButton
-                android:id="@+id/radioReciclable"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/reciclable"
-                android:textColor="@color/colorTexto"
-                android:textSize="16sp"
-                app:buttonTint="@color/colorcheckbox" />
-
-            <RadioButton
-                android:id="@+id/radioOrganicos"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="30dp"
-                android:text="@string/organicos"
-                android:textColor="@color/colorTexto"
-                android:textSize="16sp"
-                app:buttonTint="@color/colorcheckbox" />
-
-        </RadioGroup>
-
 
         <GridLayout
             android:layout_width="match_parent"
@@ -90,7 +51,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_column="0"
-                android:layout_marginTop="6dp"
+                android:layout_marginTop="12dp"
                 android:layout_row="4"
                 android:text="@string/seleccion_materiales"
                 android:textColor="@color/textoOscuro"
@@ -106,7 +67,7 @@
                 android:text="@string/aceite"
                 android:textColor="@color/colorTexto"
                 android:textSize="16sp"
-                app:buttonTint="@color/colorcheckbox" />
+                android:buttonTint="@color/colorcheckbox" />
 
             <CheckBox
                 android:id="@+id/checkBronce"
@@ -117,7 +78,7 @@
                 android:text="@string/bronce"
                 android:textColor="@color/colorTexto"
                 android:textSize="16sp"
-                app:buttonTint="@color/colorcheckbox" />
+                android:buttonTint="@color/colorcheckbox" />
 
             <CheckBox
                 android:id="@+id/checkElectronicos"
@@ -128,7 +89,7 @@
                 android:text="@string/electronicos"
                 android:textColor="@color/colorTexto"
                 android:textSize="16sp"
-                app:buttonTint="@color/colorcheckbox" />
+                android:buttonTint="@color/colorcheckbox" />
 
             <CheckBox
                 android:id="@+id/checkMetales"
@@ -139,7 +100,7 @@
                 android:text="@string/metales"
                 android:textColor="@color/colorTexto"
                 android:textSize="16sp"
-                app:buttonTint="@color/colorcheckbox" />
+                android:buttonTint="@color/colorcheckbox" />
 
             <CheckBox
                 android:id="@+id/checkNeumaticos"
@@ -150,95 +111,106 @@
                 android:text="@string/neumaticos"
                 android:textColor="@color/colorTexto"
                 android:textSize="16sp"
-                app:buttonTint="@color/colorcheckbox" />
+                android:buttonTint="@color/colorcheckbox" />
+
+            <CheckBox
+                android:id="@+id/checkOrganico"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_column="0"
+                android:layout_row="10"
+                android:text="@string/organicos"
+                android:textColor="@color/colorTexto"
+                android:textSize="16sp"
+                android:buttonTint="@color/colorcheckbox" />
 
             <CheckBox
                 android:id="@+id/checkPapel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_column="0"
-                android:layout_row="10"
+                android:layout_row="11"
                 android:text="@string/papel_carton"
                 android:textColor="@color/colorTexto"
                 android:textSize="16sp"
-                app:buttonTint="@color/colorcheckbox" />
+                android:buttonTint="@color/colorcheckbox" />
 
             <CheckBox
                 android:id="@+id/checkPilas"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_column="0"
-                android:layout_row="11"
+                android:layout_column="1"
+                android:layout_row="5"
                 android:text="@string/pilas"
                 android:textColor="@color/colorTexto"
                 android:textSize="16sp"
-                app:buttonTint="@color/colorcheckbox" />
+                android:buttonTint="@color/colorcheckbox" />
 
             <CheckBox
                 android:id="@+id/checkPlastico"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_column="1"
-                android:layout_row="5"
+                android:layout_row="6"
                 android:text="@string/plastico"
                 android:textColor="@color/colorTexto"
                 android:textSize="16sp"
-                app:buttonTint="@color/colorcheckbox" />
+                android:buttonTint="@color/colorcheckbox" />
 
             <CheckBox
                 android:id="@+id/checkTapitas"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_column="1"
-                android:layout_row="6"
+                android:layout_row="7"
                 android:text="@string/tapitas"
                 android:textColor="@color/colorTexto"
                 android:textSize="16sp"
-                app:buttonTint="@color/colorcheckbox" />
+                android:buttonTint="@color/colorcheckbox" />
 
             <CheckBox
                 android:id="@+id/checkTelgopor"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_column="1"
-                android:layout_row="7"
+                android:layout_row="8"
                 android:text="@string/telgopor"
                 android:textColor="@color/colorTexto"
                 android:textSize="16sp"
-                app:buttonTint="@color/colorcheckbox" />
+                android:buttonTint="@color/colorcheckbox" />
 
             <CheckBox
                 android:id="@+id/checkTetra"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_column="1"
-                android:layout_row="8"
+                android:layout_row="9"
                 android:text="@string/tetra"
                 android:textColor="@color/colorTexto"
                 android:textSize="16sp"
-                app:buttonTint="@color/colorcheckbox" />
+                android:buttonTint="@color/colorcheckbox" />
 
             <CheckBox
                 android:id="@+id/checkTextiles"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_column="1"
-                android:layout_row="9"
+                android:layout_row="10"
                 android:text="@string/textiles"
                 android:textColor="@color/colorTexto"
                 android:textSize="16sp"
-                app:buttonTint="@color/colorcheckbox" />
+                android:buttonTint="@color/colorcheckbox" />
 
             <CheckBox
                 android:id="@+id/checkVidrio"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_column="1"
-                android:layout_row="10"
+                android:layout_row="11"
                 android:text="@string/vidrio"
                 android:textColor="@color/colorTexto"
                 android:textSize="16sp"
-                app:buttonTint="@color/colorcheckbox" />
+                android:buttonTint="@color/colorcheckbox" />
 
 
         </GridLayout>
