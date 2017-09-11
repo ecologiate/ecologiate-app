@@ -50,9 +50,9 @@ public class ApiCallService {
         get(url, responseHandler);
     }
 
-    public void postPuntosDeRecoleccion(RequestParams params, JsonHttpResponseHandler responseHandler){
+    public void postPuntosDeRecoleccion(Context context, HttpEntity entityBody, JsonHttpResponseHandler responseHandler){
         String url = SERVER_URL + "/api/pdr";
-        post(url, params, responseHandler);
+        post(url, context, entityBody, responseHandler);
     }
 
 
@@ -74,8 +74,8 @@ public class ApiCallService {
         client.get(url, responseHandler);
     }
 
-    public void post(String url, RequestParams params, JsonHttpResponseHandler responseHandler){
-        client.post(url, params, responseHandler);
+    public void post(String url, Context context, HttpEntity entityBody, JsonHttpResponseHandler responseHandler){
+        client.post(context, url, entityBody, "application/json", responseHandler);
     }
 
 

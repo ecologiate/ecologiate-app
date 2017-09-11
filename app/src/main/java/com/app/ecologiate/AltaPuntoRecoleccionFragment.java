@@ -15,14 +15,15 @@ import android.widget.Toast;
 
 import com.app.ecologiate.service.ApiCallService;
 import com.loopj.android.http.JsonHttpResponseHandler;
-import com.loopj.android.http.RequestParams;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
+import cz.msebera.android.httpclient.entity.StringEntity;
 
 
 public class AltaPuntoRecoleccionFragment extends Fragment {
@@ -80,7 +81,7 @@ public class AltaPuntoRecoleccionFragment extends Fragment {
         String direccion = ((EditText) myView.findViewById(R.id.etDireccion)).getText().toString();
         double latitud = this.latitud;
         double longitud = this.longitud;
-        Long usuarioId = 1L;
+        long usuarioId = 1L; //TODO hardcodeado
         List<Long> materialIds = new ArrayList<>();
         CheckBox checkPapelYCarton = (CheckBox) myView.findViewById(R.id.checkPapel);
         if(checkPapelYCarton.isChecked()){
@@ -94,13 +95,22 @@ public class AltaPuntoRecoleccionFragment extends Fragment {
         if(checkPlastico.isChecked()){
             materialIds.add(3L);
         }
-        RequestParams params = new RequestParams();
-        params.put("descripcion", descripcion);
-        params.put("direccion", direccion);
-        params.put("latitud", latitud);
-        params.put("longitud", longitud);
-        params.put("usuario", usuarioId);
-        params.put("materiales", materialIds);
+
+        JSONObject jsonBody = new JSONObject();
+        StringEntity bodyEntity = null;
+        try{
+            jsonBody.put("descripcion", descripcion);
+            jsonBody.put("direccion", direccion);
+            jsonBody.put("latitud", latitud);
+            jsonBody.put("longitud", longitud);
+            jsonBody.put("usuario", usuarioId);
+            JSONArray arrayMateriales = new JSONArray(materialIds);
+            jsonBody.put("materiales", arrayMateriales);
+            bodyEntity = new StringEntity(jsonBody.toString());
+        }catch (Exception e){
+            e.printStackTrace();
+            Toast.makeText(getContext(), "Error armando Json", Toast.LENGTH_LONG).show();
+        }
 
 
         JsonHttpResponseHandler responseHandler = new JsonHttpResponseHandler(){
@@ -108,6 +118,7 @@ public class AltaPuntoRecoleccionFragment extends Fragment {
             public void onSuccess(int statusCode, Header[] headers, JSONObject response){
                     if(response != null){
                         Toast.makeText(getContext(), "Punto creado", Toast.LENGTH_LONG).show();
+                        //volver al mapa
                     }else {
                         Toast.makeText(getContext(), "Punto no creado", Toast.LENGTH_LONG).show();
                     }
@@ -125,7 +136,7 @@ public class AltaPuntoRecoleccionFragment extends Fragment {
             }
         };
 
-        apiCallService.postPuntosDeRecoleccion(params, responseHandler);
+        apiCallService.postPuntosDeRecoleccion(getContext(), bodyEntity, responseHandler);
     }
 
 
