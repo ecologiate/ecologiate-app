@@ -1,4 +1,4 @@
-package com.app.ecologiate;
+package com.app.ecologiate.fragments;
 
 import android.content.Context;
 import android.net.Uri;
@@ -7,45 +7,52 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
+
+import com.app.ecologiate.R;
 
 
 public class AltaProductoFragment extends Fragment {
 
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    private String mParam1;
-    private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+
+    private String codigoDeBarras;
+
+    Spinner categoria;
+    Spinner material;
 
     public AltaProductoFragment() {
         // Required empty public constructor
     }
 
-    public static AltaProductoFragment newInstance(String param1, String param2) {
+    public static AltaProductoFragment newInstance(String codigoDeBarras) {
         AltaProductoFragment fragment = new AltaProductoFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
+        fragment.codigoDeBarras = codigoDeBarras;
         return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_alta_producto, container, false);
+        View view = inflater.inflate(R.layout.fragment_alta_producto, container, false);
+
+        categoria = (Spinner) view.findViewById(R.id.spinnerCategoria);
+        material = (Spinner) view.findViewById(R.id.spinnerMaterial);
+
+        ArrayAdapter<CharSequence> adapterCategoria = ArrayAdapter.createFromResource(getContext(), R.array.Categoria, android.R.layout.simple_spinner_item);
+        categoria.setAdapter(adapterCategoria);
+
+        ArrayAdapter <CharSequence> adapterMaterial = ArrayAdapter.createFromResource(getContext(), R.array.Materiales, android.R.layout.simple_spinner_item);
+        material.setAdapter(adapterMaterial);
+        return view;
     }
 
     public void onButtonPressed(Uri uri) {

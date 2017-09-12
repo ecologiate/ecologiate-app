@@ -1,4 +1,4 @@
-package com.app.ecologiate;
+package com.app.ecologiate.fragments;
 
 import android.content.Context;
 import android.net.Uri;
@@ -8,9 +8,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.app.ecologiate.R;
 
 
-public class GruposFragment extends Fragment {
+public class TriviaFragment extends Fragment {
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -20,13 +21,13 @@ public class GruposFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    public GruposFragment() {
+    public TriviaFragment() {
         // Required empty public constructor
     }
 
 
-    public static GruposFragment newInstance(String param1, String param2) {
-        GruposFragment fragment = new GruposFragment();
+    public static TriviaFragment newInstance(String param1, String param2) {
+        TriviaFragment fragment = new TriviaFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -47,7 +48,7 @@ public class GruposFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_grupos, container, false);
+        return inflater.inflate(R.layout.fragment_trivia, container, false);
     }
 
     public void onButtonPressed(Uri uri) {
@@ -75,6 +76,6 @@ public class GruposFragment extends Fragment {
 
 
     public interface OnFragmentInteractionListener {
-            void onFragmentInteraction(Uri uri);
+        void onFragmentInteraction(Uri uri);
     }
 }

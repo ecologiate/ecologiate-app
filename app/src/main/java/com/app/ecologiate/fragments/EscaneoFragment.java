@@ -1,8 +1,7 @@
-package com.app.ecologiate;
+package com.app.ecologiate.fragments;
 
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
@@ -17,8 +16,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.app.ecologiate.service.ApiCallService;
-import com.app.ecologiate.service.SoundService;
+import com.app.ecologiate.ProductoNoEncontradoFragment;
+import com.app.ecologiate.R;
+import com.app.ecologiate.ResultadoFragment;
+import com.app.ecologiate.models.Producto;
+import com.app.ecologiate.services.ApiCallService;
+import com.app.ecologiate.services.SoundService;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.ResultPoint;
 import com.journeyapps.barcodescanner.BarcodeCallback;
@@ -243,23 +246,30 @@ public class EscaneoFragment extends Fragment implements
                 try {
                     // si me trajo algo
                     if(response.has("producto")){
+
                         JSONObject productoJson = response.getJSONObject("producto");
                         JSONObject materialJson = response.getJSONObject("material");
                         JSONObject categoriaJson = response.getJSONObject("categoria");
+
                         String nombreProducto = productoJson.getString("nombre_producto");
                         String categoria = categoriaJson.getString("descripcion");
                         String material = materialJson.getString("descripcion");
-                        String impacto = String.valueOf(productoJson.getString("cant_material")); //TODO HARDCODEADO
+                        Long impacto = productoJson.getLong("cant_material"); //TODO HARDCODEADO
 
-                        startActivity(ResultadoActivity.crearIntentParaResultado(
-                                getActivity(), nombreProducto, categoria,
-                                material, impacto));
+                        Producto producto = new Producto(nombreProducto,categoria,material,impacto);
+                        Fragment resultadoFragment = ResultadoFragment.newInstance(producto);
+                        getActivity().getSupportFragmentManager().beginTransaction()
+                                .replace(R.id.contentFragment, resultadoFragment)
+                                .addToBackStack(String.valueOf(resultadoFragment.getId()))
+                                .commit();
 
                     }else{
                         //si no encontró un producto con ese código
-                        Intent noEncontradoIntent = new Intent(getActivity(), ProductoNoEncontradoActivity.class);
-                        noEncontradoIntent.putExtra("codigo", codigo);
-                        startActivity(noEncontradoIntent);
+                        Fragment noEncontradoFragment = ProductoNoEncontradoFragment.newInstance(codigo);
+                        getActivity().getSupportFragmentManager().beginTransaction()
+                                .replace(R.id.contentFragment, noEncontradoFragment)
+                                .addToBackStack(String.valueOf(noEncontradoFragment.getId()))
+                                .commit();
                     }
                 } catch (JSONException e) {
                     //Error parseando el json

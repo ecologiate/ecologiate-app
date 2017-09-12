@@ -1,8 +1,7 @@
-package com.app.ecologiate;
+package com.app.ecologiate.fragments;
 
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -14,7 +13,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.app.ecologiate.service.ApiCallService;
+import com.app.ecologiate.R;
+import com.app.ecologiate.ResultadoFragment;
+import com.app.ecologiate.models.Producto;
+import com.app.ecologiate.services.ApiCallService;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
 import org.json.JSONException;
@@ -110,18 +112,20 @@ public class ManualFragment extends Fragment {
                         JSONObject productoJson = response.getJSONObject("producto");
                         JSONObject materialJson = response.getJSONObject("material");
                         JSONObject categoriaJson = response.getJSONObject("categoria");
+
                         String nombreProducto = productoJson.getString("nombre_producto");
                         String categoria = categoriaJson.getString("descripcion");
                         String material = materialJson.getString("descripcion");
-                        String impacto = productoJson.getString("cant_material");
+                        Long impacto = productoJson.getLong("cant_material"); //TODO HARDCODEADO
 
-                        startActivity(ResultadoActivity.crearIntentParaResultado(
-                                getActivity(), nombreProducto, categoria, material, impacto));
+                        Producto producto = new Producto(nombreProducto,categoria,material,impacto);
+                        Fragment resultadoFragment = ResultadoFragment.newInstance(producto);
+                        getActivity().getSupportFragmentManager().beginTransaction()
+                                .replace(R.id.contentFragment, resultadoFragment)
+                                .addToBackStack(String.valueOf(resultadoFragment.getId()))
+                                .commit();
                     }else {
-                        //DVP: Si no encuentra el Producto.
-                        Intent noEncontradoIntent = new Intent(getActivity(), ProductoNoEncontradoActivity.class);
-                        noEncontradoIntent.putExtra("nombre_producto", nombre_producto);
-                        startActivity(noEncontradoIntent);
+                        Toast.makeText(getContext(), "No se encontraron resultados", Toast.LENGTH_LONG).show();
                     }
                 }catch (JSONException e) {
                     //DVP: Si encuentra algun error parseando el Jason.

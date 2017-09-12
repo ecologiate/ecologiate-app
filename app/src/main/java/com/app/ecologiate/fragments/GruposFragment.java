@@ -1,4 +1,4 @@
-package com.app.ecologiate;
+package com.app.ecologiate.fragments;
 
 import android.content.Context;
 import android.net.Uri;
@@ -8,24 +8,47 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.app.ecologiate.R;
 
-public class InicioFragment extends Fragment {
+
+public class GruposFragment extends Fragment {
+
+    private static final String ARG_PARAM1 = "param1";
+    private static final String ARG_PARAM2 = "param2";
+
+    private String mParam1;
+    private String mParam2;
 
     private OnFragmentInteractionListener mListener;
 
-    public InicioFragment() {}
+    public GruposFragment() {
+        // Required empty public constructor
+    }
 
+
+    public static GruposFragment newInstance(String param1, String param2) {
+        GruposFragment fragment = new GruposFragment();
+        Bundle args = new Bundle();
+        args.putString(ARG_PARAM1, param1);
+        args.putString(ARG_PARAM2, param2);
+        fragment.setArguments(args);
+        return fragment;
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            mParam1 = getArguments().getString(ARG_PARAM1);
+            mParam2 = getArguments().getString(ARG_PARAM2);
+        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_inicio, container, false);
+        return inflater.inflate(R.layout.fragment_grupos, container, false);
     }
 
     public void onButtonPressed(Uri uri) {
@@ -53,6 +76,6 @@ public class InicioFragment extends Fragment {
 
 
     public interface OnFragmentInteractionListener {
-        void onFragmentInteraction(Uri uri);
+            void onFragmentInteraction(Uri uri);
     }
 }

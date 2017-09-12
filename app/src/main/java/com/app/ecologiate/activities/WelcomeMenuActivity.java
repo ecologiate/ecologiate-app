@@ -1,9 +1,9 @@
-package com.app.ecologiate;
+package com.app.ecologiate.activities;
 
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -12,7 +12,23 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import java.util.Stack;
+import com.app.ecologiate.ProductoNoEncontradoFragment;
+import com.app.ecologiate.R;
+import com.app.ecologiate.ResultadoFragment;
+import com.app.ecologiate.fragments.AjustesFragment;
+import com.app.ecologiate.fragments.AltaProductoFragment;
+import com.app.ecologiate.fragments.AltaPuntoRecoleccionFragment;
+import com.app.ecologiate.fragments.EnterateFragment;
+import com.app.ecologiate.fragments.EscaneoFragment;
+import com.app.ecologiate.fragments.GruposFragment;
+import com.app.ecologiate.fragments.InicioFragment;
+import com.app.ecologiate.fragments.ManualFragment;
+import com.app.ecologiate.fragments.MapaFragment;
+import com.app.ecologiate.fragments.MiCuentaFragment;
+import com.app.ecologiate.fragments.PerfilFragment;
+import com.app.ecologiate.fragments.ReciclarFragment;
+import com.app.ecologiate.fragments.TipsFragment;
+import com.app.ecologiate.fragments.TriviaFragment;
 
 public class WelcomeMenuActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
@@ -29,7 +45,9 @@ public class WelcomeMenuActivity extends AppCompatActivity
         PerfilFragment.OnFragmentInteractionListener,
         GruposFragment.OnFragmentInteractionListener,
         AjustesFragment.OnFragmentInteractionListener,
-        AltaPuntoRecoleccionFragment.OnFragmentInteractionListener{
+        AltaPuntoRecoleccionFragment.OnFragmentInteractionListener,
+        ResultadoFragment.OnFragmentInteractionListener,
+        ProductoNoEncontradoFragment.OnFragmentInteractionListener{
 
 
     @Override
@@ -53,7 +71,7 @@ public class WelcomeMenuActivity extends AppCompatActivity
             Fragment inicioFragment = new InicioFragment();
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.contentFragment, inicioFragment)
-                    .addToBackStack(String.valueOf(inicioFragment.getId()))
+                    //.addToBackStack(String.valueOf(inicioFragment.getId()))
                     .commit();
             navigationView.setCheckedItem(R.id.nav_inicio);
         }

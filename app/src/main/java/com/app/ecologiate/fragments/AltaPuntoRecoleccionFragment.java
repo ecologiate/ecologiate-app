@@ -1,4 +1,4 @@
-package com.app.ecologiate;
+package com.app.ecologiate.fragments;
 
 import android.content.Context;
 import android.net.Uri;
@@ -13,7 +13,9 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.app.ecologiate.service.ApiCallService;
+import com.app.ecologiate.R;
+import com.app.ecologiate.services.ApiCallService;
+import com.app.ecologiate.services.UserManager;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
 import org.json.JSONArray;
@@ -81,7 +83,7 @@ public class AltaPuntoRecoleccionFragment extends Fragment {
         String direccion = ((EditText) myView.findViewById(R.id.etDireccion)).getText().toString();
         double latitud = this.latitud;
         double longitud = this.longitud;
-        long usuarioId = 1L; //TODO hardcodeado
+        long usuarioId = UserManager.getUser().getId();
         List<Long> materialIds = new ArrayList<>();
         CheckBox checkPapelYCarton = (CheckBox) myView.findViewById(R.id.checkPapel);
         if(checkPapelYCarton.isChecked()){

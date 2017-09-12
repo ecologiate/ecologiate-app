@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center"
-    tools:context="com.app.ecologiate.WelcomeMenuActivity">
+    tools:context="com.app.ecologiate.activities.WelcomeMenuActivity">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appbar"
@@ -26,8 +26,7 @@
     <!-- pantalla de inicio -->
     <FrameLayout android:id="@+id/contentFragment"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_weight="1">
+        android:layout_height="fill_parent">
     </FrameLayout>
 
 

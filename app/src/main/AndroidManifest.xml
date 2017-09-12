@@ -36,9 +36,8 @@
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
         <activity
-            android:name=".LoginActivity"
-            android:label="@string/title_activity_login"
-            android:noHistory="true">
+            android:name=".activities.LoginActivity"
+            android:label="@string/title_activity_login">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -58,10 +57,8 @@
                 <data android:scheme="@string/fb_login_protocol_scheme" />
             </intent-filter>
         </activity>
-        <activity android:name=".ResultadoActivity" />
-        <activity android:name=".ProductoNoEncontradoActivity" />
         <activity
-            android:name=".WelcomeMenuActivity"
+            android:name=".activities.WelcomeMenuActivity"
             android:label="@string/title_activity_menu_lateral"
             android:theme="@style/AppTheme.NoActionBar" />
     </application>

@@ -1,4 +1,4 @@
-package com.app.ecologiate;
+package com.app.ecologiate.fragments;
 
 import android.Manifest;
 import android.content.Context;
@@ -16,7 +16,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.app.ecologiate.service.ApiCallService;
+import com.app.ecologiate.R;
+import com.app.ecologiate.services.ApiCallService;
 import com.github.clans.fab.FloatingActionButton;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
