@@ -64,9 +64,9 @@ public class ProductoNoEncontradoFragment extends Fragment {
         volver.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Fragment scanFragment = new EscaneoFragment();
+                Fragment reciclarFragment = new ReciclarFragment();
                 getActivity().getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.contentFragment, scanFragment)
+                        .replace(R.id.contentFragment, reciclarFragment)
                         .commit();
             }
         });

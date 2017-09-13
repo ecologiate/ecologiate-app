@@ -2,15 +2,19 @@ package com.app.ecologiate.fragments;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -95,6 +99,33 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback{
             }
         });
 
+        //pedir al user que encienda el gps
+        int off = 0;
+        try {
+            off = Settings.Secure.getInt(context.getContentResolver(), Settings.Secure.LOCATION_MODE);
+        } catch (Settings.SettingNotFoundException e) {
+            e.printStackTrace();
+            Toast.makeText(context, "Opciones de GPS no encontradas", Toast.LENGTH_LONG);
+        }
+        if(off==0){
+            AlertDialog.Builder alertDialog = new AlertDialog.Builder(context);
+            alertDialog.setTitle("Acceso a ubicación");
+            alertDialog.setMessage("El GPS no está encendido, ¿te gustaría encenderlo?");
+            alertDialog.setPositiveButton("Sí", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                    context.startActivity(intent);
+                }
+            });
+            alertDialog.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.cancel();
+                }
+            });
+            alertDialog.show();
+        }
 
         return view;
     }
@@ -148,18 +179,19 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback{
                         Toast.makeText(getContext(), "Error obteniendo dirección", Toast.LENGTH_LONG).show();
                     }
                     //obtengo dirección, ciudad, país, CP, etc
+                    String direcciones = "";
+                    for(int i=0; i <= address.getMaxAddressLineIndex(); i++){
+                        direcciones += "("+i+") "+address.getAddressLine(i)+"\n";
+                    }
                     String infoMarker =
-                            "Dirección: "+address.getAddressLine(0) + "\n" +
+                            "Direcciones: "+direcciones+
                             "Admin Area: "+address.getAdminArea() + "\n" +
                             "Cod Pais: "+address.getCountryCode() + "\n" +
                             "Pais nombre: "+address.getCountryName() + "\n" +
-                            "Feature Name: "+address.getFeatureName() + "\n" +
                             "Localidad: "+address.getLocality() + "\n" +
                             "CP: "+address.getPostalCode() + "\n" +
-                            "Premises: "+address.getPremises() + "\n" +
                             "Sub Admin Area: "+address.getSubAdminArea() + "\n" +
-                            "Sub Locality: "+address.getSubLocality() + "\n" +
-                            "getSubThoroughfare: "+address.getSubThoroughfare();
+                            "Sub Locality: "+address.getSubLocality();
                     Toast.makeText(getContext(), infoMarker, Toast.LENGTH_LONG).show();
                     gMap.addMarker(new MarkerOptions().position(latLng).title("Nuevo").snippet(address.getAddressLine(0)));
 
@@ -288,6 +320,12 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback{
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        modoAlta = false;
     }
 
     public interface OnFragmentInteractionListener {

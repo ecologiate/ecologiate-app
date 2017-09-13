@@ -1,6 +1,8 @@
 package com.app.ecologiate.activities;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -137,10 +139,30 @@ public class LoginActivity extends AppCompatActivity {
             //Google's activity result
             GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
             if(result.isSuccess()) {
-                //handleSignInResult(...)
-                final GoogleApiClient client = mGoogleApiClient;
+
                 GoogleSignInAccount account = result.getSignInAccount();
-                Toast.makeText(getApplicationContext(), "Logueado con Google: "+account.getEmail(),
+
+                // get profile information
+                String name = "";
+                String email = "";
+                String uriPicture = "";
+                if (account.getDisplayName() != null) {
+                    name = account.getDisplayName();
+                }
+                if (account.getEmail() != null) {
+                    email = account.getEmail();
+                }
+                if (account.getPhotoUrl() != null) {
+                    uriPicture = account.getPhotoUrl().toString();
+                }
+                // save profile information to preferences
+                SharedPreferences prefs = getSharedPreferences("com.app.ecologiate", Context.MODE_PRIVATE);
+                prefs.edit().putString("com.app.ecologiate.nombre", name).apply();
+                prefs.edit().putString("com.app.ecologiate.email", email).apply();
+                prefs.edit().putString("com.app.ecologiate.uriPicture", uriPicture).apply();
+
+
+                Toast.makeText(getApplicationContext(), "Logueado con Google: "+name,
                         Toast.LENGTH_LONG).show();
                 goToNextActivity();
             } else {

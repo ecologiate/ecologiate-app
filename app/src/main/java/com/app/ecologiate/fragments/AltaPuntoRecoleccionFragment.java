@@ -98,47 +98,55 @@ public class AltaPuntoRecoleccionFragment extends Fragment {
             materialIds.add(3L);
         }
 
-        JSONObject jsonBody = new JSONObject();
-        StringEntity bodyEntity = null;
-        try{
-            jsonBody.put("descripcion", descripcion);
-            jsonBody.put("direccion", direccion);
-            jsonBody.put("latitud", latitud);
-            jsonBody.put("longitud", longitud);
-            jsonBody.put("usuario", usuarioId);
-            JSONArray arrayMateriales = new JSONArray(materialIds);
-            jsonBody.put("materiales", arrayMateriales);
-            bodyEntity = new StringEntity(jsonBody.toString());
-        }catch (Exception e){
-            e.printStackTrace();
-            Toast.makeText(getContext(), "Error armando Json", Toast.LENGTH_LONG).show();
-        }
+        if(!(latitud != 0 && longitud!= 0 && usuarioId != 0 && descripcion.length()>0 &&
+                direccion.length()>0 && materialIds.size()>0)){
+            Toast.makeText(getContext(), "Faltan campos obligatorios", Toast.LENGTH_LONG).show();
+        }else {
+
+            JSONObject jsonBody = new JSONObject();
+            StringEntity bodyEntity = null;
+            try {
+                jsonBody.put("descripcion", descripcion);
+                jsonBody.put("direccion", direccion);
+                jsonBody.put("latitud", latitud);
+                jsonBody.put("longitud", longitud);
+                jsonBody.put("usuario", usuarioId);
+                JSONArray arrayMateriales = new JSONArray(materialIds);
+                jsonBody.put("materiales", arrayMateriales);
+                bodyEntity = new StringEntity(jsonBody.toString());
+            } catch (Exception e) {
+                e.printStackTrace();
+                Toast.makeText(getContext(), "Error armando Json", Toast.LENGTH_LONG).show();
+            }
 
 
-        JsonHttpResponseHandler responseHandler = new JsonHttpResponseHandler(){
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response){
-                    if(response != null){
+            JsonHttpResponseHandler responseHandler = new JsonHttpResponseHandler() {
+                @Override
+                public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                    if (response != null) {
                         Toast.makeText(getContext(), "Punto creado", Toast.LENGTH_LONG).show();
-                        //volver al mapa
-                    }else {
+                        //vuelvo al mapa
+                        getActivity().onBackPressed();
+                    } else {
                         Toast.makeText(getContext(), "Punto no creado", Toast.LENGTH_LONG).show();
                     }
-            }
-            @Override
-            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable){
-                if (statusCode == 404){
-                    Toast.makeText(getContext(), "URL no encontrada", Toast.LENGTH_LONG).show();
-                }else if (statusCode == 500){
-                    Toast.makeText(getContext(), "Error en el Backend", Toast.LENGTH_LONG).show();
-                }else{
-                    Toast.makeText(getContext(), throwable.getLocalizedMessage(), Toast.LENGTH_LONG).show();
-                    Log.e("API_ERROR", "Error Inesperado ["+statusCode+"]", throwable);
                 }
-            }
-        };
 
-        apiCallService.postPuntosDeRecoleccion(getContext(), bodyEntity, responseHandler);
+                @Override
+                public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                    if (statusCode == 404) {
+                        Toast.makeText(getContext(), "URL no encontrada", Toast.LENGTH_LONG).show();
+                    } else if (statusCode == 500) {
+                        Toast.makeText(getContext(), "Error en el Backend", Toast.LENGTH_LONG).show();
+                    } else {
+                        Toast.makeText(getContext(), throwable.getLocalizedMessage(), Toast.LENGTH_LONG).show();
+                        Log.e("API_ERROR", "Error Inesperado [" + statusCode + "]", throwable);
+                    }
+                }
+            };
+
+            apiCallService.postPuntosDeRecoleccion(getContext(), bodyEntity, responseHandler);
+        }
     }
 
 
