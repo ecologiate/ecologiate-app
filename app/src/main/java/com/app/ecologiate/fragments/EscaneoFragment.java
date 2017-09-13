@@ -16,9 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.app.ecologiate.ProductoNoEncontradoFragment;
 import com.app.ecologiate.R;
-import com.app.ecologiate.ResultadoFragment;
 import com.app.ecologiate.models.Producto;
 import com.app.ecologiate.services.ApiCallService;
 import com.app.ecologiate.services.SoundService;

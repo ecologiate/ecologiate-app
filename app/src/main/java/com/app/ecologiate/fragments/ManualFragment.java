@@ -14,7 +14,6 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.app.ecologiate.R;
-import com.app.ecologiate.ResultadoFragment;
 import com.app.ecologiate.models.Producto;
 import com.app.ecologiate.services.ApiCallService;
 import com.loopj.android.http.JsonHttpResponseHandler;

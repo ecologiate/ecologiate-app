@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
+import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -14,11 +15,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.app.ecologiate.R;
 import com.app.ecologiate.services.ApiCallService;
 import com.github.clans.fab.FloatingActionButton;
+import com.github.clans.fab.FloatingActionMenu;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
@@ -34,6 +37,8 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Locale;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import cz.msebera.android.httpclient.Header;
 
 
@@ -53,6 +58,11 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback{
     private Geocoder geocoder;
     private Address address;
 
+    @BindView(R.id.lyEditMode)
+    LinearLayout editMessage;
+    @BindView(R.id.md_floating_action_menu)
+    FloatingActionMenu fam;
+
 
     public MapaFragment() {}
 
@@ -67,24 +77,21 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback{
 
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_mapa, container, false);
+        ButterKnife.bind(this, view);
         context = view.getContext();
+        editMessage.setVisibility(View.GONE);
         FloatingActionButton fabBuscar = (FloatingActionButton) view.findViewById(R.id.buscarEnMapa);
         fabBuscar.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                modoAlta = !modoAlta;
+                //TODO
             }
         });
         FloatingActionButton fabAltaPunto = (FloatingActionButton) view.findViewById(R.id.agregarPuntoRecoleccion);
         fabAltaPunto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Fragment fragment = new AltaPuntoRecoleccionFragment();
-                getActivity().getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.contentFragment, fragment)
-                        .addToBackStack(String.valueOf(fragment.getId()))
-                        .commit();
-
+                handleEditMode();
             }
         });
 
@@ -127,7 +134,7 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback{
                 .bearing(90f) //orientacion hacia al este
                 .tilt(30f) //inclinacion
                 .build();
-        mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+        gMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
         */
 
         gMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
@@ -135,7 +142,7 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback{
             public void onMapClick(LatLng latLng) {
                 if(modoAlta) {
                     try {
-                        address = (Address) geocoder.getFromLocation(latLng.latitude, latLng.longitude, 1).get(0);
+                        address = geocoder.getFromLocation(latLng.latitude, latLng.longitude, 1).get(0);
                     } catch (Exception e) {
                         e.printStackTrace();
                         Toast.makeText(getContext(), "Error obteniendo dirección", Toast.LENGTH_LONG).show();
@@ -240,6 +247,20 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback{
                 }
             }
         }
+    }
+
+    private void handleEditMode(){
+        modoAlta = !modoAlta;
+        if(modoAlta) {
+            editMessage.setVisibility(View.VISIBLE);
+            //hacer zoom donde estoy parado
+            Location myLocation = gMap.getMyLocation();
+            LatLng myLocationLatLng = new LatLng(myLocation.getLatitude(), myLocation.getLongitude());
+            gMap.animateCamera(CameraUpdateFactory.newLatLngZoom(myLocationLatLng, (gMap.getMaxZoomLevel() -2)));
+        }else {
+            editMessage.setVisibility(View.GONE);
+        }
+        fam.close(false);
     }
 
     public void onButtonPressed(Uri uri) {

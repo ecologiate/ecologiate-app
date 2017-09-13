@@ -12,9 +12,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.app.ecologiate.ProductoNoEncontradoFragment;
 import com.app.ecologiate.R;
-import com.app.ecologiate.ResultadoFragment;
 import com.app.ecologiate.fragments.AjustesFragment;
 import com.app.ecologiate.fragments.AltaProductoFragment;
 import com.app.ecologiate.fragments.AltaPuntoRecoleccionFragment;
@@ -26,7 +24,9 @@ import com.app.ecologiate.fragments.ManualFragment;
 import com.app.ecologiate.fragments.MapaFragment;
 import com.app.ecologiate.fragments.MiCuentaFragment;
 import com.app.ecologiate.fragments.PerfilFragment;
+import com.app.ecologiate.fragments.ProductoNoEncontradoFragment;
 import com.app.ecologiate.fragments.ReciclarFragment;
+import com.app.ecologiate.fragments.ResultadoFragment;
 import com.app.ecologiate.fragments.TipsFragment;
 import com.app.ecologiate.fragments.TriviaFragment;
 

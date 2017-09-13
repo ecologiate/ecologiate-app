@@ -6,14 +6,40 @@
     android:layout_height="match_parent"
     tools:context=".fragments.MapaFragment">
 
+
     <com.google.android.gms.maps.MapView
         android:id="@+id/mapa"
         android:name="com.google.android.gms.maps.MapFragment"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:layout_weight="2"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_weight="1"
+        android:layout_gravity="center_vertical|center_horizontal"
+        android:gravity="center"
+        android:background="@color/colorAccent"
+        android:padding="5dp"
+        android:orientation="horizontal"
+        android:id="@+id/lyEditMode">
+        <TextView
+            android:id="@+id/tvMapEditMode"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:textAlignment="center"
+            android:textSize="16dp"
+            android:text="Pulse sobre el mapa para agregar" />
+    </LinearLayout>
 
     <com.github.clans.fab.FloatingActionMenu
-        android:id="@+id/material_design_android_floating_action_menu"
+        android:id="@+id/md_floating_action_menu"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -68,9 +94,10 @@
             android:src="@drawable/ic_mapa"
             fab:fab_colorNormal="@color/colorBoton"
             fab:fab_colorPressed="@color/colorPrimaryLight"
-            fab:fab_label="Punto de Recoleccion"
+            fab:fab_label="Cargar Punto de Recoleccion"
             fab:fab_size="mini" />
 
 
     </com.github.clans.fab.FloatingActionMenu>
+
 </RelativeLayout>

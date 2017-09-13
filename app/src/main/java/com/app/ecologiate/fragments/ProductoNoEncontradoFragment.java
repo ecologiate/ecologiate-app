@@ -1,4 +1,4 @@
-package com.app.ecologiate;
+package com.app.ecologiate.fragments;
 
 import android.content.Context;
 import android.net.Uri;
@@ -10,8 +10,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.app.ecologiate.fragments.AltaProductoFragment;
-import com.app.ecologiate.fragments.EscaneoFragment;
+import com.app.ecologiate.R;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
