@@ -50,6 +50,10 @@ public class ApiCallService {
         post(url, context, entityBody, responseHandler);
     }
 
+    public void postProducto(Context context, HttpEntity entityBody, JsonHttpResponseHandler responseHandler){
+        String url = SERVER_URL + "/api/alta_producto";
+        post(url, context, entityBody, responseHandler);
+    }
 
 
     /**

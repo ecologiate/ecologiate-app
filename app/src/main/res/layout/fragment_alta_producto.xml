@@ -29,7 +29,6 @@
                 android:layout_margin="20dp"
                 android:gravity="bottom"
                 android:hint="Nombre del Producto"
-                android:inputType="textEmailAddress"
                 android:textColor="@color/colorPrimaryText"
                 android:textColorHint="@color/colorPrimary"
                 android:maxLines="1"
@@ -81,14 +80,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="15dp"
-                android:hint="Peso Aproximado"
-                android:inputType="textEmailAddress"
+                android:hint="Peso aprox. en gramos"
+                android:inputType="number"
                 android:textColor="@color/colorPrimaryText"
                 android:textColorHint="@color/colorPrimary"
                 android:maxLines="1"
                 android:textSize="20sp" />
 
             <Button
+                android:id="@+id/btnSaveProduct"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="@style/ecoButtonStyle"

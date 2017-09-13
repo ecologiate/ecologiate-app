@@ -2,10 +2,10 @@
 
 <resources>
     <string-array name="Categoria">
-    <item> Reciclable </item>
-    <item> Organico </item>
-    <item> Manejo Especial </item>
-    <item> No Tratable </item>
+    <item>Reciclable</item>
+    <item>Orgánico</item>
+    <item>Manejo especial</item>
+    <item>No tratable</item>
 
     </string-array>
 
