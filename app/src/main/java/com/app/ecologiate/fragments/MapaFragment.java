@@ -23,6 +23,7 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.app.ecologiate.R;
+import com.app.ecologiate.models.Producto;
 import com.app.ecologiate.services.ApiCallService;
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
@@ -51,6 +52,9 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback{
 
     private ApiCallService apiCallService = new ApiCallService();
 
+    //si vengo a buscar puntos para un producto
+    private Producto producto;
+
     private OnFragmentInteractionListener mListener;
 
     private static int REQUEST_GEO = 567;
@@ -69,6 +73,12 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback{
 
 
     public MapaFragment() {}
+
+    public static MapaFragment newInstance(Producto producto) {
+        MapaFragment fragment = new MapaFragment();
+        fragment.producto = producto;
+        return fragment;
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

@@ -55,6 +55,11 @@ public class ApiCallService {
         post(url, context, entityBody, responseHandler);
     }
 
+    public void postReciclaje(Context context, HttpEntity entityBody, JsonHttpResponseHandler responseHandler){
+        String url = SERVER_URL + "/api/reciclar/reciclar_producto";
+        post(url, context, entityBody, responseHandler);
+    }
+
 
     /**
      ***************************************************************

@@ -112,12 +112,13 @@ public class ManualFragment extends Fragment {
                         JSONObject materialJson = response.getJSONObject("material");
                         JSONObject categoriaJson = response.getJSONObject("categoria");
 
+                        Long productId = productoJson.getLong("id");
                         String nombreProducto = productoJson.getString("nombre_producto");
                         String categoria = categoriaJson.getString("descripcion");
                         String material = materialJson.getString("descripcion");
                         Long impacto = productoJson.getLong("cant_material"); //TODO HARDCODEADO
 
-                        Producto producto = new Producto(nombreProducto,categoria,material,impacto);
+                        Producto producto = new Producto(productId,nombreProducto,categoria,material,impacto);
                         Fragment resultadoFragment = ResultadoFragment.newInstance(producto);
                         getActivity().getSupportFragmentManager().beginTransaction()
                                 .replace(R.id.contentFragment, resultadoFragment)

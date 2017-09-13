@@ -5,16 +5,27 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.Html;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.app.ecologiate.R;
 import com.app.ecologiate.models.Producto;
+import com.app.ecologiate.services.ApiCallService;
+import com.app.ecologiate.services.UserManager;
+import com.loopj.android.http.JsonHttpResponseHandler;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
+import cz.msebera.android.httpclient.Header;
+import cz.msebera.android.httpclient.entity.StringEntity;
 
 
 public class ResultadoFragment extends Fragment {
@@ -22,6 +33,8 @@ public class ResultadoFragment extends Fragment {
     private Producto producto;
 
     private OnFragmentInteractionListener mListener;
+
+    private ApiCallService apiCallService = new ApiCallService();
 
     @BindView(R.id.textViewResultado)
     TextView tvResultado;
@@ -54,6 +67,66 @@ public class ResultadoFragment extends Fragment {
         tvResultado.setText(Html.fromHtml(mensajeResultado));
 
         return view;
+    }
+
+    @OnClick(R.id.btnResultVerPdR)
+    public void searchOnMap(View view){
+        Fragment mapaFragment = MapaFragment.newInstance(producto);
+        getActivity().getSupportFragmentManager().beginTransaction()
+                .replace(R.id.contentFragment, mapaFragment)
+                .commit();
+    }
+
+    @OnClick(R.id.btnResultReciclar)
+    public void reciclar(View view){
+        Long userId = UserManager.getUser().getId();
+        Long productId = producto.getId();
+        Long puntoRecId = null; //TODO falta integrar con el mapa
+        Integer cant = 1; //TODO siempre va 1 por ahora, no está en el front
+
+        JSONObject jsonBody = new JSONObject();
+        StringEntity bodyEntity = null;
+        try {
+            jsonBody.put("product_id", productId);
+            jsonBody.put("user", userId);
+            jsonBody.put("puntorec", puntoRecId);
+            jsonBody.put("cant", cant);
+            bodyEntity = new StringEntity(jsonBody.toString());
+        } catch (Exception e) {
+            e.printStackTrace();
+            Toast.makeText(getContext(), "Error armando Json", Toast.LENGTH_LONG).show();
+        }
+
+        JsonHttpResponseHandler responseHandler = new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                if (response != null) {
+                    Toast.makeText(getContext(), "Producto reciclado", Toast.LENGTH_LONG).show();
+                    Long puntosSumados = null;
+                    try{
+                        puntosSumados = response.getLong("puntos_sumados");
+                    }catch (JSONException e){
+                        Toast.makeText(getContext(), "Error en json de respuesta", Toast.LENGTH_LONG).show();
+                    }
+                    Toast.makeText(getContext(), "Puntos sumados: "+puntosSumados, Toast.LENGTH_LONG).show();
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                if (statusCode == 404) {
+                    Toast.makeText(getContext(), "URL no encontrada", Toast.LENGTH_LONG).show();
+                } else if (statusCode == 500) {
+                    Toast.makeText(getContext(), "Error en el Backend", Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(getContext(), throwable.getLocalizedMessage(), Toast.LENGTH_LONG).show();
+                    Log.e("API_ERROR", "Error Inesperado [" + statusCode + "]", throwable);
+                }
+            }
+        };
+
+        apiCallService.postReciclaje(getContext(), bodyEntity, responseHandler);
+
     }
 
     public void onButtonPressed(Uri uri) {

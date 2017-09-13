@@ -3,17 +3,27 @@ package com.app.ecologiate.models;
 
 public class Producto {
 
+    private Long id;
     private String nombreProducto;
     private String nombreCategoria;
     private String nombreMaterial;
     private Long impacto;
 
 
-    public Producto(String nombreProducto, String nombreCategoria, String nombreMaterial, Long impacto) {
+    public Producto(Long id, String nombreProducto, String nombreCategoria, String nombreMaterial, Long impacto) {
+        this.id = id;
         this.nombreProducto = nombreProducto;
         this.nombreCategoria = nombreCategoria;
         this.nombreMaterial = nombreMaterial;
         this.impacto = impacto;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getNombreProducto() {
