@@ -11,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.app.ecologiate.R;
 import com.app.ecologiate.fragments.AjustesFragment;
@@ -29,6 +30,9 @@ import com.app.ecologiate.fragments.ReciclarFragment;
 import com.app.ecologiate.fragments.ResultadoFragment;
 import com.app.ecologiate.fragments.TipsFragment;
 import com.app.ecologiate.fragments.TriviaFragment;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GoogleApiAvailability;
+import com.google.android.gms.common.GooglePlayServicesUtil;
 
 public class WelcomeMenuActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
@@ -74,6 +78,19 @@ public class WelcomeMenuActivity extends AppCompatActivity
                     //.addToBackStack(String.valueOf(inicioFragment.getId()))
                     .commit();
             navigationView.setCheckedItem(R.id.nav_inicio);
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        GoogleApiAvailability googleApi = GoogleApiAvailability.getInstance();
+        int gsResult = googleApi.isGooglePlayServicesAvailable(this);
+        if(gsResult == ConnectionResult.SUCCESS){
+            //nada, tutto ok
+        }else{
+            Toast.makeText(this, "Google Services no instalado", Toast.LENGTH_LONG);
+            googleApi.getErrorDialog(this, gsResult, 783).show();
         }
     }
 

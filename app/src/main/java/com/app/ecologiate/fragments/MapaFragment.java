@@ -254,9 +254,13 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback{
         if(modoAlta) {
             editMessage.setVisibility(View.VISIBLE);
             //hacer zoom donde estoy parado
-            Location myLocation = gMap.getMyLocation();
-            LatLng myLocationLatLng = new LatLng(myLocation.getLatitude(), myLocation.getLongitude());
-            gMap.animateCamera(CameraUpdateFactory.newLatLngZoom(myLocationLatLng, (gMap.getMaxZoomLevel() -2)));
+            try {
+                Location myLocation = gMap.getMyLocation();
+                LatLng myLocationLatLng = new LatLng(myLocation.getLatitude(), myLocation.getLongitude());
+                gMap.animateCamera(CameraUpdateFactory.newLatLngZoom(myLocationLatLng, (gMap.getMaxZoomLevel() - 2)));
+            }catch (Exception e){
+                Toast.makeText(getContext(), "No se pudo obtener ubicación", Toast.LENGTH_LONG);
+            }
         }else {
             editMessage.setVisibility(View.GONE);
         }
