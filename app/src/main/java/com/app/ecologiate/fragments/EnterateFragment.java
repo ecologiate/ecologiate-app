@@ -56,8 +56,8 @@ public class EnterateFragment extends Fragment {
 
     private void poblarViewPager(ViewPager viewPager) {
         AdaptadorSecciones adapter = new AdaptadorSecciones(getFragmentManager());
-        adapter.addFragment(new TriviaFragment(), "Trivia");
         adapter.addFragment(new TipsFragment(), "Tips");
+        adapter.addFragment(new TriviaFragment(), "Trivia");
         viewPager.setAdapter(adapter);
     }
 

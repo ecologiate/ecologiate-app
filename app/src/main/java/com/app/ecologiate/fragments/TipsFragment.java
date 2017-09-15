@@ -54,8 +54,10 @@ public class TipsFragment extends Fragment {
         List<MyModel> myDataset = new ArrayList<MyModel>();
 
         myDataset.add(new MyModel("Tip 2", "Mira de quien te burlaste barnyyyyyyyyyyyyyyyyy", R.drawable.ic_reciclaje));
-        myDataset.add(new MyModel("Tip 3", "Descripcion lalalalala", R.drawable.ic_reciclaje));
-        myDataset.add(new MyModel("Tip 4", "Descripcion lalalalala", R.drawable.ic_reciclaje));
+        myDataset.add(new MyModel("Lucho Miyagui", "SO' VO'", R.drawable.ic_reciclaje));
+        myDataset.add(new MyModel("Tip 4", "ATR Papaaa", R.drawable.ic_reciclaje));
+        myDataset.add(new MyModel("Tip 5", "Descripcion lalalalala", R.drawable.ic_reciclaje));
+        myDataset.add(new MyModel("Tip 6", "Descripcion lalalalala", R.drawable.ic_reciclaje));
 
         // specify an adapter (see also next example)
         mAdapter = new MyAdapter(myDataset);
