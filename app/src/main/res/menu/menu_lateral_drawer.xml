@@ -9,7 +9,7 @@
         <item
             android:id="@+id/nav_reciclar"
             android:icon="@drawable/ic_reciclaje"
-            android:title="Reciclar" />
+            android:title="@string/Reciclar" />
         <item
             android:id="@+id/nav_mapa"
             android:icon="@drawable/ic_mapa"

@@ -14,30 +14,34 @@
         android:layout_marginTop="40dp"
         android:layout_weight="0.8"
         android:gravity="center"
-        android:text="Buscando..."
+        android:text="@string/buscando"
         android:textSize="18sp" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="0.2"
-        android:gravity="center">
+        android:gravity="center"
+        android:orientation="vertical"
+        android:weightSum="1">
 
         <Button
             android:id="@+id/btnResultReciclar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             style="@style/ecoButtonStyle"
-            android:layout_marginRight="10dp"
-            android:text="Reciclar" />
+            android:layout_width="210dp"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/ic_reciclaje"
+            android:text="@string/Reciclar"
+            android:textSize="20sp"
+            android:layout_weight="0.30" />
 
         <Button
             android:id="@+id/btnResultVerPdR"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             style="@style/ecoButtonStyle"
-            android:layout_marginLeft="10dp"
-            android:text="Mapa"/>
+            android:layout_width="210dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="@string/ver_mapa" />
 
     </LinearLayout>
 

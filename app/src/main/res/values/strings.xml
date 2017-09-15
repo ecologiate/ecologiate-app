@@ -33,6 +33,9 @@
     /*Mensajes generales*/
     <string name="enviar">Enviar</string>
     <string name="buscar">Buscar</string>
+    <string name="Reciclar">Reciclar</string>
+    <string name="ver_mapa">Ver donde Reciclar</string>
+    <string name="buscando">Buscando...</string>
 
 
     /*Strings de alta de punto de recoleccion*/
