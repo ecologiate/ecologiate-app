@@ -53,11 +53,11 @@ public class TipsFragment extends Fragment {
         //creo mis mails
         List<MyModel> myDataset = new ArrayList<MyModel>();
 
-        myDataset.add(new MyModel("Tip 2", "Mira de quien te burlaste barnyyyyyyyyyyyyyyyyy", R.drawable.ic_reciclaje));
-        myDataset.add(new MyModel("Lucho Miyagui", "SO' VO'", R.drawable.ic_reciclaje));
-        myDataset.add(new MyModel("Tip 4", "ATR Papaaa", R.drawable.ic_reciclaje));
-        myDataset.add(new MyModel("Tip 5", "Descripcion lalalalala", R.drawable.ic_reciclaje));
-        myDataset.add(new MyModel("Tip 6", "Descripcion lalalalala", R.drawable.ic_reciclaje));
+        myDataset.add(new MyModel("Cumpleaños", "Utiliza los rollos de papel higiénico para hacer ingeniosas decoraciones ", R.drawable.tip1));
+        myDataset.add(new MyModel("Bolsas de Te", "Guarda tus bolsas de té usadas en el refrigerador y utilízalas a la mañana siguiente para ponerla sobre tus ojos y aliviar las bolsas debajo de ellos. ", R.drawable.tip2));
+        myDataset.add(new MyModel("Individuales", "Tus jeans también podrían transformarse en atractivos individuales para proteger tu mesa.", R.drawable.tip3));
+        myDataset.add(new MyModel("Neumaticos", "Puedes utilizar tus neumaticos para hacer tachos de basura.", R.drawable.tip4));
+        myDataset.add(new MyModel("Disquete", "Utiliza tus disquetes como decorativas macetas.", R.drawable.tip5));
 
         // specify an adapter (see also next example)
         mAdapter = new MyAdapter(myDataset);
