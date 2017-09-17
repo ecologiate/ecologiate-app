@@ -7,8 +7,12 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.app.ecologiate.R;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 
 public class InicioFragment extends Fragment {
@@ -17,6 +21,9 @@ public class InicioFragment extends Fragment {
 
     public InicioFragment() {}
 
+    //Creo el botón.
+    @BindView(R.id.btnReciclar)
+    Button reciclar;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -27,7 +34,21 @@ public class InicioFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_inicio, container, false);
+        View view = inflater.inflate(R.layout.fragment_inicio, container, false);
+        ButterKnife.bind(this, view);
+
+        //Acción del botón reciclar
+        reciclar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Fragment reciclarFragment = new ReciclarFragment();
+                getActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.contentFragment, reciclarFragment)
+                        .commit();
+            }
+        });
+
+        return view;
     }
 
     public void onButtonPressed(Uri uri) {
