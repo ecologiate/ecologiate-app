@@ -5,13 +5,13 @@ import com.app.ecologiate.R;
 
 
 
-public class MyModel {
+public class Tip {
     public String titulo;
     public String descripcion;
     public Integer foto;
 
 
-    public MyModel(String titulo, String descripcion, Integer foto) {
+    public Tip(String titulo, String descripcion, Integer foto) {
         this.titulo = titulo;
         this.descripcion = descripcion;
         this.foto = foto;

@@ -13,9 +13,9 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/eco_icon_circle"
+        android:icon="@mipmap/ecologiate_launcher"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/eco_icon_circle"
+        android:roundIcon="@mipmap/ecologiate_launcher"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <meta-data

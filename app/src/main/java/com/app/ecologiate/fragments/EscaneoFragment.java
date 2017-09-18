@@ -302,6 +302,11 @@ public class EscaneoFragment extends Fragment implements
         };
 
         apiCallService.getProductoPorCodigo(codigo, responseHandler);
+    }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        prgDialog.dismiss();
     }
 }

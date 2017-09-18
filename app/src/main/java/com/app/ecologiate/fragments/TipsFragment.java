@@ -1,7 +1,6 @@
 package com.app.ecologiate.fragments;
 
 
-import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -13,11 +12,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.app.ecologiate.R;
-import com.app.ecologiate.models.MyAdapter;
-import com.app.ecologiate.models.MyModel;
+import com.app.ecologiate.models.TipAdapter;
+import com.app.ecologiate.models.Tip;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 
@@ -51,16 +49,16 @@ public class TipsFragment extends Fragment {
         mRecyclerView.setLayoutManager(mLayoutManager);
 
         //creo mis mails
-        List<MyModel> myDataset = new ArrayList<MyModel>();
+        List<Tip> myDataset = new ArrayList<>();
 
-        myDataset.add(new MyModel("Cumpleaños", "Utiliza los rollos de papel higiénico para hacer ingeniosas decoraciones ", R.drawable.tip1));
-        myDataset.add(new MyModel("Bolsas de Te", "Guarda tus bolsas de té usadas en el refrigerador y utilízalas a la mañana siguiente para ponerla sobre tus ojos y aliviar las bolsas debajo de ellos. ", R.drawable.tip2));
-        myDataset.add(new MyModel("Individuales", "Tus jeans también podrían transformarse en atractivos individuales para proteger tu mesa.", R.drawable.tip3));
-        myDataset.add(new MyModel("Neumaticos", "Puedes utilizar tus neumaticos para hacer tachos de basura.", R.drawable.tip4));
-        myDataset.add(new MyModel("Disquete", "Utiliza tus disquetes como decorativas macetas.", R.drawable.tip5));
+        myDataset.add(new Tip("Cumpleaños", "Utiliza los rollos de papel higiénico para hacer ingeniosas decoraciones ", R.raw.tip1));
+        myDataset.add(new Tip("Bolsas de Te", "Guarda tus bolsas de té usadas en el refrigerador y utilízalas a la mañana siguiente para ponerla sobre tus ojos y aliviar las bolsas debajo de ellos. ", R.raw.tip2));
+        myDataset.add(new Tip("Individuales", "Tus jeans también podrían transformarse en atractivos individuales para proteger tu mesa.", R.raw.tip3));
+        myDataset.add(new Tip("Neumaticos", "Puedes utilizar tus neumaticos para hacer tachos de basura.", R.raw.tip4));
+        myDataset.add(new Tip("Disquete", "Utiliza tus disquetes como decorativas macetas.", R.raw.tip5));
 
         // specify an adapter (see also next example)
-        mAdapter = new MyAdapter(myDataset);
+        mAdapter = new TipAdapter(myDataset);
         mRecyclerView.setAdapter(mAdapter);
 
         return  view;

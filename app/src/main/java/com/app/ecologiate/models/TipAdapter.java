@@ -12,9 +12,9 @@ import com.app.ecologiate.R;
 
 import java.util.List;
 
-public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
+public class TipAdapter extends RecyclerView.Adapter<TipAdapter.ViewHolder> {
 
-    private List<MyModel> mDataset;
+    private List<Tip> mDataset;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
@@ -31,14 +31,14 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public MyAdapter(List<MyModel> myDataset) {
+    public TipAdapter(List<Tip> myDataset) {
         mDataset = myDataset;
     }
 
     // Create new views (invoked by the layout manager)
     @Override
-    public MyAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,
-                                                   int viewType) {
+    public TipAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,
+                                                    int viewType) {
         // create a new view
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item,parent, false);
         // set the view's size, margins, paddings and layout parameters
@@ -52,7 +52,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
     public void onBindViewHolder(ViewHolder holder, int position) {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
-        MyModel model = mDataset.get(position);
+        Tip model = mDataset.get(position);
         holder.ivFoto.setImageResource(model.getFoto());
         holder.txTitulo.setText(model.getTitulo());
         holder.txDescripcion.setText(model.getDescripcion());

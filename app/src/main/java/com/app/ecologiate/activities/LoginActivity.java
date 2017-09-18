@@ -1,9 +1,12 @@
 package com.app.ecologiate.activities;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.provider.Settings;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -187,7 +190,23 @@ public class LoginActivity extends AppCompatActivity {
 
 
     public void goToNextActivity(View view){
-        goToNextActivity();
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
+        alertDialog.setTitle("Copate");
+        alertDialog.setMessage("Usá el login con Facebook o Google");
+        alertDialog.setPositiveButton("Dale", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Toast.makeText(LoginActivity.this,"Crack", Toast.LENGTH_SHORT);
+            }
+        });
+        alertDialog.setNegativeButton("No jodas", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Toast.makeText(LoginActivity.this,"Forro", Toast.LENGTH_SHORT);
+                goToNextActivity();
+            }
+        });
+        alertDialog.show();
     }
 
 
