@@ -115,10 +115,10 @@ public class AltaProductoFragment extends Fragment {
                 categoriaId = CategoryManager.categorias.keyAt(i);
             }
         }
-        //DVP: Agrego chequeo de "cantMaterial".
+        //DVP: Faltaba agregar el show para mostrar el mensaje.
         if(!(nombreProducto.length()>0 && materialId!=null && categoriaId!=null && cantMaterial!=null
-                && codigoDeBarras!=null && userId!=null && cantMaterial!=null)){
-            Toast.makeText(getContext(), "Faltan datos obligatorios", Toast.LENGTH_LONG);
+                && codigoDeBarras!=null && userId!=null)){
+            Toast.makeText(getContext(), "Faltan datos obligatorios", Toast.LENGTH_LONG).show();
         }else{
             JSONObject jsonBody = new JSONObject();
             StringEntity bodyEntity = null;
