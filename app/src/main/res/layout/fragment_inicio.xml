@@ -18,11 +18,15 @@
             android:text="Bienvenido a Ecologiate"
             android:padding="10dp"
             android:textSize="25dp"/>
-        <ImageView
-            android:layout_weight="0.5"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
-            app:srcCompat="@drawable/rsz_ecologiate_icon_2_big"/>
+        <ProgressBar
+            android:id="@+id/simpleProgressBar"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:max="200"
+            android:progress="80"
+            android:background="@color/colorBoton"
+            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+            android:padding="20dp"/><!--// 20dp padding from all the sides of the progress bar-->
 
         <LinearLayout
             android:layout_weight="0.4"
@@ -49,19 +53,30 @@
                 android:text="Medallas obtenidas: 4"
                 android:textSize="25dp"/>
         </LinearLayout>
+
         <LinearLayout
-            android:layout_weight="0.4"
-            android:orientation="vertical"
-            android:gravity="center"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="bottom|center"
+            android:orientation="vertical">
+
             <Button
                 android:id="@+id/btnReciclar"
                 style="@style/ecoButtonStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Reciclar"
-                android:drawableLeft="@drawable/ic_reciclaje" />
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_gravity="center"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:drawableLeft="@drawable/ic_reciclaje"
+                android:gravity="center"
+                android:minHeight="0dp"
+                android:minWidth="0dp"
+                android:paddingLeft="120dp"
+                android:paddingRight="120dp"
+                android:text="@string/Reciclar"
+                android:textColor="@android:color/white"
+                android:textSize="20dp" />
         </LinearLayout>
 
 
