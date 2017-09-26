@@ -36,6 +36,7 @@
     <string name="Reciclar">Reciclar</string>
     <string name="ver_mapa">Ver donde Reciclar</string>
     <string name="buscando">Buscando...</string>
+    <string name="nivel">Nivel:</string>
 
 
     /*Strings de alta de punto de recoleccion*/
