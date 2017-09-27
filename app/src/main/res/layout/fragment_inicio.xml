@@ -7,7 +7,15 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         tools:context="com.app.ecologiate.fragments.InicioFragment">
 
+        <ScrollView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent">
 
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -163,6 +171,12 @@
                 android:layout_below="@+id/tituloCampanias"
                 android:padding="10dp"/>
 
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/tipFragment"
+                android:scrollbars="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tituloCampanias"/>
 
         </RelativeLayout>
 
@@ -187,6 +201,9 @@
             android:layout_alignParentBottom="true"/>
         </RelativeLayout>
 
+        </LinearLayout>
+
+        </ScrollView>
 </LinearLayout>
 
 
