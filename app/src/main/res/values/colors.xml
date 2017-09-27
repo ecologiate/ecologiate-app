@@ -15,4 +15,6 @@
     <color name="colorTexto">#1c7b21</color>
     <color name="textoOscuro">#0e6012</color>
     <color name="colorcheckbox">#69706a</color>
+    <color name="violetaOscuro">#93056f</color>
+    <color name="violetaClaro">#e3adfc</color>
 </resources>

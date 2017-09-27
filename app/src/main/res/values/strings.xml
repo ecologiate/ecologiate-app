@@ -37,6 +37,11 @@
     <string name="ver_mapa">Ver donde Reciclar</string>
     <string name="buscando">Buscando...</string>
     <string name="nivel">Nivel:</string>
+    <string name="metricas">Métricas de Reciclaje</string>
+    <string name="campanias">Campanas Activas</string>
+    <string name="arboles">Árboles:</string>
+    <string name="agua">Agua:</string>
+    <string name="energia">Energía:</string>
 
 
     /*Strings de alta de punto de recoleccion*/
