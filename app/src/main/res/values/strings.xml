@@ -30,7 +30,7 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_maps">Map</string>
 
-    /*Mensajes generales*/
+    /*Títulos y botones generales*/
     <string name="enviar">Enviar</string>
     <string name="buscar">Buscar</string>
     <string name="Reciclar">Reciclar</string>
@@ -38,10 +38,12 @@
     <string name="buscando">Buscando...</string>
     <string name="nivel">Nivel:</string>
     <string name="metricas">Métricas de Reciclaje</string>
-    <string name="campanias">Campanas Activas</string>
+    <string name="campanias">Campañas Activas</string>
     <string name="arboles">Árboles:</string>
     <string name="agua">Agua:</string>
     <string name="energia">Energía:</string>
+    <string name="medallasMaterial">Medallas por Material</string>
+    <string name="medallasCampanias">Medallas por Campañas</string>
 
 
     /*Strings de alta de punto de recoleccion*/

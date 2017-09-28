@@ -1,13 +1,370 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.app.ecologiate.fragments.PerfilFragment">
 
+    <ScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent">
 
-    <TextView
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/white">
+
+            <ImageView
+                android:id="@+id/avatar"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                app:srcCompat="@drawable/ic_reciclaje"/>
+
+            <TextView
+                android:id="@+id/nivelharcode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:layout_toRightOf="@+id/avatar"
+                android:text="@string/nivel"
+                android:textSize="22dp" />
+
+            <TextView
+                android:id="@+id/nivelActual"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/nivelharcode"
+                android:text="Novato"
+                android:padding="10dp"
+                android:textSize="22dp"/>
+
+
+            <ProgressBar
+                android:id="@+id/simpleProgressBar"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:max="100"
+                android:progress="80"
+                android:layout_below="@+id/nivelharcode"
+                android:layout_toRightOf="@+id/avatar"
+                style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                android:padding="2dp"
+                android:layout_marginRight="8dp"
+                android:progressTint="@color/colorTexto"
+                android:progressBackgroundTint="@color/violetaOscuro"    />
+
+        </RelativeLayout>
+
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="2dip"
+            android:background="@color/violetaOscuro"/>
+
+    <RelativeLayout
+        android:layout_height="wrap_content"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="PERFILL" />
+        android:background="@android:color/white">
 
-</FrameLayout>
+        <TextView
+            android:id="@+id/tituloMedaXMat"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/medallasMaterial"
+            android:gravity="center_horizontal"
+            android:textSize="20dp"/>
+
+            <GridLayout
+                android:id="@+id/grilla"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginStart="15dp"
+                android:alignmentMode="alignBounds"
+                android:columnCount="12"
+                android:orientation="vertical"
+                android:layout_below="@+id/tituloMedaXMat"
+                android:rowCount="12">
+
+                <CheckBox
+                    android:id="@+id/checkAceite"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_column="0"
+                    android:layout_row="5"
+                    android:text="@string/aceite"
+                    android:textColor="@color/colorTexto"
+                    android:textSize="16sp"
+                    android:buttonTint="@color/colorcheckbox" />
+
+                <CheckBox
+                    android:id="@+id/checkBronce"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_column="0"
+                    android:layout_row="6"
+                    android:text="@string/bronce"
+                    android:textColor="@color/colorTexto"
+                    android:textSize="16sp"
+                    android:buttonTint="@color/colorcheckbox" />
+
+                <CheckBox
+                    android:id="@+id/checkElectronicos"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_column="0"
+                    android:layout_row="7"
+                    android:text="@string/electronicos"
+                    android:textColor="@color/colorTexto"
+                    android:textSize="16sp"
+                    android:buttonTint="@color/colorcheckbox" />
+
+                <CheckBox
+                    android:id="@+id/checkMetales"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_column="0"
+                    android:layout_row="8"
+                    android:text="@string/metales"
+                    android:textColor="@color/colorTexto"
+                    android:textSize="16sp"
+                    android:buttonTint="@color/colorcheckbox" />
+
+                <CheckBox
+                    android:id="@+id/checkNeumaticos"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_column="0"
+                    android:layout_row="9"
+                    android:text="@string/neumaticos"
+                    android:textColor="@color/colorTexto"
+                    android:textSize="16sp"
+                    android:buttonTint="@color/colorcheckbox" />
+
+                <CheckBox
+                    android:id="@+id/checkOrganico"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_column="0"
+                    android:layout_row="10"
+                    android:text="@string/organicos"
+                    android:textColor="@color/colorTexto"
+                    android:textSize="16sp"
+                    android:buttonTint="@color/colorcheckbox" />
+
+                <CheckBox
+                    android:id="@+id/checkPapel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_column="0"
+                    android:layout_row="11"
+                    android:text="@string/papel_carton"
+                    android:textColor="@color/colorTexto"
+                    android:textSize="16sp"
+                    android:buttonTint="@color/colorcheckbox" />
+
+                <CheckBox
+                    android:id="@+id/checkPilas"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_column="1"
+                    android:layout_row="5"
+                    android:text="@string/pilas"
+                    android:textColor="@color/colorTexto"
+                    android:textSize="16sp"
+                    android:buttonTint="@color/colorcheckbox" />
+
+                <CheckBox
+                    android:id="@+id/checkPlastico"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_column="1"
+                    android:layout_row="6"
+                    android:text="@string/plastico"
+                    android:textColor="@color/colorTexto"
+                    android:textSize="16sp"
+                    android:buttonTint="@color/colorcheckbox" />
+
+                <CheckBox
+                    android:id="@+id/checkTapitas"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_column="1"
+                    android:layout_row="7"
+                    android:text="@string/tapitas"
+                    android:textColor="@color/colorTexto"
+                    android:textSize="16sp"
+                    android:buttonTint="@color/colorcheckbox" />
+
+                <CheckBox
+                    android:id="@+id/checkTelgopor"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_column="1"
+                    android:layout_row="8"
+                    android:text="@string/telgopor"
+                    android:textColor="@color/colorTexto"
+                    android:textSize="16sp"
+                    android:buttonTint="@color/colorcheckbox" />
+
+                <CheckBox
+                    android:id="@+id/checkTetra"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_column="1"
+                    android:layout_row="9"
+                    android:text="@string/tetra"
+                    android:textColor="@color/colorTexto"
+                    android:textSize="16sp"
+                    android:buttonTint="@color/colorcheckbox" />
+
+                <CheckBox
+                    android:id="@+id/checkTextiles"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_column="1"
+                    android:layout_row="10"
+                    android:text="@string/textiles"
+                    android:textColor="@color/colorTexto"
+                    android:textSize="16sp"
+                    android:buttonTint="@color/colorcheckbox" />
+
+                <CheckBox
+                    android:id="@+id/checkVidrio"
+                    android:checked="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_column="1"
+                    android:layout_row="11"
+                    android:text="@string/vidrio"
+                    android:textColor="@color/colorTexto"
+                    android:textSize="16sp"
+                    android:buttonTint="@color/colorcheckbox" />
+
+            </GridLayout>
+
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="2dip"
+            android:background="@color/violetaOscuro"
+            android:layout_below="@+id/grilla"
+            android:padding="10dp"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent">
+
+        <TextView
+            android:id="@+id/tituloMedaXCamp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/medallasCampanias"
+            android:gravity="center_horizontal"
+            android:textSize="20dp"/>
+
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="2dip"
+            android:background="@color/violetaOscuro"
+            android:layout_below="@+id/tituloMedaXCamp"
+            android:padding="10dp"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+            android:id="@+id/relativeMetricas"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:background="@android:color/white"
+            >
+
+            <TextView
+                android:id="@+id/tituloMetrica"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/metricas"
+                android:gravity="center_horizontal"
+                android:padding="10dp"
+                android:textSize="20dp"
+                />
+
+            <TextView
+                android:id="@+id/tituloArboles"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/arboles"
+                android:layout_below="@+id/tituloMetrica"
+                android:padding="6dp"
+                android:textSize="20dp"/>
+
+            <TextView
+                android:id="@+id/contenidoAboles"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/tituloArboles"
+                android:layout_below="@+id/tituloMetrica"
+                android:text="sarasa"
+                android:padding="6dp"
+                android:textSize="20dp"/>
+
+            <TextView
+                android:id="@+id/tituloAgua"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tituloArboles"
+                android:text="@string/agua"
+                android:padding="6dp"
+                android:textSize="20dp"/>
+
+            <TextView
+                android:id="@+id/contenidoAgua"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tituloArboles"
+                android:layout_toRightOf="@+id/tituloAgua"
+                android:text="sarasa2"
+                android:padding="6dp"
+                android:textSize="20dp"/>
+
+            <TextView
+                android:id="@+id/tituloEnergia"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tituloAgua"
+                android:text="@string/energia"
+                android:padding="6dp"
+                android:textSize="20dp"/>
+
+            <TextView
+                android:id="@+id/contenidoEnergia"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tituloAgua"
+                android:layout_toRightOf="@+id/tituloEnergia"
+                android:text="sarasa energia"
+                android:padding="6dp"
+                android:textSize="20dp"/>
+
+        </RelativeLayout>
+
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="2dip"
+            android:background="@color/violetaOscuro"
+            android:layout_marginBottom="5dp"/>
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>
