@@ -1,5 +1,6 @@
 package com.app.ecologiate.fragments;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
@@ -39,6 +40,8 @@ public class ResultadoFragment extends Fragment {
     @BindView(R.id.textViewResultado)
     TextView tvResultado;
 
+    ProgressDialog prgDialog;
+
     public ResultadoFragment() {}
 
 
@@ -51,6 +54,9 @@ public class ResultadoFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        prgDialog = new ProgressDialog(getContext());
+        prgDialog.setCancelable(false);
     }
 
     @Override
@@ -60,9 +66,9 @@ public class ResultadoFragment extends Fragment {
         ButterKnife.bind(this, view);
 
         String mensajeResultado = "<b>Nombre del producto</b><br/> "+ producto.getNombreProducto() + "<br/><br/>"+
-                "<b>Categoría</b><br/> "+ producto.getNombreCategoria() + "<br/><br/>"+
-                "<b>Material</b><br/> "+ producto.getNombreMaterial() + "<br/><br/>"+
-                "<b>Impacto</b><br/> "+ producto.getImpacto();
+                "<b>Categoría</b><br/> "+ producto.getCategoria().getDescripcion() + "<br/><br/>"+
+                "<b>Material</b><br/> "+ producto.getMaterial().getDescripcion() + "<br/><br/>"+
+                "<b>¿Impacto?</b><br/> "+ (producto.getCantMaterial() * producto.getMaterial().getTipoMaterialEqu());
 
         tvResultado.setText(Html.fromHtml(mensajeResultado));
 
@@ -79,6 +85,7 @@ public class ResultadoFragment extends Fragment {
 
     @OnClick(R.id.btnResultReciclar)
     public void reciclar(View view){
+
         Long userId = UserManager.getUser().getId();
         Long productId = producto.getId();
         Long puntoRecId = null; //TODO falta integrar con el mapa
@@ -97,9 +104,11 @@ public class ResultadoFragment extends Fragment {
             Toast.makeText(getContext(), "Error armando Json", Toast.LENGTH_LONG).show();
         }
 
+        prgDialog.show();
         JsonHttpResponseHandler responseHandler = new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                prgDialog.hide();
                 if (response != null) {
                     Toast.makeText(getContext(), "Producto reciclado", Toast.LENGTH_LONG).show();
                     Long puntosSumados = null;
@@ -109,11 +118,17 @@ public class ResultadoFragment extends Fragment {
                         Toast.makeText(getContext(), "Error en json de respuesta", Toast.LENGTH_LONG).show();
                     }
                     Toast.makeText(getContext(), "Puntos sumados: "+puntosSumados, Toast.LENGTH_LONG).show();
+                    Fragment inicioFragment = new InicioFragment();
+                    getActivity().getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.contentFragment, inicioFragment)
+                            //.addToBackStack(String.valueOf(resultadoFragment.getId())) //no quiero que pueda volver
+                            .commit();
                 }
             }
 
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                prgDialog.hide();
                 if (statusCode == 404) {
                     Toast.makeText(getContext(), "URL no encontrada", Toast.LENGTH_LONG).show();
                 } else if (statusCode == 500) {

@@ -8,6 +8,7 @@ import com.loopj.android.http.JsonHttpResponseHandler;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.List;
 
 import cz.msebera.android.httpclient.HttpEntity;
@@ -27,25 +28,44 @@ public class ApiCallService {
 
     public void getProductoPorCodigo(String codigo, JsonHttpResponseHandler responseHandler){
         //armo la url del get
-        String url = SERVER_URL + "/api/producto/" + codigo;
+        String url = SERVER_URL + "/api/producto/codigo/" + codigo;
+        get(url, responseHandler);
+    }
+
+    public void getProductoPorId(Long id, JsonHttpResponseHandler responseHandler){
+        //armo la url del get
+        String url = SERVER_URL + "/api/producto/" + id;
         get(url, responseHandler);
     }
 
     public void getProductoPorTitulo(String titulo, JsonHttpResponseHandler responseHandler){
         //armo la url del get
-        String url = SERVER_URL + "/api/busqueda_manual/" + titulo;
+        String url = SERVER_URL + "/api/producto/nombre/" + titulo;
         get(url, responseHandler);
     }
 
-    public void getPuntosDeRecoleccion(List<String> materiales, JsonHttpResponseHandler responseHandler){
+    public void getPuntosDeRecoleccion(List<String> materiales, String pais, String area, JsonHttpResponseHandler responseHandler){
         String url = SERVER_URL + "/api/pdr";
+        List<String> parametros = new ArrayList<>();
         if(materiales != null && !materiales.isEmpty()){
-            url += "?materiales=" + TextUtils.join(",", materiales);
+            //agrego ids de materiales separados por coma
+            parametros.add("materiales=" + TextUtils.join(",", materiales));
+        }
+        if(pais != null){
+            parametros.add("pais=" + pais);
+        }
+        if(area != null){
+            parametros.add("area=" + area);
+        }
+        if(!parametros.isEmpty()){
+            //agrego los parámetros separados por &
+            //ejemplo /api/pdr?materiales=1,2,3&area=Misiones&pais=Argentina
+            url += "?"+TextUtils.join("&", parametros);
         }
         get(url, responseHandler);
     }
 
-    public void postPuntosDeRecoleccion(Context context, HttpEntity entityBody, JsonHttpResponseHandler responseHandler){
+    public void postPuntoDeRecoleccion(Context context, HttpEntity entityBody, JsonHttpResponseHandler responseHandler){
         String url = SERVER_URL + "/api/pdr";
         post(url, context, entityBody, responseHandler);
     }

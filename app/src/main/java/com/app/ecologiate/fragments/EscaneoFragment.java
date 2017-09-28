@@ -245,21 +245,11 @@ public class EscaneoFragment extends Fragment implements
                     // si me trajo algo
                     if(response.has("producto")){
 
-                        JSONObject productoJson = response.getJSONObject("producto");
-                        JSONObject materialJson = response.getJSONObject("material");
-                        JSONObject categoriaJson = response.getJSONObject("categoria");
-
-                        Long productId = productoJson.getLong("id");
-                        String nombreProducto = productoJson.getString("nombre_producto");
-                        String categoria = categoriaJson.getString("descripcion");
-                        String material = materialJson.getString("descripcion");
-                        Long impacto = productoJson.getLong("cant_material"); //TODO HARDCODEADO
-
-                        Producto producto = new Producto(productId,nombreProducto,categoria,material,impacto);
-                        Fragment resultadoFragment = ResultadoFragment.newInstance(producto);
+                        Producto productoEncontrado = Producto.getFromJson(response.getJSONObject("producto"));
+                        Fragment resultadoFragment = ResultadoFragment.newInstance(productoEncontrado);
                         getActivity().getSupportFragmentManager().beginTransaction()
                                 .replace(R.id.contentFragment, resultadoFragment)
-                                .addToBackStack(String.valueOf(resultadoFragment.getId()))
+                                //.addToBackStack(String.valueOf(resultadoFragment.getId()))
                                 .commit();
 
                     }else{
@@ -267,7 +257,7 @@ public class EscaneoFragment extends Fragment implements
                         Fragment noEncontradoFragment = ProductoNoEncontradoFragment.newInstance(codigo);
                         getActivity().getSupportFragmentManager().beginTransaction()
                                 .replace(R.id.contentFragment, noEncontradoFragment)
-                                .addToBackStack(String.valueOf(noEncontradoFragment.getId()))
+                                //.addToBackStack(String.valueOf(noEncontradoFragment.getId()))
                                 .commit();
                     }
                 } catch (JSONException e) {

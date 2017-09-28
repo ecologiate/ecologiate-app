@@ -102,7 +102,6 @@ public class AltaProductoFragment extends Fragment {
         }
         Long codigoDeBarras = this.codigoDeBarras != null ? Long.valueOf(this.codigoDeBarras) : null;
         Long userId = UserManager.getUser().getId();
-        String imgUrl = null;
         Long materialId = null;
         Long categoriaId = null;
         for(int i = 0; i < MaterialsManager.materiales.size(); i++){
@@ -129,7 +128,6 @@ public class AltaProductoFragment extends Fragment {
                 jsonBody.put("codigo_barra", codigoDeBarras);
                 jsonBody.put("categoria_id", categoriaId);
                 jsonBody.put("usuario_id", userId);
-                jsonBody.put("imagen", imgUrl);
                 bodyEntity = new StringEntity(jsonBody.toString());
             } catch (Exception e) {
                 e.printStackTrace();
@@ -143,12 +141,29 @@ public class AltaProductoFragment extends Fragment {
                 public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                     //DVP: oculto el "Creando".
                     prgDialog.hide();
-                    if (response != null) {
-                        Toast.makeText(getContext(), "Producto creado", Toast.LENGTH_LONG).show();
-                        //DVP: voy a resultado
-                        getProductoManual(tvNombreProducto.getText().toString());
-                    } else {
-                        Toast.makeText(getContext(), "Producto no creado", Toast.LENGTH_LONG).show();
+                    try {
+                        if (response != null) {
+                            if (response.has("producto")) {
+                                Toast.makeText(getContext(), "Producto creado", Toast.LENGTH_LONG).show();
+                                //DVP: voy a resultado
+                                //DVP: Hago el parseo del Json.
+                                Producto productoEncontrado = Producto.getFromJson(response.getJSONObject("producto"));
+
+                                Fragment resultadoFragment = ResultadoFragment.newInstance(productoEncontrado);
+                                getActivity().getSupportFragmentManager().beginTransaction()
+                                        .replace(R.id.contentFragment, resultadoFragment)
+                                        //.addToBackStack(String.valueOf(resultadoFragment.getId())) //no quiero que pueda volver
+                                        .commit();
+                            } else {
+                                Toast.makeText(getContext(), "No se encontraron resultados", Toast.LENGTH_LONG).show();
+                            }
+                        } else {
+                            Toast.makeText(getContext(), "Producto no creado", Toast.LENGTH_LONG).show();
+                        }
+                    }catch (JSONException e) {
+                        //DVP: Si encuentra algun error parseando el Jason.
+                        Toast.makeText(getContext(), "Error en formato de Json", Toast.LENGTH_LONG).show();
+                        e.printStackTrace();
                     }
                 }
 
@@ -196,61 +211,4 @@ public class AltaProductoFragment extends Fragment {
         void onFragmentInteraction(Uri uri);
     }
 
-    //DVP: Función para buscar el producto de forma manual.
-    public void getProductoManual(final String nombre_producto){
-        //DVP: muestro "Buscando".
-        prgDialog.show();
-        //DVP: agrego el código a ejecutar cuando vuelve del Back.
-        JsonHttpResponseHandler responseHandler = new JsonHttpResponseHandler(){
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response){
-                //DVP: oculto el "Buscando".
-                prgDialog.hide();
-                try {
-                    //DVP: Si encuentra el Producto.
-                    if(response.has("producto")){
-                        //DVP: Hago el parseo del Json.
-                        JSONObject productoJson = response.getJSONObject("producto");
-                        JSONObject materialJson = response.getJSONObject("material");
-                        JSONObject categoriaJson = response.getJSONObject("categoria");
-
-                        Long productId = productoJson.getLong("id");
-                        String nombreProducto = productoJson.getString("nombre_producto");
-                        String categoria = categoriaJson.getString("descripcion");
-                        String material = materialJson.getString("descripcion");
-                        Long impacto = productoJson.getLong("cant_material"); //TODO HARDCODEADO
-
-                        Producto producto = new Producto(productId,nombreProducto,categoria,material,impacto);
-                        Fragment resultadoFragment = ResultadoFragment.newInstance(producto);
-                        getActivity().getSupportFragmentManager().beginTransaction()
-                                .replace(R.id.contentFragment, resultadoFragment)
-                                .addToBackStack(String.valueOf(resultadoFragment.getId()))
-                                .commit();
-                    }else {
-                        Toast.makeText(getContext(), "No se encontraron resultados", Toast.LENGTH_LONG).show();
-                    }
-                }catch (JSONException e) {
-                    //DVP: Si encuentra algun error parseando el Jason.
-                    Toast.makeText(getContext(), "Error en formato de Json", Toast.LENGTH_LONG).show();
-                    e.printStackTrace();
-                }
-            }
-
-            //DVP: Cuando falla la invocación al Back. (status code != 200).
-            @Override
-            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable){
-                prgDialog.hide();
-                if (statusCode == 404){
-                    Toast.makeText(getContext(), "URL no encontrada", Toast.LENGTH_LONG).show();
-                }else if (statusCode == 500){
-                    Toast.makeText(getContext(), "Error en el Backend", Toast.LENGTH_LONG).show();
-                }else{
-                    Toast.makeText(getContext(), throwable.getLocalizedMessage(), Toast.LENGTH_LONG).show();
-                    Log.e("API_ERROR", "Error Inesperado ["+statusCode+"]", throwable);
-                }
-            }
-        };
-        //DVP: invoco al servicio del Back
-        apiCallService.getProductoPorTitulo(nombre_producto, responseHandler);
-    }
 }

@@ -23,6 +23,7 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.app.ecologiate.R;
+import com.app.ecologiate.models.Material;
 import com.app.ecologiate.models.Producto;
 import com.app.ecologiate.services.ApiCallService;
 import com.github.clans.fab.FloatingActionButton;
@@ -40,6 +41,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 import butterknife.BindView;
@@ -205,7 +207,8 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback{
                     Toast.makeText(getContext(), infoMarker, Toast.LENGTH_LONG).show();
                     gMap.addMarker(new MarkerOptions().position(latLng).title("Nuevo").snippet(address.getAddressLine(0)));
 
-                    Fragment fragment = AltaPuntoRecoleccionFragment.newInstance(latLng.latitude, latLng.longitude, address.getAddressLine(0));
+                    Fragment fragment = AltaPuntoRecoleccionFragment.newInstance(latLng.latitude, latLng.longitude,
+                            address.getAddressLine(0), address.getAdminArea(), address.getCountryName());
                     getActivity().getSupportFragmentManager().beginTransaction()
                             .replace(R.id.contentFragment, fragment)
                             .addToBackStack(String.valueOf(fragment.getId()))
@@ -226,6 +229,34 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback{
     private void getPuntosDeRecoleccion(){
 
         JsonHttpResponseHandler responseHandler = new JsonHttpResponseHandler() {
+
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                try {
+                    // si me trajo algo
+                    if(response != null && response.has("puntos")){
+                        JSONArray puntosArray = response.getJSONArray("puntos");
+                        if(puntosArray.length()>0){
+                            for(int i = 0; i < puntosArray.length(); i++){
+                                JSONObject pdr = puntosArray.getJSONObject(i);
+                                LatLng pdrLatLng = new LatLng(pdr.getDouble("latitud"), pdr.getDouble("longitud"));
+                                String title = pdr.getString("descripcion");
+                                String direccion = pdr.getString("direccion");
+                                gMap.addMarker(new MarkerOptions().position(pdrLatLng).title(title).snippet(direccion));
+                            }
+                        }else{
+                            Toast.makeText(getContext(), "No se encontró ningún punto de recolección", Toast.LENGTH_LONG).show();
+                        }
+                    }else{
+                        Toast.makeText(getContext(), "No se encontró ningún punto de recolección", Toast.LENGTH_LONG).show();
+                    }
+                } catch (JSONException e) {
+                    //Error parseando el json
+                    Toast.makeText(getContext(), "Error en formato de json", Toast.LENGTH_LONG).show();
+                    e.printStackTrace();
+                }
+            }
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
@@ -249,13 +280,6 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback{
                 }
             }
 
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                ArrayList<JSONObject> list = new ArrayList<>();
-                list.add(response);
-                this.onSuccess(statusCode,headers,new JSONArray(list));
-            }
-
             //Cuando no vuelve con un status code "200" del backend, o sea, una falla
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
@@ -275,7 +299,14 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback{
 
         };
 
-        apiCallService.getPuntosDeRecoleccion(null, responseHandler);
+        List<String> materialIds = null;
+        String pais = null;
+        String area = null;
+        if(producto != null && producto.getMaterial() != null){
+            materialIds = new ArrayList<>();
+            materialIds.add(producto.getMaterial().getId().toString());
+        }
+        apiCallService.getPuntosDeRecoleccion(materialIds, pais, area, responseHandler);
     }
 
     @Override

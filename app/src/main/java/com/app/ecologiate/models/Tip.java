@@ -1,10 +1,9 @@
 package com.app.ecologiate.models;
 
-import com.app.ecologiate.R;
 
 
 
-
+@SuppressWarnings("unused")
 public class Tip {
     public String titulo;
     public String descripcion;

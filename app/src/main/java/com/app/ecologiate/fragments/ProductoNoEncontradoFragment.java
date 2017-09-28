@@ -56,7 +56,7 @@ public class ProductoNoEncontradoFragment extends Fragment {
                 Fragment altaProductoFragment = AltaProductoFragment.newInstance(codigoNoEncontrado);
                 getActivity().getSupportFragmentManager().beginTransaction()
                         .replace(R.id.contentFragment, altaProductoFragment)
-                        .addToBackStack(String.valueOf(altaProductoFragment.getId()))
+                        //.addToBackStack(String.valueOf(altaProductoFragment.getId())) no dejo volver
                         .commit();
             }
         });
@@ -67,6 +67,7 @@ public class ProductoNoEncontradoFragment extends Fragment {
                 Fragment reciclarFragment = new ReciclarFragment();
                 getActivity().getSupportFragmentManager().beginTransaction()
                         .replace(R.id.contentFragment, reciclarFragment)
+                        //.addToBackStack(String.valueOf(altaProductoFragment.getId())) no dejo volver
                         .commit();
             }
         });

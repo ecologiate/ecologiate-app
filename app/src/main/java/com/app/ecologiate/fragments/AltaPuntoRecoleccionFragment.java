@@ -33,6 +33,8 @@ public class AltaPuntoRecoleccionFragment extends Fragment {
     ApiCallService apiCallService = new ApiCallService();
 
     private String direccionSugerida;
+    private String area;
+    private String pais;
     private double latitud;
     private double longitud;
 
@@ -44,11 +46,14 @@ public class AltaPuntoRecoleccionFragment extends Fragment {
     public AltaPuntoRecoleccionFragment() {}
 
 
-    public static AltaPuntoRecoleccionFragment newInstance(double latitud, double longitud, String direccion) {
+    public static AltaPuntoRecoleccionFragment newInstance(double latitud, double longitud, String direccion,
+                                                           String area, String pais) {
         AltaPuntoRecoleccionFragment fragment = new AltaPuntoRecoleccionFragment();
         fragment.latitud = latitud;
         fragment.longitud = longitud;
         fragment.direccionSugerida = direccion;
+        fragment.area = area;
+        fragment.pais = pais;
         return fragment;
     }
 
@@ -81,8 +86,6 @@ public class AltaPuntoRecoleccionFragment extends Fragment {
     private void guardarPuntoRecoleccion(){
         String descripcion = ((EditText) myView.findViewById(R.id.etDescripcion)).getText().toString();
         String direccion = ((EditText) myView.findViewById(R.id.etDireccion)).getText().toString();
-        double latitud = this.latitud;
-        double longitud = this.longitud;
         long usuarioId = UserManager.getUser().getId();
         List<Long> materialIds = new ArrayList<>();
         CheckBox checkPapelYCarton = (CheckBox) myView.findViewById(R.id.checkPapel);
@@ -108,11 +111,13 @@ public class AltaPuntoRecoleccionFragment extends Fragment {
             try {
                 jsonBody.put("descripcion", descripcion);
                 jsonBody.put("direccion", direccion);
-                jsonBody.put("latitud", latitud);
-                jsonBody.put("longitud", longitud);
+                jsonBody.put("latitud", this.latitud);
+                jsonBody.put("longitud", this.longitud);
                 jsonBody.put("usuario", usuarioId);
                 JSONArray arrayMateriales = new JSONArray(materialIds);
                 jsonBody.put("materiales", arrayMateriales);
+                jsonBody.put("area", this.area);
+                jsonBody.put("pais", this.pais);
                 bodyEntity = new StringEntity(jsonBody.toString());
             } catch (Exception e) {
                 e.printStackTrace();
@@ -145,7 +150,7 @@ public class AltaPuntoRecoleccionFragment extends Fragment {
                 }
             };
 
-            apiCallService.postPuntosDeRecoleccion(getContext(), bodyEntity, responseHandler);
+            apiCallService.postPuntoDeRecoleccion(getContext(), bodyEntity, responseHandler);
         }
     }
 
