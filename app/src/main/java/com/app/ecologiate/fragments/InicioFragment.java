@@ -1,6 +1,5 @@
 package com.app.ecologiate.fragments;
 
-import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -11,12 +10,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 
 import com.app.ecologiate.R;
+import com.app.ecologiate.models.CampaniaAdapter;
 import com.app.ecologiate.models.Tip;
-import com.app.ecologiate.models.TipAdapter;
 
 
 import java.util.ArrayList;
@@ -37,17 +35,11 @@ public class InicioFragment extends Fragment {
 
     public InicioFragment() {}
 
-    //Creo el botón.
-    //@BindView(R.id.btnReciclar)
-    //Button reciclar;
-
     @BindView(R.id.avatar)
     ImageView imagenAvatar;
 
     @BindView(R.id.md_floating_action_reciclar)
     FloatingActionButton fam;
-
-
 
 
     @Override
@@ -78,12 +70,12 @@ public class InicioFragment extends Fragment {
         //creo mis mails
         List<Tip> myDataset = new ArrayList<>();
 
-        myDataset.add(new Tip("Cumpleaños", "Utiliza los rollos de papel higiénico para hacer ingeniosas decoraciones ", R.raw.tip1));
-        myDataset.add(new Tip("Bolsas de Te", "Guarda tus bolsas de té usadas en el refrigerador y utilízalas a la mañana siguiente para ponerla sobre tus ojos y aliviar las bolsas debajo de ellos. ", R.raw.tip2));
+        myDataset.add(new Tip("Garrahan", "Juntemos las tapitas para ayudar a los chicos ", R.raw.tapitas));
+        myDataset.add(new Tip("Fort", "Mantene el aire a 24° para que no se corte la Looz", R.raw.fort));
 
 
         // specify an adapter (see also next example)
-        mAdapter = new TipAdapter(myDataset);
+        mAdapter = new CampaniaAdapter(myDataset);
         mRecyclerView.setAdapter(mAdapter);
 
 
