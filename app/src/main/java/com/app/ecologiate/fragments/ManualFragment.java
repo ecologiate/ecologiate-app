@@ -14,12 +14,17 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.app.ecologiate.R;
+import com.app.ecologiate.models.Material;
 import com.app.ecologiate.models.Producto;
 import com.app.ecologiate.services.ApiCallService;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
 
@@ -106,9 +111,20 @@ public class ManualFragment extends Fragment {
                 prgDialog.hide();
                 try {
                     //DVP: Si encuentra el Producto.
-                    if(response.has("producto")){
+                    if(response.has("productos")){
                         //DVP: Hago el parseo del Json.
-                        Producto productoEncontrado = Producto.getFromJson(response.getJSONObject("producto"));
+
+                        //TODO devuelve una lista ahora, tengo que dejarle elegir al usuario con un recyclerview
+                        JSONArray productosJsonArray = response.getJSONArray("productos");
+                        List<Producto> productos = new ArrayList<>();
+                        for(int i = 0; i < productosJsonArray.length(); i++){
+                            JSONObject jsonProducto = productosJsonArray.getJSONObject(i);
+                            Producto prod = Producto.getFromJson(jsonProducto);
+                            productos.add(prod);
+                        }
+
+                        //Producto productoEncontrado = Producto.getFromJson(response.getJSONObject("producto"));
+                        Producto productoEncontrado = productos.get(0); //por ahora
 
                         Fragment resultadoFragment = ResultadoFragment.newInstance(productoEncontrado);
                         getActivity().getSupportFragmentManager().beginTransaction()

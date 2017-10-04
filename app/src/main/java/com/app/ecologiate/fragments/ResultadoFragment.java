@@ -66,9 +66,9 @@ public class ResultadoFragment extends Fragment {
         ButterKnife.bind(this, view);
 
         String mensajeResultado = "<b>Nombre del producto</b><br/> "+ producto.getNombreProducto() + "<br/><br/>"+
-                "<b>Categoría</b><br/> "+ producto.getCategoria().getDescripcion() + "<br/><br/>"+
-                "<b>Material</b><br/> "+ producto.getMaterial().getDescripcion() + "<br/><br/>"+
-                "<b>¿Impacto?</b><br/> "+ (producto.getCantMaterial() * producto.getMaterial().getTipoMaterialEqu());
+                "<b>Categoría</b><br/> "+ (producto.getCategoria()!=null ? producto.getCategoria().getDescripcion() : "?") + "<br/><br/>"+
+                "<b>Material</b><br/> "+ (producto.getMaterial()!=null ? producto.getMaterial().getDescripcion() : "?") + "<br/><br/>"+
+                "<b>¿Impacto?</b><br/> "+ (producto.getMaterial()!=null ? (producto.getCantMaterial() * producto.getMaterial().getTipoMaterialEqu()) : "?");
 
         tvResultado.setText(Html.fromHtml(mensajeResultado));
 

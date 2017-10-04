@@ -48,6 +48,10 @@ public class Producto {
         this.usuarioAlta = usuarioAlta;
     }
 
+    public boolean isPendiente(){
+        return ("PENDIENTE".equals(this.getEstado()));
+    }
+
 
     public Long getId() {
         return id;
