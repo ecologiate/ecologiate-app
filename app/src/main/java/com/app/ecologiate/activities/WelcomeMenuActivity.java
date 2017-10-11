@@ -114,7 +114,8 @@ public class WelcomeMenuActivity extends AppCompatActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_lateral_settings, menu);
+        //DVP: Comento la línea de abajo para que no aparezca el menú arriba a la derecha.
+        //getMenuInflater().inflate(R.menu.menu_lateral_settings, menu);
         return true;
     }
 
