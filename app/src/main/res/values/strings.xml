@@ -33,7 +33,7 @@
     /*Títulos y botones generales*/
     <string name="enviar">Enviar</string>
     <string name="buscar">Buscar</string>
-    <string name="Reciclar">Reciclar</string>
+    <string name="Reciclar">Búsqueda</string>
     <string name="ver_mapa">Ver donde Reciclar</string>
     <string name="buscando">Buscando...</string>
     <string name="nivel">Nivel:</string>

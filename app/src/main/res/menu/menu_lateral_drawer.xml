@@ -17,16 +17,16 @@
         <item
             android:id="@+id/nav_enterate"
             android:icon="@drawable/ic_enterate"
-            android:title="Enterate" />
+            android:title="Divertite" />
 
     </group>
 
-    <item android:title="Comunicate">
+    <item android:title="Personal">
         <menu>
             <item
                 android:id="@+id/nav_micuenta"
                 android:icon="@drawable/ic_usuario"
-                android:title="Mi Cuenta" />
+                android:title="Mi Perfil" />
             <item
                 android:id="@+id/nav_ajustes"
                 android:icon="@drawable/ic_ajustes"
