@@ -29,7 +29,9 @@
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
-                app:srcCompat="@drawable/ic_reciclaje"/>
+                android:tint="@color/colorPrimaryLight"
+                android:background="@android:color/darker_gray"
+                app:srcCompat="@drawable/ic_plastico"/>
 
             <TextView
                 android:id="@+id/nivelharcode"
