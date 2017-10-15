@@ -1,15 +1,18 @@
 package com.app.ecologiate.activities;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.app.ecologiate.R;
@@ -24,17 +27,25 @@ import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
+import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.OptionalPendingResult;
+import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.common.api.Status;
 
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity implements
+        GoogleApiClient.OnConnectionFailedListener{
 
 
     //Facebook
     CallbackManager mFacebookCallbackManager;
     //Google OAuth
     GoogleApiClient mGoogleApiClient;
+
+    private ProgressDialog mProgressDialog;
+
     private static final int GOOGLE_RC_SIGN_IN = 9001;
 
     @Override
@@ -59,16 +70,27 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onCancel() {
                 Toast.makeText(getApplicationContext(), "Cancelled", Toast.LENGTH_LONG).show();
+                mostrarLoginViejo();
             }
             @Override
             public void onError(FacebookException exception) {
                 Log.e(LoginActivity.class.getCanonicalName(), exception.getMessage());
                 Toast.makeText(getApplicationContext(), "ERROR: "+exception.getMessage(), Toast.LENGTH_LONG).show();
+                mostrarLoginViejo();
             }
         });
 
         //Google's binding
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail()
+                .build();
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .enableAutoManage(this, this)
+                .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
+                .build();
+
         SignInButton mGoogleSignInButton = (SignInButton)findViewById(R.id.google_sign_in_button);
+        mGoogleSignInButton.setSize(SignInButton.SIZE_ICON_ONLY);
         mGoogleSignInButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -77,22 +99,82 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    private void signInWithGoogle() {
-        if(mGoogleApiClient != null) {
-            mGoogleApiClient.disconnect();
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        OptionalPendingResult<GoogleSignInResult> opr = Auth.GoogleSignInApi.silentSignIn(mGoogleApiClient);
+        if (opr.isDone()) {
+            // If the user's cached credentials are valid, the OptionalPendingResult will be "done"
+            // and the GoogleSignInResult will be available instantly.
+            Log.d("LOGIN", "Got cached sign-in");
+            GoogleSignInResult result = opr.get();
+            handleSignInResult(result);
+        } else {
+            // If the user has not previously signed in on this device or the sign-in has expired,
+            // this asynchronous branch will attempt to sign in the user silently.  Cross-device
+            // single sign-on will occur in this branch.
+            showProgressDialog();
+            opr.setResultCallback(new ResultCallback<GoogleSignInResult>() {
+                @Override
+                public void onResult(GoogleSignInResult googleSignInResult) {
+                    hideProgressDialog();
+                    handleSignInResult(googleSignInResult);
+                }
+            });
         }
+    }
 
-        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestEmail()
-                .build();
-        mGoogleApiClient = new GoogleApiClient.Builder(this)
-                .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
-                .build();
+    private void handleSignInResult(GoogleSignInResult result) {
+        if (result.isSuccess()) {
+            GoogleSignInAccount account = result.getSignInAccount();
+            // get profile information
+            String name = "";
+            String email = "";
+            String uriPicture = "";
+            if (account.getDisplayName() != null) {
+                name = account.getDisplayName();
+            }
+            if (account.getEmail() != null) {
+                email = account.getEmail();
+            }
+            if (account.getPhotoUrl() != null) {
+                uriPicture = account.getPhotoUrl().toString();
+            }
+            // save profile information to preferences
+            SharedPreferences prefs = getSharedPreferences("com.app.ecologiate", Context.MODE_PRIVATE);
+            prefs.edit().putString("com.app.ecologiate.nombre", name).apply();
+            prefs.edit().putString("com.app.ecologiate.email", email).apply();
+            prefs.edit().putString("com.app.ecologiate.uriPicture", uriPicture).apply();
 
+
+            Toast.makeText(getApplicationContext(), "Logueado con Google: "+name,
+                    Toast.LENGTH_LONG).show();
+            goToNextActivity();
+        } else {
+            //failed
+            String msg = result.getStatus().getStatusMessage()+" - "+result.getStatus().toString();
+            Toast.makeText(getApplicationContext(), "Error: "+msg,
+                    Toast.LENGTH_LONG).show();
+            mostrarLoginViejo();
+        }
+    }
+
+
+    private void signInWithGoogle() {
         final Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
         startActivityForResult(signInIntent, GOOGLE_RC_SIGN_IN);
     }
 
+    private void signOut() {
+        Auth.GoogleSignInApi.signOut(mGoogleApiClient).setResultCallback(
+            new ResultCallback<Status>() {
+                @Override
+                public void onResult(Status status) {
+                    Toast.makeText(getApplicationContext(), "Deslogueado", Toast.LENGTH_LONG).show();
+                }
+        });
+    }
 
 
     @Override
@@ -101,39 +183,7 @@ public class LoginActivity extends AppCompatActivity {
         if (requestCode == GOOGLE_RC_SIGN_IN) {
             //Google's activity result
             GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
-            if(result.isSuccess()) {
-
-                GoogleSignInAccount account = result.getSignInAccount();
-
-                // get profile information
-                String name = "";
-                String email = "";
-                String uriPicture = "";
-                if (account.getDisplayName() != null) {
-                    name = account.getDisplayName();
-                }
-                if (account.getEmail() != null) {
-                    email = account.getEmail();
-                }
-                if (account.getPhotoUrl() != null) {
-                    uriPicture = account.getPhotoUrl().toString();
-                }
-                // save profile information to preferences
-                SharedPreferences prefs = getSharedPreferences("com.app.ecologiate", Context.MODE_PRIVATE);
-                prefs.edit().putString("com.app.ecologiate.nombre", name).apply();
-                prefs.edit().putString("com.app.ecologiate.email", email).apply();
-                prefs.edit().putString("com.app.ecologiate.uriPicture", uriPicture).apply();
-
-
-                Toast.makeText(getApplicationContext(), "Logueado con Google: "+name,
-                        Toast.LENGTH_LONG).show();
-                goToNextActivity();
-            } else {
-                //failed
-                String msg = result.getStatus().getStatusMessage()+" - "+result.getStatus().toString();
-                Toast.makeText(getApplicationContext(), "Error: "+msg,
-                        Toast.LENGTH_LONG).show();
-            }
+            handleSignInResult(result);
         } else {
             //Facebook's activity result
             mFacebookCallbackManager.onActivityResult(requestCode, resultCode, data);
@@ -146,6 +196,7 @@ public class LoginActivity extends AppCompatActivity {
         Intent menuIntent = new Intent(getApplicationContext(),WelcomeMenuActivity.class);
         menuIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(menuIntent);
+        finish();
     }
 
 
@@ -167,6 +218,44 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
         alertDialog.show();
+    }
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+        Toast.makeText(LoginActivity.this,"Error al conectarse con Google", Toast.LENGTH_LONG).show();
+    }
+
+    private void showProgressDialog() {
+        if (mProgressDialog == null) {
+            mProgressDialog = new ProgressDialog(this);
+            mProgressDialog.setIndeterminate(true);
+        }
+        mProgressDialog.show();
+    }
+
+    private void hideProgressDialog() {
+        if (mProgressDialog != null && mProgressDialog.isShowing()) {
+            mProgressDialog.hide();
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        hideProgressDialog();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (mProgressDialog != null) {
+            mProgressDialog.dismiss();
+        }
+    }
+
+    private void mostrarLoginViejo(){
+        Button btn = (Button) findViewById(R.id.ecoCustomLogin);
+        btn.setVisibility(View.VISIBLE);
     }
 
     /**
