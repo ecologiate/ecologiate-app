@@ -1,33 +1,71 @@
 {
   "project_info": {
-    "project_number": "775389596315",
-    "project_id": "firebase-ecologiate"
+    "project_number": "495472434616",
+    "firebase_url": "https://ecologiate-1494205722499.firebaseio.com",
+    "project_id": "ecologiate-1494205722499",
+    "storage_bucket": "ecologiate-1494205722499.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:775389596315:android:b9601bd9f64e8837",
+        "mobilesdk_app_id": "1:495472434616:android:b9601bd9f64e8837",
         "android_client_info": {
           "package_name": "com.app.ecologiate"
         }
       },
       "oauth_client": [
         {
-          "client_id": "775389596315-g77vmf35fqtu2t57ec5h2qmhlnkiia0m.apps.googleusercontent.com",
-          "client_type": 3
-        },
-        {
-          "client_id": "775389596315-0722g3jdvnvuvjtljbglj25i8of9q6cl.apps.googleusercontent.com",
+          "client_id": "495472434616-fir4ovcuf7tkdjhdnvoqil64p52ut2au.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.app.ecologiate",
-            "certificate_hash": "49f7313ef842ee2f0bc0304588d78767e2267b70"
+            "certificate_hash": "6c07740d9482db9016bcd6e958f217fe7f0c5a6b"
           }
+        },
+        {
+          "client_id": "495472434616-rdh8mvvvb5m3ch9jlfi1qiptp6jm6ii7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.app.ecologiate",
+            "certificate_hash": "868ca2c5e6310244ab65633f936b9a547d288a97"
+          }
+        },
+        {
+          "client_id": "495472434616-re9ekmuv713rtlll04abqh8glrnticov.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.app.ecologiate",
+            "certificate_hash": "5bab39a91571c0eaad73efb0cb54421adff59462"
+          }
+        },
+        {
+          "client_id": "495472434616-8enjacncpp7vra1ne2nr2ct10r09efdp.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.app.ecologiate",
+            "certificate_hash": "e289a475ebd4e0c5e5c75cb17afc4e1bccd66f37"
+          }
+        },
+        {
+          "client_id": "495472434616-po56f8npuu0ekuqtrbpltiba73dht9b4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.app.ecologiate",
+            "certificate_hash": "3b69d59b52a74d2df6e1b9e7fb70fb00e8d7c14a"
+          }
+        },
+        {
+          "client_id": "495472434616-9qu4g5rlaokt2mcqfu48aiq7vj1o8sqa.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "495472434616-8dbt0ov6ked0kqdepq5kq8nut97h8avb.apps.googleusercontent.com",
+          "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyD1SSYQivdSz6kLxhPQ-dlpveKHmsDrmhI"
+          "current_key": "AIzaSyCxvBrhhYG-XKUXgEHWSF_Fnb0gikfN2nU"
         }
       ],
       "services": {
@@ -39,7 +77,7 @@
           "other_platform_oauth_client": []
         },
         "ads_service": {
-          "status": 1
+          "status": 2
         }
       }
     }
