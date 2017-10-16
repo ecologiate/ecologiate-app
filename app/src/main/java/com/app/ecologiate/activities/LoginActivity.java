@@ -34,6 +34,8 @@ import com.google.android.gms.common.api.OptionalPendingResult;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
 
+import java.util.Arrays;
+
 
 public class LoginActivity extends AppCompatActivity implements
         GoogleApiClient.OnConnectionFailedListener{
@@ -60,6 +62,8 @@ public class LoginActivity extends AppCompatActivity implements
         //Facebook's binding
         mFacebookCallbackManager = CallbackManager.Factory.create();
         LoginButton fbLoginButton = (LoginButton) findViewById(R.id.fb_login_button);
+        fbLoginButton.setReadPermissions(Arrays.asList("email","public_profile","user_friends"));
+
         fbLoginButton.registerCallback(mFacebookCallbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
@@ -90,7 +94,7 @@ public class LoginActivity extends AppCompatActivity implements
                 .build();
 
         SignInButton mGoogleSignInButton = (SignInButton)findViewById(R.id.google_sign_in_button);
-        mGoogleSignInButton.setSize(SignInButton.SIZE_ICON_ONLY);
+        mGoogleSignInButton.setSize(SignInButton.SIZE_WIDE);
         mGoogleSignInButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -109,7 +113,7 @@ public class LoginActivity extends AppCompatActivity implements
             // and the GoogleSignInResult will be available instantly.
             Log.d("LOGIN", "Got cached sign-in");
             GoogleSignInResult result = opr.get();
-            handleSignInResult(result);
+            handleGoogleSignInResult(result, true);
         } else {
             // If the user has not previously signed in on this device or the sign-in has expired,
             // this asynchronous branch will attempt to sign in the user silently.  Cross-device
@@ -119,13 +123,17 @@ public class LoginActivity extends AppCompatActivity implements
                 @Override
                 public void onResult(GoogleSignInResult googleSignInResult) {
                     hideProgressDialog();
-                    handleSignInResult(googleSignInResult);
+                    handleGoogleSignInResult(googleSignInResult, true);
                 }
             });
         }
     }
 
-    private void handleSignInResult(GoogleSignInResult result) {
+    private void handleGoogleSignInResult(GoogleSignInResult result) {
+        handleGoogleSignInResult(result, false);
+    }
+
+    private void handleGoogleSignInResult(GoogleSignInResult result, Boolean silent) {
         if (result.isSuccess()) {
             GoogleSignInAccount account = result.getSignInAccount();
             // get profile information
@@ -147,16 +155,19 @@ public class LoginActivity extends AppCompatActivity implements
             prefs.edit().putString("com.app.ecologiate.email", email).apply();
             prefs.edit().putString("com.app.ecologiate.uriPicture", uriPicture).apply();
 
-
-            Toast.makeText(getApplicationContext(), "Logueado con Google: "+name,
-                    Toast.LENGTH_LONG).show();
+            if(!silent) {
+                Toast.makeText(getApplicationContext(), "Logueado con Google: " + name,
+                        Toast.LENGTH_LONG).show();
+            }
             goToNextActivity();
         } else {
             //failed
-            String msg = result.getStatus().getStatusMessage()+" - "+result.getStatus().toString();
-            Toast.makeText(getApplicationContext(), "Error: "+msg,
-                    Toast.LENGTH_LONG).show();
-            mostrarLoginViejo();
+            if(!silent) {
+                String msg = result.getStatus().getStatusMessage()+" - "+result.getStatus().toString();
+                Toast.makeText(getApplicationContext(), "Error: " + msg,
+                        Toast.LENGTH_LONG).show();
+                mostrarLoginViejo();
+            }
         }
     }
 
@@ -183,7 +194,7 @@ public class LoginActivity extends AppCompatActivity implements
         if (requestCode == GOOGLE_RC_SIGN_IN) {
             //Google's activity result
             GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
-            handleSignInResult(result);
+            handleGoogleSignInResult(result);
         } else {
             //Facebook's activity result
             mFacebookCallbackManager.onActivityResult(requestCode, resultCode, data);

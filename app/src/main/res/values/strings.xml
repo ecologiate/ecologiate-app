@@ -5,6 +5,7 @@
     <!-- Facebook -->
     <string name="facebook_app_id">149676695596008</string>
     <string name="fb_login_protocol_scheme">fb149676695596008</string>
+    <string name="fb_login">Iniciar sesión con Facebook</string>
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password (optional)</string>
