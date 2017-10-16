@@ -16,6 +16,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.app.ecologiate.R;
+import com.app.ecologiate.services.UserManager;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
@@ -25,14 +26,11 @@ import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.common.api.OptionalPendingResult;
 import com.google.android.gms.common.api.ResultCallback;
-import com.google.android.gms.common.api.Status;
 
 import java.util.Arrays;
 
@@ -43,8 +41,6 @@ public class LoginActivity extends AppCompatActivity implements
 
     //Facebook
     CallbackManager mFacebookCallbackManager;
-    //Google OAuth
-    GoogleApiClient mGoogleApiClient;
 
     private ProgressDialog mProgressDialog;
 
@@ -85,13 +81,7 @@ public class LoginActivity extends AppCompatActivity implements
         });
 
         //Google's binding
-        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestEmail()
-                .build();
-        mGoogleApiClient = new GoogleApiClient.Builder(this)
-                .enableAutoManage(this, this)
-                .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
-                .build();
+        UserManager.setUpGoogleSignIn(this, this, this);
 
         SignInButton mGoogleSignInButton = (SignInButton)findViewById(R.id.google_sign_in_button);
         mGoogleSignInButton.setSize(SignInButton.SIZE_WIDE);
@@ -107,30 +97,17 @@ public class LoginActivity extends AppCompatActivity implements
     public void onStart() {
         super.onStart();
 
-        OptionalPendingResult<GoogleSignInResult> opr = Auth.GoogleSignInApi.silentSignIn(mGoogleApiClient);
-        if (opr.isDone()) {
-            // If the user's cached credentials are valid, the OptionalPendingResult will be "done"
-            // and the GoogleSignInResult will be available instantly.
-            Log.d("LOGIN", "Got cached sign-in");
-            GoogleSignInResult result = opr.get();
-            handleGoogleSignInResult(result, true);
-        } else {
-            // If the user has not previously signed in on this device or the sign-in has expired,
-            // this asynchronous branch will attempt to sign in the user silently.  Cross-device
-            // single sign-on will occur in this branch.
-            showProgressDialog();
-            opr.setResultCallback(new ResultCallback<GoogleSignInResult>() {
-                @Override
-                public void onResult(GoogleSignInResult googleSignInResult) {
-                    hideProgressDialog();
-                    handleGoogleSignInResult(googleSignInResult, true);
-                }
-            });
-        }
-    }
+        showProgressDialog();
 
-    private void handleGoogleSignInResult(GoogleSignInResult result) {
-        handleGoogleSignInResult(result, false);
+        UserManager.googleSilentSignIn(new ResultCallback<GoogleSignInResult>() {
+            @Override
+            public void onResult(@NonNull GoogleSignInResult googleSignInResult) {
+                hideProgressDialog();
+                handleGoogleSignInResult(googleSignInResult, true);
+            }
+        });
+
+        UserManager.connect();
     }
 
     private void handleGoogleSignInResult(GoogleSignInResult result, Boolean silent) {
@@ -173,19 +150,10 @@ public class LoginActivity extends AppCompatActivity implements
 
 
     private void signInWithGoogle() {
-        final Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
+        final Intent signInIntent = UserManager.createGoogleSignIntent();
         startActivityForResult(signInIntent, GOOGLE_RC_SIGN_IN);
     }
 
-    private void signOut() {
-        Auth.GoogleSignInApi.signOut(mGoogleApiClient).setResultCallback(
-            new ResultCallback<Status>() {
-                @Override
-                public void onResult(Status status) {
-                    Toast.makeText(getApplicationContext(), "Deslogueado", Toast.LENGTH_LONG).show();
-                }
-        });
-    }
 
 
     @Override
@@ -194,7 +162,7 @@ public class LoginActivity extends AppCompatActivity implements
         if (requestCode == GOOGLE_RC_SIGN_IN) {
             //Google's activity result
             GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
-            handleGoogleSignInResult(result);
+            handleGoogleSignInResult(result, false);
         } else {
             //Facebook's activity result
             mFacebookCallbackManager.onActivityResult(requestCode, resultCode, data);
@@ -218,13 +186,13 @@ public class LoginActivity extends AppCompatActivity implements
         alertDialog.setPositiveButton("Dale", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                Toast.makeText(LoginActivity.this,"Crack", Toast.LENGTH_SHORT);
+                Toast.makeText(LoginActivity.this,"Crack", Toast.LENGTH_SHORT).show();
             }
         });
         alertDialog.setNegativeButton("No jodas", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                Toast.makeText(LoginActivity.this,"Forro", Toast.LENGTH_SHORT);
+                Toast.makeText(LoginActivity.this,"Forro", Toast.LENGTH_SHORT).show();
                 goToNextActivity();
             }
         });
@@ -239,6 +207,7 @@ public class LoginActivity extends AppCompatActivity implements
     private void showProgressDialog() {
         if (mProgressDialog == null) {
             mProgressDialog = new ProgressDialog(this);
+            mProgressDialog.setTitle("Obteniendo información del usuario");
             mProgressDialog.setIndeterminate(true);
         }
         mProgressDialog.show();
@@ -262,6 +231,7 @@ public class LoginActivity extends AppCompatActivity implements
         if (mProgressDialog != null) {
             mProgressDialog.dismiss();
         }
+        UserManager.disconnect();
     }
 
     private void mostrarLoginViejo(){
@@ -269,9 +239,7 @@ public class LoginActivity extends AppCompatActivity implements
         btn.setVisibility(View.VISIBLE);
     }
 
-    /**
-     * Shows the progress UI and hides the login form.
-     */
+
     /*
     @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
     private void showProgress(final boolean show) {

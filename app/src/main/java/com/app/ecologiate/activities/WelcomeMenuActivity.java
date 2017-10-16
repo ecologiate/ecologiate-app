@@ -1,7 +1,9 @@
 package com.app.ecologiate.activities;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
@@ -30,9 +32,12 @@ import com.app.ecologiate.fragments.ReciclarFragment;
 import com.app.ecologiate.fragments.ResultadoFragment;
 import com.app.ecologiate.fragments.TipsFragment;
 import com.app.ecologiate.fragments.TriviaFragment;
+import com.app.ecologiate.services.UserManager;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.common.GooglePlayServicesUtil;
+import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.common.api.Status;
 
 public class WelcomeMenuActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
@@ -159,6 +164,17 @@ public class WelcomeMenuActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_ajustes) {
             fragment = new AjustesFragment();
+
+        }else if(id == R.id.nav_cerrar_sesion){
+            UserManager.logOut(new ResultCallback<Status>() {
+                @Override
+                public void onResult(@NonNull Status status) {
+                    Intent loginIntent = new Intent(getApplicationContext(),LoginActivity.class);
+                    loginIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(loginIntent);
+                    finish();
+                }
+            });
         }
 
         if (fragment != null) {
@@ -166,9 +182,10 @@ public class WelcomeMenuActivity extends AppCompatActivity
                     .replace(R.id.contentFragment, fragment)
                     .addToBackStack(String.valueOf(fragment.getId()))
                     .commit();
+
+            setTitle(item.getTitle());
         }
 
-        setTitle(item.getTitle());
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
