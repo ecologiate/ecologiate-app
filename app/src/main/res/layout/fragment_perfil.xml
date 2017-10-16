@@ -98,160 +98,132 @@
                 android:layout_below="@+id/tituloMedaXMat"
                 android:rowCount="12">
 
-                <CheckBox
-                    android:id="@+id/checkAceite"
+                <ImageButton
+                    android:id="@+id/ibAceite"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_column="0"
                     android:layout_row="5"
-                    android:text="@string/aceite"
-                    android:textColor="@color/colorTexto"
-                    android:textSize="16sp"
-                    android:buttonTint="@color/colorcheckbox" />
+                    android:tint="@color/colorBoton"
+                    app:srcCompat="@drawable/ic_aceite"/>
 
-                <CheckBox
-                    android:id="@+id/checkBronce"
+                <ImageButton
+                    android:id="@+id/ibBronce"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_column="0"
                     android:layout_row="6"
-                    android:text="@string/bronce"
-                    android:textColor="@color/colorTexto"
-                    android:textSize="16sp"
-                    android:buttonTint="@color/colorcheckbox" />
+                    android:tint="@color/colorBoton"
+                    app:srcCompat="@drawable/ic_bronce" />
 
-                <CheckBox
-                    android:id="@+id/checkElectronicos"
+                <ImageButton
+                    android:id="@+id/ibElectronicos"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_column="0"
                     android:layout_row="7"
-                    android:text="@string/electronicos"
-                    android:textColor="@color/colorTexto"
-                    android:textSize="16sp"
-                    android:buttonTint="@color/colorcheckbox" />
+                    android:tint="@color/colorBoton"
+                    app:srcCompat="@drawable/ic_electronicos" />
 
-                <CheckBox
-                    android:id="@+id/checkMetales"
+                <ImageButton
+                    android:id="@+id/ibMetales"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_column="0"
-                    android:layout_row="8"
-                    android:text="@string/metales"
-                    android:textColor="@color/colorTexto"
-                    android:textSize="16sp"
-                    android:buttonTint="@color/colorcheckbox" />
+                    android:layout_column="2"
+                    android:layout_row="5"
+                    android:tint="@color/colorBoton"
+                    app:srcCompat="@drawable/ic_metales" />
 
-                <CheckBox
-                    android:id="@+id/checkNeumaticos"
+                <ImageButton
+                    android:id="@+id/ibNeumaticos"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_column="0"
-                    android:layout_row="9"
-                    android:text="@string/neumaticos"
-                    android:textColor="@color/colorTexto"
-                    android:textSize="16sp"
-                    android:buttonTint="@color/colorcheckbox" />
+                    android:layout_column="2"
+                    android:layout_row="6"
+                    android:tint="@color/colorBoton"
+                    app:srcCompat="@drawable/ic_neumaticos"  />
 
-                <CheckBox
-                    android:id="@+id/checkOrganico"
+                <ImageButton
+                    android:id="@+id/ibOrganico"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_column="0"
-                    android:layout_row="10"
-                    android:text="@string/organicos"
-                    android:textColor="@color/colorTexto"
-                    android:textSize="16sp"
-                    android:buttonTint="@color/colorcheckbox" />
+                    android:layout_column="2"
+                    android:layout_row="7"
+                    android:tint="@color/colorBoton"
+                    app:srcCompat="@drawable/ic_organico"  />
 
-                <CheckBox
-                    android:id="@+id/checkPapel"
+                <ImageButton
+                    android:id="@+id/ibPapel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_column="0"
-                    android:layout_row="11"
-                    android:text="@string/papel_carton"
-                    android:textColor="@color/colorTexto"
-                    android:textSize="16sp"
-                    android:buttonTint="@color/colorcheckbox" />
+                    android:layout_column="3"
+                    android:layout_row="5"
+                    android:tint="@color/colorBoton"
+                    app:srcCompat="@drawable/ic_cartonypapel"  />
 
-                <CheckBox
-                    android:id="@+id/checkPilas"
+                <ImageButton
+                    android:id="@+id/ibPilas"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_column="1"
                     android:layout_row="5"
-                    android:text="@string/pilas"
-                    android:textColor="@color/colorTexto"
-                    android:textSize="16sp"
-                    android:buttonTint="@color/colorcheckbox" />
+                    android:tint="@color/colorBoton"
+                    app:srcCompat="@drawable/ic_pilas"  />
 
-                <CheckBox
-                    android:id="@+id/checkPlastico"
+                <ImageButton
+                    android:id="@+id/ibPlastico"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_column="1"
                     android:layout_row="6"
-                    android:text="@string/plastico"
-                    android:textColor="@color/colorTexto"
-                    android:textSize="16sp"
-                    android:buttonTint="@color/colorcheckbox" />
+                    android:tint="@color/colorBoton"
+                    app:srcCompat="@drawable/ic_plastico"  />
 
-                <CheckBox
-                    android:id="@+id/checkTapitas"
+                <ImageButton
+                    android:id="@+id/ibTapitas"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_column="1"
                     android:layout_row="7"
-                    android:text="@string/tapitas"
-                    android:textColor="@color/colorTexto"
-                    android:textSize="16sp"
-                    android:buttonTint="@color/colorcheckbox" />
+                    android:tint="@color/colorBoton"
+                    app:srcCompat="@drawable/ic_tapitas"  />
 
-                <CheckBox
-                    android:id="@+id/checkTelgopor"
+                <ImageButton
+                    android:id="@+id/ibTelgopor"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_column="1"
-                    android:layout_row="8"
-                    android:text="@string/telgopor"
-                    android:textColor="@color/colorTexto"
-                    android:textSize="16sp"
-                    android:buttonTint="@color/colorcheckbox" />
+                    android:layout_column="3"
+                    android:layout_row="6"
+                    android:tint="@color/colorBoton"
+                    app:srcCompat="@drawable/ic_telgopor"  />
 
-                <CheckBox
-                    android:id="@+id/checkTetra"
+                <ImageButton
+                    android:id="@+id/ibTetra"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_column="1"
-                    android:layout_row="9"
-                    android:text="@string/tetra"
-                    android:textColor="@color/colorTexto"
-                    android:textSize="16sp"
-                    android:buttonTint="@color/colorcheckbox" />
+                    android:layout_column="3"
+                    android:layout_row="7"
+                    android:tint="@color/colorBoton"
+                    app:srcCompat="@drawable/ic_tetra"  />
 
-                <CheckBox
-                    android:id="@+id/checkTextiles"
+                <ImageButton
+                    android:id="@+id/ibTextiles"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_column="1"
-                    android:layout_row="10"
-                    android:text="@string/textiles"
-                    android:textColor="@color/colorTexto"
-                    android:textSize="16sp"
-                    android:buttonTint="@color/colorcheckbox" />
+                    android:layout_column="4"
+                    android:layout_row="5"
+                    android:tint="@color/colorBoton"
+                    app:srcCompat="@drawable/ic_textil"  />
 
-                <CheckBox
-                    android:id="@+id/checkVidrio"
+                <ImageButton
+                    android:id="@+id/ibVidrio"
                     android:checked="true"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_column="1"
-                    android:layout_row="11"
-                    android:text="@string/vidrio"
-                    android:textColor="@color/colorTexto"
-                    android:textSize="16sp"
-                    android:buttonTint="@color/colorcheckbox" />
+                    android:layout_column="4"
+                    android:layout_row="6"
+                    android:tint="@color/colorBoton"
+                    app:srcCompat="@drawable/ic_vidrio" />
 
             </GridLayout>
 
@@ -276,11 +248,52 @@
             android:gravity="center_horizontal"
             android:textSize="20dp"/>
 
+        <GridLayout
+            android:id="@+id/grilla2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginStart="15dp"
+            android:alignmentMode="alignBounds"
+            android:columnCount="12"
+            android:orientation="vertical"
+            android:layout_below="@+id/tituloMedaXCamp"
+            android:rowCount="12">
+
+            <ImageButton
+                android:id="@+id/ibHospital"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_column="0"
+                android:layout_row="5"
+                android:tint="@color/colorBoton"
+                app:srcCompat="@drawable/ic_hospital"/>
+
+            <ImageButton
+                android:id="@+id/ibClub"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_column="2"
+                android:layout_row="5"
+                android:tint="@color/colorBoton"
+                app:srcCompat="@drawable/ic_club" />
+
+            <ImageButton
+                android:id="@+id/ibFundacion"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_column="5"
+                android:layout_row="5"
+                android:tint="@color/colorBoton"
+                app:srcCompat="@drawable/ic_electronicos" />
+        </GridLayout>
+
+
         <View
             android:layout_width="wrap_content"
             android:layout_height="2dip"
             android:background="@color/violetaOscuro"
-            android:layout_below="@+id/tituloMedaXCamp"
+            android:layout_below="@+id/grilla2"
             android:padding="10dp"/>
 
     </RelativeLayout>
