@@ -285,7 +285,7 @@
                 android:layout_column="5"
                 android:layout_row="5"
                 android:tint="@color/colorBoton"
-                app:srcCompat="@drawable/ic_electronicos" />
+                app:srcCompat="@drawable/ic_fundacion" />
         </GridLayout>
 
 
@@ -330,7 +330,7 @@
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@+id/tituloArboles"
                 android:layout_below="@+id/tituloMetrica"
-                android:text="sarasa"
+                android:text="5"
                 android:padding="6dp"
                 android:textSize="20dp"/>
 
@@ -349,7 +349,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/tituloArboles"
                 android:layout_toRightOf="@+id/tituloAgua"
-                android:text="sarasa2"
+                android:text="25"
                 android:padding="6dp"
                 android:textSize="20dp"/>
 
@@ -368,7 +368,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/tituloAgua"
                 android:layout_toRightOf="@+id/tituloEnergia"
-                android:text="sarasa energia"
+                android:text="30"
                 android:padding="6dp"
                 android:textSize="20dp"/>
 

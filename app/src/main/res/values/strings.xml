@@ -40,9 +40,9 @@
     <string name="nivel">Nivel:</string>
     <string name="metricas">Métricas de Reciclaje</string>
     <string name="campanias">Campañas Activas</string>
-    <string name="arboles">Árboles:</string>
-    <string name="agua">Agua:</string>
-    <string name="energia">Energía:</string>
+    <string name="arboles">Árboles Salvados:</string>
+    <string name="agua">Agua Ahorrada (Lts):</string>
+    <string name="energia">Energía Ahorrada (Kws):</string>
     <string name="medallasMaterial">Medallas por Material</string>
     <string name="medallasCampanias">Medallas por Campañas</string>
 
