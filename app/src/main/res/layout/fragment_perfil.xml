@@ -105,7 +105,7 @@
                     android:layout_column="0"
                     android:layout_row="5"
                     android:tint="@color/colorBoton"
-                    app:srcCompat="@drawable/ic_aceite"/>
+                    app:srcCompat="@drawable/ic_aceite" />
 
                 <ImageButton
                     android:id="@+id/ibBronce"
