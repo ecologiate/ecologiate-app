@@ -131,6 +131,7 @@ public class LoginActivity extends AppCompatActivity implements
             prefs.edit().putString("com.app.ecologiate.nombre", name).apply();
             prefs.edit().putString("com.app.ecologiate.email", email).apply();
             prefs.edit().putString("com.app.ecologiate.uriPicture", uriPicture).apply();
+            UserManager.getUser().setNombre(name);
 
             if(!silent) {
                 Toast.makeText(getApplicationContext(), "Logueado con Google: " + name,
