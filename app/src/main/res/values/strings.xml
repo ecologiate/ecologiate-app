@@ -39,12 +39,16 @@
     <string name="buscando">Buscando...</string>
     <string name="nivel">Nivel:</string>
     <string name="metricas">Métricas de Reciclaje</string>
+    <string name="metricasgrupo">Metricas del Grupo</string>
     <string name="campanias">Campañas Activas</string>
     <string name="arboles">Árboles Salvados:</string>
     <string name="agua">Agua Ahorrada (Lts):</string>
     <string name="energia">Energía Ahorrada (Kws):</string>
     <string name="medallasMaterial">Medallas por Material</string>
     <string name="medallasCampanias">Medallas por Campañas</string>
+    <string name="creargrupo">Crear Grupo</string>
+    <string name="invitargrupo">Invitar Amigo</string>
+    <string name="salirgrupo">Salir del Grupo</string>
 
 
     /*Strings de alta de punto de recoleccion*/
