@@ -16,7 +16,7 @@ import cz.msebera.android.httpclient.HttpEntity;
 
 public class ApiCallService {
 
-    static final String SERVER_URL = "https://ecologiate.herokuapp.com";
+    static final String SERVER_URL = EcologiateConstants.SERVER_URL;
 
     AsyncHttpClient client = new AsyncHttpClient();
 
