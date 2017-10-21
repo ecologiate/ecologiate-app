@@ -68,7 +68,7 @@ public class ResultadoFragment extends Fragment {
         String mensajeResultado = "<b>Nombre del producto</b><br/> "+ producto.getNombreProducto() + "<br/><br/>"+
                 "<b>Categoría</b><br/> "+ (producto.getCategoria()!=null ? producto.getCategoria().getDescripcion() : "?") + "<br/><br/>"+
                 "<b>Material</b><br/> "+ (producto.getMaterial()!=null ? producto.getMaterial().getDescripcion() : "?") + "<br/><br/>"+
-                "<b>¿Impacto?</b><br/> "+ (producto.getMaterial()!=null ? (producto.getCantMaterial() * producto.getMaterial().getTipoMaterialEqu()) : "?");
+                "<b>Emisiones ahorradas</b><br/> "+ (producto.getMaterial()!=null ? (producto.getCantMaterial() * producto.getMaterial().getEquEmisiones()) : "?");
 
         tvResultado.setText(Html.fromHtml(mensajeResultado));
 

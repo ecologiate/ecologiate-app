@@ -12,7 +12,7 @@ public class Material {
     private Integer equArboles;
     private Integer equEnergia;
     private Integer equAgua;
-    private Integer tipoMaterialEqu;
+    private Integer equEmisiones;
     private Integer puntosOtorgados;
     private Categoria categoria;
 
@@ -25,7 +25,7 @@ public class Material {
                     jsonObject.has("equ_arboles") ? jsonObject.getInt("equ_arboles") : null,
                     jsonObject.has("equ_energia") ? jsonObject.getInt("equ_energia") : null,
                     jsonObject.has("equ_agua") ? jsonObject.getInt("equ_agua") : null,
-                    jsonObject.has("tipo_material_equ") ? jsonObject.getInt("tipo_material_equ") : null,
+                    jsonObject.has("equ_emisiones") ? jsonObject.getInt("equ_emisiones") : null,
                     jsonObject.has("puntos_otorgados") ? jsonObject.getInt("puntos_otorgados") : null,
                     jsonObject.has("categoria") ? Categoria.getFromJson(jsonObject.getJSONObject("categoria")) : null
             );
@@ -36,14 +36,14 @@ public class Material {
     }
 
     public Material(Long id, String descripcion, Integer equArboles, Integer equEnergia,
-                    Integer equAgua, Integer tipoMaterialEqu, Integer puntosOtorgados,
+                    Integer equAgua, Integer equEmisiones, Integer puntosOtorgados,
                     Categoria categoria) {
         this.id = id;
         this.descripcion = descripcion;
         this.equArboles = equArboles;
         this.equEnergia = equEnergia;
         this.equAgua = equAgua;
-        this.tipoMaterialEqu = tipoMaterialEqu;
+        this.equEmisiones = equEmisiones;
         this.puntosOtorgados = puntosOtorgados;
         this.categoria = categoria;
     }
@@ -88,12 +88,12 @@ public class Material {
         this.equAgua = equAgua;
     }
 
-    public Integer getTipoMaterialEqu() {
-        return tipoMaterialEqu;
+    public Integer getEquEmisiones() {
+        return equEmisiones;
     }
 
-    public void setTipoMaterialEqu(Integer tipoMaterialEqu) {
-        this.tipoMaterialEqu = tipoMaterialEqu;
+    public void setEquEmisiones(Integer equEmisiones) {
+        this.equEmisiones = equEmisiones;
     }
 
     public Integer getPuntosOtorgados() {

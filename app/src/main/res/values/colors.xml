@@ -17,4 +17,8 @@
     <color name="colorcheckbox">#69706a</color>
     <color name="violetaOscuro">#93056f</color>
     <color name="violetaClaro">#e3adfc</color>
+
+    <color name="oro">#ffd700</color>
+    <color name="plata">#8A9597</color>
+    <color name="bronce">#783D21</color>
 </resources>

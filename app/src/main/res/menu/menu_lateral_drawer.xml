@@ -29,7 +29,7 @@
                 android:title="Mi Perfil" />
             <item
                 android:id="@+id/nav_ajustes"
-                android:icon="@drawable/ic_ajustes"
+                android:icon="@android:drawable/ic_menu_preferences"
                 android:title="Ajustes" />
             <item
                 android:id="@+id/nav_cerrar_sesion"
