@@ -37,22 +37,24 @@ public class ReciclarFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragmento_paginado, container, false);
+        View view = inflater.inflate(R.layout.fragment_reciclar, container, false);
 
         insertarTabs(container);
         //setear adaptador al viewpager
-        viewPager = (ViewPager) view.findViewById(R.id.pager);
+        viewPager = (ViewPager) view.findViewById(R.id.pagerReciclar);
         poblarViewPager(viewPager);
         pestanias.setupWithViewPager(viewPager);
 
         return view;
     }
 
+
     private void insertarTabs(ViewGroup container) {
         View padre = (View) container.getParent();
         appBar = (AppBarLayout) padre.findViewById(R.id.appbar);
-        pestanias = new TabLayout(getActivity());
-        pestanias.setTabTextColors(Color.parseColor("#FFFFFF"), Color.parseColor("#0051FF"));
+        pestanias = new TabLayout(getContext());
+        pestanias.setTabTextColors(Color.parseColor("#FFFFFF"), Color.parseColor("#1b5e20"));
+        pestanias.setSelectedTabIndicatorColor(Color.parseColor("#1b5e20"));
         appBar.addView(pestanias);
     }
 
