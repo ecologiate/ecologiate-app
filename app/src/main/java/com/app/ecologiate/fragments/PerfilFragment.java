@@ -53,10 +53,12 @@ public class PerfilFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        //DVP: Manejo el fragment como un view, creo el botón y en el onclick llamo
-        //al dialog.
+        //DVP: Manejo el fragment como un view.
         View view = inflater.inflate(R.layout.fragment_perfil, container, false);
         ImageButton imagen = (ImageButton) view.findViewById(R.id.ibAceite);
+
+        //Cómo puedo hacer para todos los botones? (Lucho??)
+        //ImageButton imagen2 = (ImageButton) view.findViewById(R.id.ibBronce);
 
         imagen.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -65,8 +67,6 @@ public class PerfilFragment extends Fragment {
                 LayoutInflater inflater = getActivity().getLayoutInflater();
                 View view1 = inflater.inflate(R.layout.dialogo_medallas,null);
                 builder.setView(view1);
-                //builder.setTitle("Medallas");
-                //builder.setMessage("Oro, Plata o Bronce");
                 Dialog dialog = builder.create();
                 dialog.show();
             }
