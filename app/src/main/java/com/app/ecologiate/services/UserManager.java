@@ -26,8 +26,8 @@ public class UserManager {
     /* *****************************/
 
     private static Usuario loggedUser = new Usuario(1L, "Ecologiate", "",
-            "ecologiateapp@gmail.com", "", 0L, new Nivel(1L,"Novato",
-            "ecologiate.herokuapp.com/images/avatar_novato.png",
+            "ecologiateapp@gmail.com", 0L, true, new Nivel(1L,"Novato",
+            "/images/avatar_novato.png",
             0L,1000L));
 
     public static Usuario getUser(){

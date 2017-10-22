@@ -12,8 +12,8 @@ public class Usuario {
     private String nombre;
     private String apellido;
     private String mail;
-    private String token;
     private Long puntos;
+    private Boolean admin;
     private Nivel nivel;
 
     public static Usuario getFromJson(JSONObject jsonObject){
@@ -23,8 +23,8 @@ public class Usuario {
                     jsonObject.has("nombre") ? jsonObject.getString("nombre") : null,
                     jsonObject.has("apellido") ? jsonObject.getString("apellido") : null,
                     jsonObject.has("mail") ? jsonObject.getString("mail") : null,
-                    jsonObject.has("token") ? jsonObject.getString("token") : null,
                     jsonObject.has("puntos") ? jsonObject.getLong("puntos") : null,
+                    jsonObject.has("admin") ? jsonObject.getBoolean("admin") : false,
                     jsonObject.has("nivel") ? Nivel.getFromJson(jsonObject.getJSONObject("nivel")) : null
             );
         }catch (Exception e){
@@ -34,13 +34,13 @@ public class Usuario {
     }
 
 
-    public Usuario(Long id, String nombre, String apellido, String mail, String token, Long puntos, Nivel nivel) {
+    public Usuario(Long id, String nombre, String apellido, String mail, Long puntos, Boolean admin, Nivel nivel) {
         this.id = id;
         this.nombre = nombre;
         this.apellido = apellido;
         this.mail = mail;
-        this.token = token;
         this.puntos = puntos;
+        this.admin = admin;
         this.nivel = nivel;
     }
 
@@ -76,12 +76,12 @@ public class Usuario {
         this.mail = mail;
     }
 
-    public String getToken() {
-        return token;
+    public Boolean getAdmin() {
+        return admin;
     }
 
-    public void setToken(String token) {
-        this.token = token;
+    public void setAdmin(Boolean admin) {
+        this.admin = admin;
     }
 
     public Long getPuntos() {

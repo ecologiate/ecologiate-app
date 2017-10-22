@@ -3,6 +3,8 @@ package com.app.ecologiate.models;
 
 import android.util.Log;
 
+import com.app.ecologiate.services.EcologiateConstants;
+
 import org.json.JSONObject;
 
 @SuppressWarnings("unused")
@@ -54,7 +56,7 @@ public class Nivel {
     }
 
     public String getImagenLink() {
-        return imagenLink;
+        return EcologiateConstants.SERVER_URL + imagenLink;
     }
 
     public void setImagenLink(String imagenLink) {

@@ -1,8 +1,11 @@
 package com.app.ecologiate.fragments;
 
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,10 +14,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.app.ecologiate.R;
 import com.app.ecologiate.models.CampaniaAdapter;
 import com.app.ecologiate.models.Tip;
+import com.app.ecologiate.models.Usuario;
+import com.app.ecologiate.services.UserManager;
+import com.squareup.picasso.Picasso;
 
 
 import java.util.ArrayList;
@@ -37,6 +44,8 @@ public class InicioFragment extends Fragment {
 
     @BindView(R.id.avatar)
     ImageView imagenAvatar;
+    @BindView(R.id.nivelActual)
+    TextView txNivelUsuario;
 
     @BindView(R.id.md_floating_action_reciclar)
     FloatingActionButton fam;
@@ -54,6 +63,13 @@ public class InicioFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_inicio, container, false);
         ButterKnife.bind(this, view);
         imagenAvatar.requestFocus();
+        //seteo los datos del usuario
+        Usuario usuario = UserManager.getUser();
+        completeAppBarInfo(usuario, container);
+        Picasso.with(getContext()).load(usuario.getNivel().getImagenLink()).into(imagenAvatar);
+        txNivelUsuario.setText(usuario.getNivel().getDescripcion());
+
+
 
         mRecyclerView = (RecyclerView) view.findViewById(R.id.tipFragment);
 
@@ -95,6 +111,12 @@ public class InicioFragment extends Fragment {
     }
 
 
+    private void completeAppBarInfo(Usuario usuario, ViewGroup container) {
+        getActivity().setTitle("Hola "+usuario.getNombre());
+        View padre = (View) container.getParent();
+        AppBarLayout appBar = (AppBarLayout) padre.findViewById(R.id.appbar);
+        //appBar.addView(alguna view creada);
+    }
 
 
     public interface OnFragmentInteractionListener {

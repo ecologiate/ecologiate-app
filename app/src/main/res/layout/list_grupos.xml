@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/cvgrupos"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="8dp">
+
+
+            <TextView
+                android:id="@+id/grupoTitulo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:textSize="24sp" />
+
+            <TextView
+            android:id="@+id/grupoIntegrante"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/grupoTitulo"
+            android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/grupoIntegrantePuntos"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/grupoTitulo"
+                android:layout_alignParentRight="true"
+                android:textSize="18sp"/>
+
+            <RelativeLayout
+                android:id="@+id/relativeMetricasGrupos"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/grupoIntegrante"
+                android:background="@android:color/white">
+
+                <TextView
+                    android:id="@+id/tituloMetrica"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:padding="10dp"
+                    android:text="@string/metricasgrupo"
+                    android:textSize="20dp" />
+
+                <TextView
+                    android:id="@+id/tituloArboles"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tituloMetrica"
+                    android:padding="6dp"
+                    android:text="@string/arboles"
+                    android:textSize="18dp" />
+
+                <TextView
+                    android:id="@+id/grupoContenidoAboles"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tituloMetrica"
+                    android:layout_toRightOf="@+id/tituloArboles"
+                    android:padding="6dp"
+                    android:textSize="18dp" />
+
+                <TextView
+                    android:id="@+id/tituloAgua"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tituloArboles"
+                    android:padding="6dp"
+                    android:text="@string/agua"
+                    android:textSize="18dp" />
+
+                <TextView
+                    android:id="@+id/grupoContenidoAgua"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tituloArboles"
+                    android:layout_toRightOf="@+id/tituloAgua"
+                    android:padding="6dp"
+                    android:textSize="18dp" />
+
+                <TextView
+                    android:id="@+id/tituloEnergia"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tituloAgua"
+                    android:padding="6dp"
+                    android:text="@string/energia"
+                    android:textSize="18dp" />
+
+                <TextView
+                    android:id="@+id/grupoContenidoEnergia"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tituloAgua"
+                    android:layout_toRightOf="@+id/tituloEnergia"
+                    android:padding="6dp"
+                    android:textSize="18dp" />
+
+            </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/relativeMetricasGrupos"
+            android:background="@android:color/white"  >
+
+            <Button
+                android:id="@+id/btnInvitarGrupo"
+                style="@style/ecoButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="@string/invitargrupo" />
+
+            <Button
+                android:id="@+id/btnSalirGrupo"
+                style="@style/ecoButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="@string/salirgrupo"
+                android:layout_toRightOf="@+id/btnInvitarGrupo"/>
+
+        </RelativeLayout>
+
+        </RelativeLayout>
+
+    </android.support.v7.widget.CardView>
+
+</LinearLayout>
