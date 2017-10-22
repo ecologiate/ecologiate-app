@@ -62,8 +62,11 @@ public class PerfilFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                builder.setTitle("Medallas");
-                builder.setMessage("Oro, Plata o Bronce");
+                LayoutInflater inflater = getActivity().getLayoutInflater();
+                View view1 = inflater.inflate(R.layout.dialogo_medallas,null);
+                builder.setView(view1);
+                //builder.setTitle("Medallas");
+                //builder.setMessage("Oro, Plata o Bronce");
                 Dialog dialog = builder.create();
                 dialog.show();
             }

@@ -24,6 +24,15 @@
         android:layout_below="@+id/titMed"
         app:srcCompat="@drawable/ic_medalla1"/>
 
+    <TextView
+        android:id="@+id/tvOro"
+        android:gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="80dp"
+        android:layout_below="@+id/titMed"
+        android:layout_toRightOf="@+id/medalla1"
+        android:text="MEDALLA DE ORO" />
+
     <ImageView
         android:id="@+id/medalla2"
         android:layout_width="80dp"
@@ -34,6 +43,15 @@
         android:layout_below="@+id/medalla1"
         app:srcCompat="@drawable/ic_medalla2"/>
 
+    <TextView
+        android:id="@+id/tvPlata"
+        android:gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="80dp"
+        android:layout_below="@+id/tvOro"
+        android:layout_toRightOf="@+id/medalla2"
+        android:text="MEDALLA DE PLATA" />
+
     <ImageView
         android:id="@+id/medalla3"
         android:layout_width="80dp"
@@ -43,5 +61,14 @@
         android:layout_alignParentTop="false"
         android:layout_below="@+id/medalla2"
         app:srcCompat="@drawable/ic_medalla3"/>
+
+    <TextView
+        android:id="@+id/tvBronce"
+        android:gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="80dp"
+        android:layout_below="@+id/tvPlata"
+        android:layout_toRightOf="@+id/medalla3"
+        android:text="MEDALLA DE ORO" />
 
 </RelativeLayout>
