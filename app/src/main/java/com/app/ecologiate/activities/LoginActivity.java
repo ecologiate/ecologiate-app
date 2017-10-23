@@ -17,10 +17,14 @@ import android.widget.Toast;
 
 import com.app.ecologiate.R;
 import com.app.ecologiate.services.UserManager;
+import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
+import com.facebook.Profile;
 import com.facebook.appevents.AppEventsLogger;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
@@ -31,6 +35,9 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.ResultCallback;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.Arrays;
 
@@ -63,9 +70,37 @@ public class LoginActivity extends AppCompatActivity implements
         fbLoginButton.registerCallback(mFacebookCallbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
-                Toast.makeText(getApplicationContext(), "Logueado con Facebook: "+loginResult.getAccessToken().getUserId(),
+                AccessToken fbAccessToken = loginResult.getAccessToken();
+                Profile fbProfile = Profile.getCurrentProfile();
+                Toast.makeText(getApplicationContext(),
+                        "Logueado con Facebook: "+(fbProfile != null?fbProfile.getFirstName():fbAccessToken.getUserId()),
                         Toast.LENGTH_LONG).show();
-                goToNextActivity();
+
+                // Facebook Email address
+                GraphRequest request = GraphRequest.newMeRequest(
+                        loginResult.getAccessToken(),
+                        new GraphRequest.GraphJSONObjectCallback() {
+                            @Override
+                            public void onCompleted(
+                                    JSONObject object,
+                                    GraphResponse response) {
+                                Log.v("LoginActivity Response ", response.toString());
+
+                                try {
+                                    String name = object.getString("name");
+                                    String fbEmail = object.getString("email");
+                                    UserManager.getUser().setNombre(name);
+                                    UserManager.getUser().setMail(fbEmail);
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                                goToNextActivity();
+                            }
+                        });
+                Bundle parameters = new Bundle();
+                parameters.putString("fields", "id,name,email,gender, birthday");
+                request.setParameters(parameters);
+                request.executeAsync();
             }
             @Override
             public void onCancel() {
