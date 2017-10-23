@@ -38,7 +38,7 @@ import java.util.List;
 import cz.msebera.android.httpclient.Header;
 
 
-public class EscaneoFragment extends Fragment implements
+public class EscaneoFragment extends AbstractEcologiateFragment implements
         DecoratedBarcodeView.TorchListener{
 
     private ApiCallService apiCallService = new ApiCallService();
@@ -292,6 +292,16 @@ public class EscaneoFragment extends Fragment implements
         };
 
         apiCallService.getProductoPorCodigo(codigo, responseHandler);
+    }
+
+    @Override
+    public String getTitle() {
+        return getResources().getString(R.string.escaneo_fragment_title);
+    }
+
+    @Override
+    public String getSubTitle() {
+        return null;
     }
 
     @Override

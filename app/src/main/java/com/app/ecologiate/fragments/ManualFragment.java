@@ -29,7 +29,7 @@ import java.util.List;
 import cz.msebera.android.httpclient.Header;
 
 
-public class ManualFragment extends Fragment {
+public class ManualFragment extends AbstractEcologiateFragment {
 
     private OnFragmentInteractionListener mListener;
 
@@ -129,7 +129,7 @@ public class ManualFragment extends Fragment {
                         Fragment resultadoFragment = ResultadoFragment.newInstance(productoEncontrado);
                         getActivity().getSupportFragmentManager().beginTransaction()
                                 .replace(R.id.contentFragment, resultadoFragment)
-                                .addToBackStack(String.valueOf(resultadoFragment.getId()))
+                                //.addToBackStack(String.valueOf(resultadoFragment.getId()))
                                 .commit();
                     }else {
                         Toast.makeText(getContext(), "No se encontraron resultados", Toast.LENGTH_LONG).show();
@@ -157,5 +157,15 @@ public class ManualFragment extends Fragment {
         };
         //DVP: invoco al servicio del Back
         apiCallService.getProductoPorTitulo(nombre_producto, responseHandler);
+    }
+
+    @Override
+    public String getTitle() {
+        return getResources().getString(R.string.manual_fragment_title);
+    }
+
+    @Override
+    public String getSubTitle() {
+        return null;
     }
 }

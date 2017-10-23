@@ -186,17 +186,6 @@
 
         </ScrollView>
 
-
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/md_floating_action_reciclar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
-            android:layout_margin="10dp"
-
-            app:srcCompat="@drawable/ic_reciclaje"/>
-
 </RelativeLayout>
 
 

@@ -21,7 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class EnterateFragment extends Fragment {
+public class EnterateFragment extends AbstractEcologiateFragment {
 
     private AppBarLayout appBar;
     private TabLayout pestanias;
@@ -94,6 +94,16 @@ public class EnterateFragment extends Fragment {
 
     public interface OnFragmentInteractionListener {
         void onFragmentInteraction(Uri uri);
+    }
+
+    @Override
+    public String getTitle() {
+        return getResources().getString(R.string.enterate_fragment_title);
+    }
+
+    @Override
+    public String getSubTitle() {
+        return null;
     }
 
 

@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class TipsFragment extends Fragment {
+public class TipsFragment extends AbstractEcologiateFragment {
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
@@ -62,6 +62,16 @@ public class TipsFragment extends Fragment {
         mRecyclerView.setAdapter(mAdapter);
 
         return  view;
+    }
+
+    @Override
+    public String getTitle() {
+        return getResources().getString(R.string.tips_fragment_title);
+    }
+
+    @Override
+    public String getSubTitle() {
+        return null;
     }
 
 

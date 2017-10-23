@@ -28,7 +28,7 @@ import cz.msebera.android.httpclient.Header;
 import cz.msebera.android.httpclient.entity.StringEntity;
 
 
-public class AltaPuntoRecoleccionFragment extends Fragment {
+public class AltaPuntoRecoleccionFragment extends AbstractEcologiateFragment {
 
     ApiCallService apiCallService = new ApiCallService();
 
@@ -176,6 +176,16 @@ public class AltaPuntoRecoleccionFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    @Override
+    public String getTitle() {
+        return getResources().getString(R.string.altapdr_fragment_title);
+    }
+
+    @Override
+    public String getSubTitle() {
+        return getResources().getString(R.string.altapdr_fragment_subtitle);
     }
 
 

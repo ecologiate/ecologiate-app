@@ -32,7 +32,7 @@ import cz.msebera.android.httpclient.Header;
 import cz.msebera.android.httpclient.entity.StringEntity;
 
 
-public class AltaProductoFragment extends Fragment {
+public class AltaProductoFragment extends AbstractEcologiateFragment {
 
     private ApiCallService apiCallService = new ApiCallService();
 
@@ -205,6 +205,16 @@ public class AltaProductoFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    @Override
+    public String getTitle() {
+        return getResources().getString(R.string.altaprod_fragment_title);
+    }
+
+    @Override
+    public String getSubTitle() {
+        return getResources().getString(R.string.altaprod_fragment_subtitle);
     }
 
     public interface OnFragmentInteractionListener {

@@ -49,7 +49,7 @@ import butterknife.ButterKnife;
 import cz.msebera.android.httpclient.Header;
 
 
-public class MapaFragment extends Fragment implements OnMapReadyCallback{
+public class MapaFragment extends AbstractEcologiateFragment implements OnMapReadyCallback{
 
 
     private ApiCallService apiCallService = new ApiCallService();
@@ -211,7 +211,7 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback{
                             address.getAddressLine(0), address.getAdminArea(), address.getCountryName());
                     getActivity().getSupportFragmentManager().beginTransaction()
                             .replace(R.id.contentFragment, fragment)
-                            .addToBackStack(String.valueOf(fragment.getId()))
+                            //.addToBackStack(String.valueOf(fragment.getId()))
                             .commit();
                 }
             }
@@ -367,6 +367,16 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback{
     public void onResume() {
         super.onResume();
         modoAlta = false;
+    }
+
+    @Override
+    public String getTitle() {
+        return getResources().getString(R.string.mapa_fragment_title);
+    }
+
+    @Override
+    public String getSubTitle() {
+        return null;
     }
 
     public interface OnFragmentInteractionListener {
