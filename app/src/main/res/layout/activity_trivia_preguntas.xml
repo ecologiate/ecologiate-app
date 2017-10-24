@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.app.ecologiate.activities.trivia_preguntas">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        >
+
+        <TextView
+            android:id="@+id/tvTituloTrivia"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:gravity="center"
+            android:text="¿DÓNDE LO TIRO?" />
+
+        <ImageView
+            android:id="@+id/ivImagenTrivia"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/tvTituloTrivia"
+            />
+
+        <TextView
+            android:id="@+id/tvTituloProducto"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_centerHorizontal="true"
+            android:gravity="center"
+            android:layout_below="@+id/ivImagenTrivia"
+            android:text="Nombre del Producto" />
+
+        <ImageView
+            android:id="@+id/ivTachoVerde"
+            android:layout_width="140dp"
+            android:layout_height="80dp"
+            android:layout_below="@+id/tvTituloProducto"
+            android:layout_alignParentLeft="true"
+            app:srcCompat="@drawable/ic_tacho_verde"
+            />
+
+        <Button
+            android:id="@+id/btnTachoVerde"
+            style="@style/triviaButtonVerdeStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tacho Verde"
+            android:layout_below="@+id/ivTachoVerde"
+            />
+
+        <ImageView
+            android:id="@+id/ivCompostera"
+            android:layout_width="140dp"
+            android:layout_height="80dp"
+            android:layout_below="@+id/tvTituloProducto"
+            android:layout_alignParentRight="true"
+            app:srcCompat="@drawable/ic_compostera"
+            />
+
+        <Button
+            android:id="@+id/btnCompostera"
+            style="@style/triviaButtonComposteraStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Compostera"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/ivCompostera"
+            />
+
+        <ImageView
+            android:id="@+id/ivTachoNegro"
+            android:layout_width="140dp"
+            android:layout_height="80dp"
+            android:layout_below="@+id/btnTachoVerde"
+            android:layout_alignParentLeft="true"
+            app:srcCompat="@drawable/ic_tacho_negro"
+            />
+
+        <Button
+            android:id="@+id/btnTachoNegro"
+            style="@style/triviaButtonNegroStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tacho Negro"
+            android:layout_below="@+id/ivTachoNegro"
+            />
+
+        <ImageView
+            android:id="@+id/ivManejoEspecial"
+            android:layout_width="140dp"
+            android:layout_height="80dp"
+            android:layout_below="@+id/btnCompostera"
+            android:layout_alignParentRight="true"
+            app:srcCompat="@drawable/ic_manejo_especial"
+            />
+
+        <Button
+            android:id="@+id/btnManejoEspecial"
+            style="@style/triviaButtonEspecialStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Manejo Especial"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/ivManejoEspecial"
+            />
+
+    </RelativeLayout>
+
+</android.support.constraint.ConstraintLayout>
