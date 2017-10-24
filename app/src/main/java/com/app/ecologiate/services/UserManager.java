@@ -11,6 +11,7 @@ import android.util.Log;
 
 import com.app.ecologiate.models.Nivel;
 import com.app.ecologiate.models.Usuario;
+import com.facebook.login.LoginManager;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
@@ -85,6 +86,11 @@ public class UserManager {
     public static void logOut(ResultCallback<Status> callback){
         //si está logueado con google
         manager.signOutFromGoogle(callback);
+        try{
+            manager.signOutFromFacebook(callback);
+        }catch(Exception e){
+            Log.w("UserManager", e.getMessage());
+        }
     }
 
     private void signOutFromGoogle(final ResultCallback<Status> callback) {
@@ -103,6 +109,11 @@ public class UserManager {
                 Log.d("UserManager", "Google API Client Connection Suspended");
             }
         });
+    }
+
+    private void signOutFromFacebook(final ResultCallback<Status> callback){
+        LoginManager.getInstance().logOut();
+        callback.onResult(null);
     }
 
 
