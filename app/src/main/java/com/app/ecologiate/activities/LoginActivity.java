@@ -71,36 +71,7 @@ public class LoginActivity extends AppCompatActivity implements
             @Override
             public void onSuccess(LoginResult loginResult) {
                 AccessToken fbAccessToken = loginResult.getAccessToken();
-                Profile fbProfile = Profile.getCurrentProfile();
-                Toast.makeText(getApplicationContext(),
-                        "Logueado con Facebook: "+(fbProfile != null?fbProfile.getFirstName():fbAccessToken.getUserId()),
-                        Toast.LENGTH_LONG).show();
-
-                // Facebook Email address
-                GraphRequest request = GraphRequest.newMeRequest(
-                        loginResult.getAccessToken(),
-                        new GraphRequest.GraphJSONObjectCallback() {
-                            @Override
-                            public void onCompleted(
-                                    JSONObject object,
-                                    GraphResponse response) {
-                                Log.v("LoginActivity Response ", response.toString());
-
-                                try {
-                                    String name = object.getString("name");
-                                    String fbEmail = object.getString("email");
-                                    UserManager.getUser().setNombre(name);
-                                    UserManager.getUser().setMail(fbEmail);
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                }
-                                goToNextActivity();
-                            }
-                        });
-                Bundle parameters = new Bundle();
-                parameters.putString("fields", "id,name,email,gender, birthday");
-                request.setParameters(parameters);
-                request.executeAsync();
+                handleFacebookSignInResult(fbAccessToken, false);
             }
             @Override
             public void onCancel() {
@@ -134,10 +105,17 @@ public class LoginActivity extends AppCompatActivity implements
 
         showProgressDialog();
 
+        //chequeo si está logueado con Facebook
+        AccessToken fbToken = AccessToken.getCurrentAccessToken();
+        Profile fbProfile = Profile.getCurrentProfile();
+        if(fbProfile != null && fbToken != null){
+            handleFacebookSignInResult(fbToken, true);
+        }
+
+        //chequeo si puedo loguear automáticamente con Google
         UserManager.googleSilentSignIn(new ResultCallback<GoogleSignInResult>() {
             @Override
             public void onResult(@NonNull GoogleSignInResult googleSignInResult) {
-                hideProgressDialog();
                 handleGoogleSignInResult(googleSignInResult, true);
             }
         });
@@ -146,14 +124,19 @@ public class LoginActivity extends AppCompatActivity implements
     }
 
     private void handleGoogleSignInResult(GoogleSignInResult result, Boolean silent) {
+        hideProgressDialog();
         if (result.isSuccess()) {
             GoogleSignInAccount account = result.getSignInAccount();
             // get profile information
             String name = "";
+            String lastName = "";
             String email = "";
             String uriPicture = "";
-            if (account.getDisplayName() != null) {
-                name = account.getDisplayName();
+            if (account.getGivenName() != null) {
+                name = account.getGivenName();
+            }
+            if (account.getFamilyName() != null) {
+                lastName = account.getFamilyName();
             }
             if (account.getEmail() != null) {
                 email = account.getEmail();
@@ -164,9 +147,13 @@ public class LoginActivity extends AppCompatActivity implements
             // save profile information to preferences
             SharedPreferences prefs = getSharedPreferences("com.app.ecologiate", Context.MODE_PRIVATE);
             prefs.edit().putString("com.app.ecologiate.nombre", name).apply();
+            prefs.edit().putString("com.app.ecologiate.lastname", lastName).apply();
             prefs.edit().putString("com.app.ecologiate.email", email).apply();
             prefs.edit().putString("com.app.ecologiate.uriPicture", uriPicture).apply();
             UserManager.getUser().setNombre(name);
+            UserManager.getUser().setApellido(lastName);
+            UserManager.getUser().setFotoUri(uriPicture);
+            UserManager.getUser().setMail(email);
 
             if(!silent) {
                 Toast.makeText(getApplicationContext(), "Logueado con Google: " + name,
@@ -182,6 +169,50 @@ public class LoginActivity extends AppCompatActivity implements
                 mostrarLoginViejo();
             }
         }
+    }
+
+    private void handleFacebookSignInResult(AccessToken fbToken, Boolean silent){
+        final Profile fbProfile = Profile.getCurrentProfile();
+        if(!silent) {
+            Toast.makeText(getApplicationContext(),
+                    "Logueado con Facebook: " + (fbProfile != null ? fbProfile.getFirstName() : fbToken.getUserId()),
+                    Toast.LENGTH_LONG).show();
+        }
+
+        // Facebook Email address
+        GraphRequest request = GraphRequest.newMeRequest(fbToken,
+                new GraphRequest.GraphJSONObjectCallback() {
+                    @Override
+                    public void onCompleted(
+                            JSONObject object,
+                            GraphResponse response) {
+                        Log.v("LoginActivity Response ", response.toString());
+                        hideProgressDialog();
+                        try {
+                            String name = fbProfile.getFirstName();//object.getString("name");
+                            String lastName = fbProfile.getLastName();
+                            String fbEmail = object.getString("email");
+                            String uriPicture = fbProfile.getProfilePictureUri(192,192).toString();
+                            UserManager.getUser().setNombre(name);
+                            UserManager.getUser().setApellido(lastName);
+                            UserManager.getUser().setFotoUri(uriPicture);
+                            UserManager.getUser().setMail(fbEmail);
+
+                            SharedPreferences prefs = getSharedPreferences("com.app.ecologiate", Context.MODE_PRIVATE);
+                            prefs.edit().putString("com.app.ecologiate.nombre", name).apply();
+                            prefs.edit().putString("com.app.ecologiate.lastname", lastName).apply();
+                            prefs.edit().putString("com.app.ecologiate.email", fbEmail).apply();
+                            prefs.edit().putString("com.app.ecologiate.uriPicture", uriPicture).apply();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        goToNextActivity();
+                    }
+                });
+        Bundle parameters = new Bundle();
+        parameters.putString("fields", "id,name,email,gender, birthday");
+        request.setParameters(parameters);
+        request.executeAsync();
     }
 
 

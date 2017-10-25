@@ -84,13 +84,8 @@ public class UserManager {
     }
 
     public static void logOut(ResultCallback<Status> callback){
-        //si está logueado con google
         manager.signOutFromGoogle(callback);
-        try{
-            manager.signOutFromFacebook(callback);
-        }catch(Exception e){
-            Log.w("UserManager", e.getMessage());
-        }
+        manager.signOutFromFacebook(callback);
     }
 
     private void signOutFromGoogle(final ResultCallback<Status> callback) {
