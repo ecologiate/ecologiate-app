@@ -3,7 +3,7 @@ package com.app.ecologiate.models;
 
 import android.util.Log;
 
-import com.app.ecologiate.services.EcologiateConstants;
+import com.app.ecologiate.utils.EcologiateConstants;
 
 import org.json.JSONObject;
 

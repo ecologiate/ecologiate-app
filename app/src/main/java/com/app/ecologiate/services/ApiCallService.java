@@ -3,6 +3,7 @@ package com.app.ecologiate.services;
 import android.content.Context;
 import android.text.TextUtils;
 
+import com.app.ecologiate.utils.EcologiateConstants;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 

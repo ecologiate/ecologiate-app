@@ -35,7 +35,9 @@ public class UserManager {
         return loggedUser;
     }
 
-
+    public static Usuario updateUser(Usuario usuario, String token){
+        return getUser(); //TODO
+    }
 
 
     /* *****************************/

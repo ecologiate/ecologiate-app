@@ -1,4 +1,4 @@
-package com.app.ecologiate.services;
+package com.app.ecologiate.utils;
 
 
 public class EcologiateConstants {

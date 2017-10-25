@@ -127,6 +127,7 @@ public class LoginActivity extends AppCompatActivity implements
         hideProgressDialog();
         if (result.isSuccess()) {
             GoogleSignInAccount account = result.getSignInAccount();
+            String gToken = account.getIdToken();
             // get profile information
             String name = "";
             String lastName = "";
