@@ -12,9 +12,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.app.ecologiate.R;
+import com.app.ecologiate.models.Usuario;
+import com.app.ecologiate.services.UserManager;
+import com.squareup.picasso.Picasso;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 
 public class PerfilFragment extends AbstractEcologiateFragment {
@@ -22,15 +30,28 @@ public class PerfilFragment extends AbstractEcologiateFragment {
 
     private OnFragmentInteractionListener mListener;
 
-    public PerfilFragment() {
-        // Required empty public constructor
-    }
+    public PerfilFragment() {}
+
+    @BindView(R.id.avatar)
+    ImageView imagenAvatar;
+    @BindView(R.id.nivelActual)
+    TextView txNivelUsuario;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         //DVP: Manejo el fragment como un view.
         View view = inflater.inflate(R.layout.fragment_perfil, container, false);
+
+        //Recupero avatar y nivel del usuario
+        ButterKnife.bind(this, view);
+        imagenAvatar.requestFocus();
+
+        //seteo los datos del usuario
+        Usuario usuario = UserManager.getUser();
+        Picasso.with(getContext()).load(usuario.getNivel().getImagenLink()).into(imagenAvatar);
+        txNivelUsuario.setText(usuario.getNivel().getDescripcion());
+
         ImageButton imagen = (ImageButton) view.findViewById(R.id.ibAceite);
 
         //Cómo puedo hacer para todos los botones? (Lucho??)
@@ -47,6 +68,7 @@ public class PerfilFragment extends AbstractEcologiateFragment {
                 dialog.show();
             }
         });
+
         return view;
     }
 

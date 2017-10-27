@@ -166,13 +166,6 @@
                         android:text="@string/campanias"
                         android:textSize="20dp" />
 
-                    <View
-                        android:layout_width="wrap_content"
-                        android:layout_height="2dip"
-                        android:layout_below="@+id/tituloCampanias"
-                        android:background="@color/violetaOscuro"
-                        android:padding="10dp" />
-
                     <android.support.v7.widget.RecyclerView
                         android:id="@+id/tipFragment"
                         android:layout_width="match_parent"
@@ -181,6 +174,13 @@
                         android:scrollbars="vertical" />
 
                 </RelativeLayout>
+
+                <View
+                    android:layout_width="wrap_content"
+                    android:layout_height="2dip"
+                    android:layout_below="@+id/tituloCampanias"
+                    android:background="@color/violetaOscuro"
+                    android:padding="10dp" />
 
             </LinearLayout>
 
