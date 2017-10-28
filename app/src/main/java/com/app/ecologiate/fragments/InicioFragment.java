@@ -1,14 +1,8 @@
 package com.app.ecologiate.fragments;
 
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.design.widget.AppBarLayout;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -19,10 +13,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.app.ecologiate.R;
 import com.app.ecologiate.models.CampaniaAdapter;
+import com.app.ecologiate.models.Impacto;
+import com.app.ecologiate.models.Nivel;
 import com.app.ecologiate.models.Tip;
 import com.app.ecologiate.models.Usuario;
 import com.app.ecologiate.services.UserManager;
@@ -38,7 +35,7 @@ import butterknife.ButterKnife;
 
 public class InicioFragment extends AbstractEcologiateFragment {
 
-    private RecyclerView mRecyclerView;
+    private RecyclerView mRecyclerViewCampania;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private OnFragmentInteractionListener mListener;
@@ -51,7 +48,16 @@ public class InicioFragment extends AbstractEcologiateFragment {
     ImageView imagenAvatar;
     @BindView(R.id.nivelActual)
     TextView txNivelUsuario;
-
+    @BindView(R.id.simpleProgressBar)
+    ProgressBar progressBarNivel;
+    @BindView(R.id.contenidoAboles)
+    TextView contenidoArboles;
+    @BindView(R.id.contenidoAgua)
+    TextView contenidoAgua;
+    @BindView(R.id.contenidoEnergia)
+    TextView contenidoEnergia;
+    @BindView(R.id.contenidoEmisiones)
+    TextView contenidoEmisiones;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -65,24 +71,18 @@ public class InicioFragment extends AbstractEcologiateFragment {
         View view = inflater.inflate(R.layout.fragment_inicio, container, false);
         ButterKnife.bind(this, view);
         imagenAvatar.requestFocus();
-        //seteo los datos del usuario
-        Usuario usuario = UserManager.getUser();
-        Picasso.with(getContext()).load(usuario.getNivel().getImagenLink()).into(imagenAvatar);
-        txNivelUsuario.setText(usuario.getNivel().getDescripcion());
 
-
-
-        mRecyclerView = (RecyclerView) view.findViewById(R.id.tipFragment);
+        mRecyclerViewCampania = (RecyclerView) view.findViewById(R.id.campaniasFragment);
 
         // use this setting to improve performance if you know that changes
         // in content do not change the layout size of the RecyclerView
-        mRecyclerView.setHasFixedSize(true);
+        mRecyclerViewCampania.setHasFixedSize(true);
 
-        mRecyclerView.addItemDecoration(new DividerItemDecoration(view.getContext(), DividerItemDecoration.VERTICAL));
+        mRecyclerViewCampania.addItemDecoration(new DividerItemDecoration(view.getContext(), DividerItemDecoration.VERTICAL));
 
         // use a linear layout manager
         mLayoutManager = new LinearLayoutManager(view.getContext());
-        mRecyclerView.setLayoutManager(mLayoutManager);
+        mRecyclerViewCampania.setLayoutManager(mLayoutManager);
 
         //creo mis mails
         List<Tip> myDataset = new ArrayList<>();
@@ -93,13 +93,31 @@ public class InicioFragment extends AbstractEcologiateFragment {
 
         // specify an adapter (see also next example)
         mAdapter = new CampaniaAdapter(myDataset);
-        mRecyclerView.setAdapter(mAdapter);
+        mRecyclerViewCampania.setAdapter(mAdapter);
 
 
         setHasOptionsMenu(true); //para que me agregue un menu, tiene que ir al final
         return view;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        //seteo los datos del usuario
+        Usuario usuario = UserManager.getUser();
+        Nivel nivel = usuario.getNivel();
+        Picasso.with(getContext()).load(usuario.getNivel().getImagenLink()).into(imagenAvatar);
+        txNivelUsuario.setText(nivel.getDescripcion());
+        progressBarNivel.setMax((int ) (nivel.getPuntosHasta() - nivel.getPuntosDesde()));
+        progressBarNivel.setProgress((int) (usuario.getPuntos() - nivel.getPuntosDesde()));
+        Impacto impacto = usuario.getImpacto();
+        if(impacto != null){
+            contenidoAgua.setText(impacto.getAgua().toString());
+            contenidoArboles.setText(impacto.getArboles().toString());
+            contenidoEmisiones.setText(impacto.getEmisiones().toString());
+            contenidoEnergia.setText(impacto.getEnergia().toString());
+        }
+    }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {

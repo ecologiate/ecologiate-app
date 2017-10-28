@@ -81,6 +81,11 @@ public class ApiCallService {
         post(url, context, entityBody, responseHandler);
     }
 
+    public void login(Context context, HttpEntity entityBody, JsonHttpResponseHandler responseHandler){
+        String url = SERVER_URL + "/api/usuario/login";
+        put(url, context, entityBody, responseHandler);
+    }
+
 
     /**
      ***************************************************************
@@ -101,6 +106,10 @@ public class ApiCallService {
 
     public void post(String url, Context context, HttpEntity entityBody, JsonHttpResponseHandler responseHandler){
         client.post(context, url, entityBody, "application/json", responseHandler);
+    }
+
+    public void put(String url, Context context, HttpEntity entityBody, JsonHttpResponseHandler responseHandler){
+        client.put(context, url, entityBody, "application/json", responseHandler);
     }
 
 

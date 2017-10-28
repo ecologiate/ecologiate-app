@@ -16,6 +16,10 @@ public class Usuario {
     private Boolean admin;
     private Nivel nivel;
     private String fotoUri;
+    //private List<Reciclaje> reciclajes;
+    //private List<Objetivo> objetivosCumplidos;
+    //private List<Campania> campaniasCumplidas;
+    private Impacto impacto;
 
     public static Usuario getFromJson(JSONObject jsonObject){
         try {
@@ -26,7 +30,8 @@ public class Usuario {
                     jsonObject.has("mail") ? jsonObject.getString("mail") : null,
                     jsonObject.has("puntos") ? jsonObject.getLong("puntos") : null,
                     jsonObject.has("admin") ? jsonObject.getBoolean("admin") : false,
-                    jsonObject.has("nivel") ? Nivel.getFromJson(jsonObject.getJSONObject("nivel")) : null
+                    jsonObject.has("nivel") ? Nivel.getFromJson(jsonObject.getJSONObject("nivel")) : null,
+                    jsonObject.has("impacto") ? Impacto.getFromJson(jsonObject.getJSONObject("impacto")) : null
             );
         }catch (Exception e){
             Log.e("JSON_ERROR", e.getMessage());
@@ -35,7 +40,7 @@ public class Usuario {
     }
 
 
-    public Usuario(Long id, String nombre, String apellido, String mail, Long puntos, Boolean admin, Nivel nivel) {
+    public Usuario(Long id, String nombre, String apellido, String mail, Long puntos, Boolean admin, Nivel nivel, Impacto impacto) {
         this.id = id;
         this.nombre = nombre;
         this.apellido = apellido;
@@ -43,6 +48,7 @@ public class Usuario {
         this.puntos = puntos;
         this.admin = admin;
         this.nivel = nivel;
+        this.impacto = impacto;
     }
 
     public Long getId() {
@@ -107,5 +113,13 @@ public class Usuario {
 
     public void setFotoUri(String fotoUri) {
         this.fotoUri = fotoUri;
+    }
+
+    public Impacto getImpacto() {
+        return impacto;
+    }
+
+    public void setImpacto(Impacto impacto) {
+        this.impacto = impacto;
     }
 }

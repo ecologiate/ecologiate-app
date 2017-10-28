@@ -6,9 +6,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
+import android.widget.Toast;
 
+import com.app.ecologiate.R;
+import com.app.ecologiate.fragments.InicioFragment;
+import com.app.ecologiate.models.Impacto;
 import com.app.ecologiate.models.Nivel;
 import com.app.ecologiate.models.Usuario;
 import com.facebook.login.LoginManager;
@@ -17,10 +22,20 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.OptionalPendingResult;
+import com.google.android.gms.common.api.Result;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
+import com.loopj.android.http.JsonHttpResponseHandler;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import cz.msebera.android.httpclient.Header;
+import cz.msebera.android.httpclient.entity.StringEntity;
 
 public class UserManager {
+
+    private static ApiCallService apiCallService = new ApiCallService();
 
     /* *****************************/
     /* **** manejo del dominio *****/
@@ -29,14 +44,68 @@ public class UserManager {
     private static Usuario loggedUser = new Usuario(1L, "Ecologiate", "",
             "ecologiateapp@gmail.com", 0L, true, new Nivel(1L,"Novato",
             "/images/avatar_novato.png",
-            0L,1000L));
+            0L,1000L), new Impacto(0L,0L,0L,0L));
 
     public static Usuario getUser(){
         return loggedUser;
     }
 
-    public static Usuario updateUser(Usuario usuario, String token){
-        return getUser(); //TODO
+    public static void login(final Context context, String email, String nombre, String apellido, String token, final ResultCallback callback){
+        JSONObject jsonBody = new JSONObject();
+        StringEntity bodyEntity = null;
+        try {
+            jsonBody.put("email", email);
+            jsonBody.put("nombre", nombre);
+            jsonBody.put("apellido", apellido);
+            jsonBody.put("token", token);
+            bodyEntity = new StringEntity(jsonBody.toString());
+        } catch (Exception e) {
+            e.printStackTrace();
+            Toast.makeText(context, "Error armando Json", Toast.LENGTH_LONG).show();
+        }
+        JsonHttpResponseHandler responseHandler = new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                if (response != null) {
+                    final int status = statusCode;
+                    try {
+                        Usuario usuario = Usuario.getFromJson(response.getJSONObject("usuario"));
+                        loggedUser = usuario;
+                    }catch (Exception e){
+                        Log.e("JSON_ERROR", e.getMessage());
+                        throw new RuntimeException("Error en formato de json para login: "+ e.getMessage());
+                    }
+                    if(callback!=null){
+                        callback.onResult(new Result() {
+                            @Override
+                            public Status getStatus() {
+                                return new Status(status);
+                            }
+                        });
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                if (statusCode == 404) {
+                    Toast.makeText(context, "URL no encontrada", Toast.LENGTH_LONG).show();
+                } else if (statusCode == 500) {
+                    Toast.makeText(context, "Error en el Backend", Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(context, throwable.getLocalizedMessage(), Toast.LENGTH_LONG).show();
+                    Log.e("API_ERROR", "Error Inesperado [" + statusCode + "]", throwable);
+                }
+            }
+        };
+
+        apiCallService.login(context, bodyEntity, responseHandler);
+    }
+
+    public static void updateUser(Context context, ResultCallback callback){
+        //medio choto pero más fácil
+        Usuario usuario = getUser();
+        login(context, usuario.getMail(), usuario.getNombre(), usuario.getApellido(), "", callback);
     }
 
 
