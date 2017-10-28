@@ -39,7 +39,7 @@
                 android:padding="10dp"
                 android:layout_toRightOf="@+id/avatar"
                 android:text="@string/nivel"
-                android:textSize="22dp" />
+                android:textSize="16dp" />
 
             <TextView
                 android:id="@+id/nivelActual"
@@ -48,7 +48,7 @@
                 android:layout_toRightOf="@+id/nivelharcode"
                 android:text="Nuevito"
                 android:padding="10dp"
-                android:textSize="22dp"/>
+                android:textSize="16dp"/>
 
 
             <ProgressBar

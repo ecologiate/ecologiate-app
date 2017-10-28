@@ -64,7 +64,7 @@ public class GrupoAdapter extends RecyclerView.Adapter<GrupoAdapter.ViewHolder>{
 
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(final ViewHolder holder, int position) {
         Grupo model = gruposDataset.get(position);
         //armo string de integrantes
         String htmlIntegrantes = "";
@@ -94,6 +94,33 @@ public class GrupoAdapter extends RecyclerView.Adapter<GrupoAdapter.ViewHolder>{
                 View view1 = inflater.inflate(R.layout.dialogo_invitargrupo,null);
                 builder.setView(view1);
                 builder.setTitle("Invitar amigo a "+nombreGrupo);
+                builder.setPositiveButton("OK",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                //invitar
+                            }
+                        })
+                        .setNegativeButton("CANCELAR",
+                                new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        //no hacer nada supongo
+                                    }
+                                });
+                Dialog dialog = builder.create();
+                dialog.show();
+            }
+        });
+
+        holder.btnSalir.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                LayoutInflater inflater = LayoutInflater.from(context);
+                View view1 = inflater.inflate(R.layout.dialogo_salirgrupo,null);
+                builder.setView(view1);
+                builder.setTitle("Seguro que deseas abandonar el grupo "+nombreGrupo);
                 builder.setPositiveButton("OK",
                         new DialogInterface.OnClickListener() {
                             @Override

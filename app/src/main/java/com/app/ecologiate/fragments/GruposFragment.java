@@ -91,6 +91,7 @@ public class GruposFragment extends AbstractEcologiateFragment {
                                 });
                 Dialog dialog = builder.create();
                 dialog.show();
+
             }
         });
 
