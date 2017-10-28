@@ -237,7 +237,8 @@
 
     <RelativeLayout
         android:layout_height="wrap_content"
-        android:layout_width="match_parent">
+        android:layout_width="match_parent"
+        android:background="@android:color/white">
 
         <TextView
             android:id="@+id/tituloMedaXCamp"
@@ -370,6 +371,25 @@
                 android:text="30"
                 android:padding="6dp"
                 android:textSize="20dp"/>
+
+        <TextView
+            android:id="@+id/tituloEmisiones"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tituloEnergia"
+            android:text="@string/emisiones"
+            android:padding="6dp"
+            android:textSize="20dp"/>
+
+        <TextView
+            android:id="@+id/contenidoEmisiones"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tituloEnergia"
+            android:layout_toRightOf="@+id/tituloEmisiones"
+            android:text="45"
+            android:padding="6dp"
+            android:textSize="20dp"/>
 
         </RelativeLayout>
 
