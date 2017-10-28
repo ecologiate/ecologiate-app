@@ -16,7 +16,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 
-public class ProductoNoEncontradoFragment extends Fragment {
+public class ProductoNoEncontradoFragment extends AbstractEcologiateFragment {
 
     @BindView(R.id.btnAltaProducto)
     Button alta;
@@ -97,6 +97,16 @@ public class ProductoNoEncontradoFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    @Override
+    public String getTitle() {
+        return getResources().getString(R.string.noencontrado_fragment_title);
+    }
+
+    @Override
+    public String getSubTitle() {
+        return null;
     }
 
 

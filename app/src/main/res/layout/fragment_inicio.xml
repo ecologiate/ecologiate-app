@@ -166,13 +166,6 @@
                         android:text="@string/campanias"
                         android:textSize="20dp" />
 
-                    <View
-                        android:layout_width="wrap_content"
-                        android:layout_height="2dip"
-                        android:layout_below="@+id/tituloCampanias"
-                        android:background="@color/violetaOscuro"
-                        android:padding="10dp" />
-
                     <android.support.v7.widget.RecyclerView
                         android:id="@+id/tipFragment"
                         android:layout_width="match_parent"
@@ -182,20 +175,16 @@
 
                 </RelativeLayout>
 
+                <View
+                    android:layout_width="wrap_content"
+                    android:layout_height="2dip"
+                    android:layout_below="@+id/tituloCampanias"
+                    android:background="@color/violetaOscuro"
+                    android:padding="10dp" />
+
             </LinearLayout>
 
         </ScrollView>
-
-
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/md_floating_action_reciclar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
-            android:layout_margin="10dp"
-
-            app:srcCompat="@drawable/ic_reciclaje"/>
 
 </RelativeLayout>
 

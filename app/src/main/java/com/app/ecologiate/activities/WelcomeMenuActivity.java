@@ -5,7 +5,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
-import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -13,9 +12,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.app.ecologiate.R;
+import com.app.ecologiate.fragments.AbstractEcologiateFragment;
 import com.app.ecologiate.fragments.AjustesFragment;
 import com.app.ecologiate.fragments.AltaProductoFragment;
 import com.app.ecologiate.fragments.AltaPuntoRecoleccionFragment;
@@ -33,11 +34,12 @@ import com.app.ecologiate.fragments.ResultadoFragment;
 import com.app.ecologiate.fragments.TipsFragment;
 import com.app.ecologiate.fragments.TriviaFragment;
 import com.app.ecologiate.services.UserManager;
+import com.app.ecologiate.utils.CircleTransform;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
-import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
+import com.squareup.picasso.Picasso;
 
 public class WelcomeMenuActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
@@ -59,6 +61,8 @@ public class WelcomeMenuActivity extends AppCompatActivity
         ProductoNoEncontradoFragment.OnFragmentInteractionListener{
 
 
+    private NavigationView navigationView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,14 +76,16 @@ public class WelcomeMenuActivity extends AppCompatActivity
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        ImageView menuPicture = (ImageView) navigationView.getHeaderView(0).findViewById(R.id.imageViewMenuLateral);
+        Picasso.with(this).load(UserManager.getUser().getFotoUri()).transform(new CircleTransform()).into(menuPicture);
 
         //selecciono el inicioFragment por default
         if(savedInstanceState == null){
-            Fragment inicioFragment = new InicioFragment();
+            AbstractEcologiateFragment inicioFragment = new InicioFragment();
             getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.contentFragment, inicioFragment)
+                    .replace(R.id.contentFragment, inicioFragment, inicioFragment.getFragmentTag())
                     //.addToBackStack(String.valueOf(inicioFragment.getId()))
                     .commit();
             navigationView.setCheckedItem(R.id.nav_inicio);
@@ -105,14 +111,25 @@ public class WelcomeMenuActivity extends AppCompatActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            int count = getFragmentManager().getBackStackEntryCount();
-
+            InicioFragment inicioFragment = (InicioFragment)getSupportFragmentManager().findFragmentByTag(InicioFragment.class.getCanonicalName());
+            if (inicioFragment != null && inicioFragment.isVisible()) {
+                // salgo
+                super.onBackPressed();
+            }else{
+                //voy al inicio
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.contentFragment, new InicioFragment(), InicioFragment.class.getCanonicalName())
+                        .commit();
+                navigationView.setCheckedItem(R.id.nav_inicio);
+            }
+            /*
+            int count = getSupportFragmentManager().getBackStackEntryCount();
             if (count == 0) {
                 super.onBackPressed();
-                //additional code
             } else {
                 getFragmentManager().popBackStack();
             }
+            */
         }
     }
 
@@ -145,7 +162,7 @@ public class WelcomeMenuActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        Fragment fragment = null;
+        AbstractEcologiateFragment fragment = null;
 
         if(id == R.id.nav_inicio){
             fragment = new InicioFragment();
@@ -179,11 +196,11 @@ public class WelcomeMenuActivity extends AppCompatActivity
 
         if (fragment != null) {
             getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.contentFragment, fragment)
-                    .addToBackStack(String.valueOf(fragment.getId()))
+                    .replace(R.id.contentFragment, fragment, fragment.getFragmentTag())
+                    //.addToBackStack(String.valueOf(fragment.getId()))
                     .commit();
 
-            setTitle(item.getTitle());
+            //setTitle(item.getTitle());
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

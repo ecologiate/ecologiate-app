@@ -8,67 +8,91 @@
     <TextView
         android:id="@+id/titMed"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="30dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:gravity="center"
         android:text="MEDALLAS" />
 
     <ImageView
+        android:id="@+id/podio"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/titMed"
+        app:srcCompat="@drawable/ic_podio"/>
+
+    <TextView
+        android:id="@+id/cantMed"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:layout_below="@+id/podio"
+        android:text="CANTIDAD RECICLADA:" />
+
+    <TextView
+        android:id="@+id/nroReciclado"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:layout_below="@+id/podio"
+        android:layout_toRightOf="@+id/cantMed"
+        android:text="15"/>
+
+    <ImageView
         android:id="@+id/medalla1"
         android:layout_width="80dp"
         android:layout_height="80dp"
-        android:layout_alignParentLeft="false"
+        android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_alignParentTop="false"
-        android:layout_below="@+id/titMed"
+        android:layout_below="@+id/cantMed"
         app:srcCompat="@drawable/ic_medalla1"/>
-
     <TextView
         android:id="@+id/tvOro"
         android:gravity="center"
-        android:layout_width="wrap_content"
-        android:layout_height="80dp"
-        android:layout_below="@+id/titMed"
-        android:layout_toRightOf="@+id/medalla1"
-        android:text="MEDALLA DE ORO" />
+        android:layout_width="80dp"
+        android:layout_height="30dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/medalla1"
+        android:text="ORO (100)" />
 
     <ImageView
         android:id="@+id/medalla2"
         android:layout_width="80dp"
         android:layout_height="80dp"
-        android:layout_alignParentLeft="false"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="false"
-        android:layout_below="@+id/medalla1"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/cantMed"
+        android:layout_toRightOf="@+id/medalla1"
         app:srcCompat="@drawable/ic_medalla2"/>
 
     <TextView
         android:id="@+id/tvPlata"
         android:gravity="center"
-        android:layout_width="wrap_content"
-        android:layout_height="80dp"
-        android:layout_below="@+id/tvOro"
-        android:layout_toRightOf="@+id/medalla2"
-        android:text="MEDALLA DE PLATA" />
+        android:layout_width="80dp"
+        android:layout_height="30dp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/medalla2"
+        android:layout_toRightOf="@+id/tvOro"
+        android:text="PLATA (50)" />
 
     <ImageView
         android:id="@+id/medalla3"
         android:layout_width="80dp"
         android:layout_height="80dp"
-        android:layout_alignParentLeft="false"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="false"
-        android:layout_below="@+id/medalla2"
+        android:layout_below="@+id/cantMed"
+        android:layout_toRightOf="@+id/medalla2"
         app:srcCompat="@drawable/ic_medalla3"/>
 
     <TextView
         android:id="@+id/tvBronce"
         android:gravity="center"
-        android:layout_width="wrap_content"
-        android:layout_height="80dp"
-        android:layout_below="@+id/tvPlata"
-        android:layout_toRightOf="@+id/medalla3"
-        android:text="MEDALLA DE ORO" />
+        android:layout_width="90dp"
+        android:layout_height="30dp"
+        android:layout_below="@+id/medalla3"
+        android:layout_toRightOf="@+id/tvPlata"
+        android:text="BRONCE (15)" />
 
 </RelativeLayout>

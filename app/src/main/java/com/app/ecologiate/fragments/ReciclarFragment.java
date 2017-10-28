@@ -20,8 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class ReciclarFragment extends Fragment {
-
+public class ReciclarFragment extends AbstractEcologiateFragment {
 
     private AppBarLayout appBar;
     private TabLayout pestanias;
@@ -98,6 +97,16 @@ public class ReciclarFragment extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+    }
+
+    @Override
+    public String getTitle() {
+        return getResources().getString(R.string.reciclar_fragment_title);
+    }
+
+    @Override
+    public String getSubTitle() {
+        return null;
     }
 
 

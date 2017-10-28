@@ -29,7 +29,7 @@ import cz.msebera.android.httpclient.Header;
 import cz.msebera.android.httpclient.entity.StringEntity;
 
 
-public class ResultadoFragment extends Fragment {
+public class ResultadoFragment extends AbstractEcologiateFragment {
 
     private Producto producto;
 
@@ -165,6 +165,16 @@ public class ResultadoFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    @Override
+    public String getTitle() {
+        return getResources().getString(R.string.resultado_fragment_title);
+    }
+
+    @Override
+    public String getSubTitle() {
+        return null;
     }
 
 

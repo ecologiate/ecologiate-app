@@ -15,6 +15,7 @@ public class Usuario {
     private Long puntos;
     private Boolean admin;
     private Nivel nivel;
+    private String fotoUri;
 
     public static Usuario getFromJson(JSONObject jsonObject){
         try {
@@ -98,5 +99,13 @@ public class Usuario {
 
     public void setNivel(Nivel nivel) {
         this.nivel = nivel;
+    }
+
+    public String getFotoUri() {
+        return fotoUri;
+    }
+
+    public void setFotoUri(String fotoUri) {
+        this.fotoUri = fotoUri;
     }
 }

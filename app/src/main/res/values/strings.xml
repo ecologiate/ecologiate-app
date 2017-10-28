@@ -6,17 +6,25 @@
     <string name="facebook_app_id">149676695596008</string>
     <string name="fb_login_protocol_scheme">fb149676695596008</string>
     <string name="fb_login">Iniciar sesión con Facebook</string>
-    <!-- Strings related to login -->
-    <string name="prompt_email">Email</string>
-    <string name="prompt_password">Password (optional)</string>
-    <string name="action_sign_in">Sign in or register</string>
-    <string name="action_sign_in_short">Sign in</string>
-    <string name="error_invalid_email">This email address is invalid</string>
-    <string name="error_invalid_password">This password is too short</string>
-    <string name="error_incorrect_password">This password is incorrect</string>
-    <string name="error_field_required">This field is required</string>
-    <string name="permission_rationale">"Contacts permissions are needed for providing email
-        completions."</string>
+    <!-- titulos de pantallas -->
+    <string name="ajustes_fragment_title">Ajustes</string>
+    <string name="altaprod_fragment_title">Producto</string>
+    <string name="altaprod_fragment_subtitle">Complete los campos</string>
+    <string name="altapdr_fragment_title">Punto de recolección</string>
+    <string name="altapdr_fragment_subtitle">Complete los campos</string>
+    <string name="enterate_fragment_title">Aprendé jugando</string>
+    <string name="escaneo_fragment_title">Búsqueda</string>
+    <string name="grupos_fragment_title">Mi perfil</string>
+    <string name="inicio_fragment_title">Bienvenido</string>
+    <string name="manual_fragment_title">Búsqueda</string>
+    <string name="mapa_fragment_title">Mapa</string>
+    <string name="micuenta_fragment_title">Mi perfil</string>
+    <string name="perfil_fragment_title">Mi perfil</string>
+    <string name="noencontrado_fragment_title">Lo sentimos</string>
+    <string name="reciclar_fragment_title">Búsqueda</string>
+    <string name="resultado_fragment_title">¡Eureka!</string>
+    <string name="tips_fragment_title">Aprendé jugando</string>
+    <string name="trivia_fragment_title">Aprendé jugando</string>
     <!-- scan activity -->
     <string name="turn_on_flashlight">Encender linterna</string>
     <string name="turn_off_flashlight">Apagar linterna</string>

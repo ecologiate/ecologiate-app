@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 import com.app.ecologiate.R;
 
 
-public class AjustesFragment extends Fragment {
+public class AjustesFragment extends AbstractEcologiateFragment {
 
     private OnFragmentInteractionListener mListener;
 
@@ -49,6 +49,16 @@ public class AjustesFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    @Override
+    public String getTitle() {
+        return getResources().getString(R.string.ajustes_fragment_title);
+    }
+
+    @Override
+    public String getSubTitle() {
+        return null; //sin subtítulo
     }
 
 

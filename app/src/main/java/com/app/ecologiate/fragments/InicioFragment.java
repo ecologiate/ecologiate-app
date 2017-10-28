@@ -7,10 +7,15 @@ import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -31,7 +36,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 
-public class InicioFragment extends Fragment {
+public class InicioFragment extends AbstractEcologiateFragment {
 
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
@@ -46,9 +51,6 @@ public class InicioFragment extends Fragment {
     ImageView imagenAvatar;
     @BindView(R.id.nivelActual)
     TextView txNivelUsuario;
-
-    @BindView(R.id.md_floating_action_reciclar)
-    FloatingActionButton fam;
 
 
     @Override
@@ -65,7 +67,6 @@ public class InicioFragment extends Fragment {
         imagenAvatar.requestFocus();
         //seteo los datos del usuario
         Usuario usuario = UserManager.getUser();
-        completeAppBarInfo(usuario, container);
         Picasso.with(getContext()).load(usuario.getNivel().getImagenLink()).into(imagenAvatar);
         txNivelUsuario.setText(usuario.getNivel().getDescripcion());
 
@@ -95,27 +96,39 @@ public class InicioFragment extends Fragment {
         mRecyclerView.setAdapter(mAdapter);
 
 
-        fam.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view) {
-                Fragment reciclarFragment = new ReciclarFragment();
-                getActivity().getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.contentFragment, reciclarFragment)
-                        .commit();
-
-            }
-        });
-
-
+        setHasOptionsMenu(true); //para que me agregue un menu, tiene que ir al final
         return view;
     }
 
 
-    private void completeAppBarInfo(Usuario usuario, ViewGroup container) {
-        getActivity().setTitle("Hola "+usuario.getNombre());
-        View padre = (View) container.getParent();
-        AppBarLayout appBar = (AppBarLayout) padre.findViewById(R.id.appbar);
-        //appBar.addView(alguna view creada);
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.menu_superior_inicio, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_reciclar:
+                Fragment reciclarFragment = new ReciclarFragment();
+                getActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.contentFragment, reciclarFragment)
+                        .commit();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
+    public String getTitle() {
+        return "Hola "+UserManager.getUser().getNombre();
+    }
+
+    @Override
+    public String getSubTitle() {
+        return null;
     }
 
 

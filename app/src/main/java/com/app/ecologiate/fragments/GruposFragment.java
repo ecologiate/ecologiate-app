@@ -26,7 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class GruposFragment extends Fragment {
+public class GruposFragment extends AbstractEcologiateFragment {
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
@@ -110,6 +110,15 @@ public class GruposFragment extends Fragment {
         return  view;
     }
 
+    @Override
+    public String getTitle() {
+        return getResources().getString(R.string.grupos_fragment_title);
+    }
+
+    @Override
+    public String getSubTitle() {
+        return null;
+    }
 
 
     public interface OnFragmentInteractionListener {

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.app.ecologiate.activities.trivia_respuestas">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+
+        <TextView
+            android:id="@+id/tvTituloRespuesta"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:gravity="center"
+            android:text="CORRECTO O INCORRECTO" />
+
+        <ImageView
+            android:id="@+id/ivImagenRespuesta"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_centerHorizontal="true"
+            android:gravity="center"
+            android:layout_below="@+id/tvTituloRespuesta"
+            />
+
+        <TextView
+            android:id="@+id/tvDetalleProducto"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_centerHorizontal="true"
+            android:gravity="center"
+            android:layout_below="@+id/ivImagenRespuesta"
+            android:text="Detalle del Producto" />
+
+        <Button
+            android:id="@+id/btnSiguiente"
+            style="@style/ecoButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:gravity="center"
+            android:text="Siguiente"
+            android:layout_below="@+id/tvDetalleProducto"
+            />
+
+    </RelativeLayout>
+
+</android.support.constraint.ConstraintLayout>

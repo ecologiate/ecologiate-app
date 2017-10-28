@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class MiCuentaFragment extends Fragment {
+public class MiCuentaFragment extends AbstractEcologiateFragment {
 
     private AppBarLayout appBar;
     private TabLayout pestanias;
@@ -114,6 +114,16 @@ public class MiCuentaFragment extends Fragment {
         public CharSequence getPageTitle(int position) {
             return titulosFragmentos.get(position);
         }
+    }
+
+    @Override
+    public String getTitle() {
+        return getResources().getString(R.string.micuenta_fragment_title);
+    }
+
+    @Override
+    public String getSubTitle() {
+        return null;
     }
 
 

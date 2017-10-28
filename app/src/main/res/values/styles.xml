@@ -29,6 +29,38 @@
         <item name="android:paddingLeft">20dp</item>
     </style>
 
+    <style name="triviaButtonVerdeStyle">
+        <item name="android:textColor">@android:color/black</item>
+        <item name="android:background">@drawable/borde_redondo</item>
+        <item name="backgroundTint">#00E530</item>
+        <item name="android:paddingRight">20dp</item>
+        <item name="android:paddingLeft">20dp</item>
+    </style>
+
+    <style name="triviaButtonComposteraStyle">
+        <item name="android:textColor">@android:color/black</item>
+        <item name="android:background">@drawable/borde_redondo</item>
+        <item name="backgroundTint">#33B5E5</item>
+        <item name="android:paddingRight">20dp</item>
+        <item name="android:paddingLeft">20dp</item>
+    </style>
+
+    <style name="triviaButtonNegroStyle">
+        <item name="android:textColor">@android:color/black</item>
+        <item name="android:background">@drawable/borde_redondo</item>
+        <item name="backgroundTint">#E50616</item>
+        <item name="android:paddingRight">20dp</item>
+        <item name="android:paddingLeft">20dp</item>
+    </style>
+
+    <style name="triviaButtonEspecialStyle">
+        <item name="android:textColor">@android:color/black</item>
+        <item name="android:background">@drawable/borde_redondo</item>
+        <item name="backgroundTint">#E5DC00</item>
+        <item name="android:paddingRight">20dp</item>
+        <item name="android:paddingLeft">20dp</item>
+    </style>
+
     <style name="torchOn">
         <item name="backgroundTint">@android:color/white</item>
         <item name="android:tint">@android:color/black</item>
