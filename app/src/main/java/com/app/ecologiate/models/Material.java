@@ -9,11 +9,11 @@ import org.json.JSONObject;
 public class Material {
     private Long id;
     private String descripcion;
-    private Integer equArboles;
-    private Integer equEnergia;
-    private Integer equAgua;
-    private Integer equEmisiones;
-    private Integer puntosOtorgados;
+    private Double equArboles;
+    private Double equEnergia;
+    private Double equAgua;
+    private Double equEmisiones;
+    private Double puntosOtorgados;
     private Categoria categoria;
 
 
@@ -22,11 +22,11 @@ public class Material {
             return new Material(
                     jsonObject.has("id") ? jsonObject.getLong("id") : null ,
                     jsonObject.has("descripcion") ? jsonObject.getString("descripcion") : null,
-                    jsonObject.has("equ_arboles") ? jsonObject.getInt("equ_arboles") : null,
-                    jsonObject.has("equ_energia") ? jsonObject.getInt("equ_energia") : null,
-                    jsonObject.has("equ_agua") ? jsonObject.getInt("equ_agua") : null,
-                    jsonObject.has("equ_emisiones") ? jsonObject.getInt("equ_emisiones") : null,
-                    jsonObject.has("puntos_otorgados") ? jsonObject.getInt("puntos_otorgados") : null,
+                    jsonObject.has("equ_arboles") ? jsonObject.getDouble("equ_arboles") : 0d,
+                    jsonObject.has("equ_energia") ? jsonObject.getDouble("equ_energia") : 0d,
+                    jsonObject.has("equ_agua") ? jsonObject.getDouble("equ_agua") : 0d,
+                    jsonObject.has("equ_emisiones") ? jsonObject.getDouble("equ_emisiones") : 0d,
+                    jsonObject.has("puntos_otorgados") ? jsonObject.getDouble("puntos_otorgados") : 0d,
                     jsonObject.has("categoria") ? Categoria.getFromJson(jsonObject.getJSONObject("categoria")) : null
             );
         }catch (Exception e){
@@ -35,8 +35,8 @@ public class Material {
         }
     }
 
-    public Material(Long id, String descripcion, Integer equArboles, Integer equEnergia,
-                    Integer equAgua, Integer equEmisiones, Integer puntosOtorgados,
+    public Material(Long id, String descripcion, Double equArboles, Double equEnergia,
+                    Double equAgua, Double equEmisiones, Double puntosOtorgados,
                     Categoria categoria) {
         this.id = id;
         this.descripcion = descripcion;
@@ -64,43 +64,43 @@ public class Material {
         this.descripcion = descripcion;
     }
 
-    public Integer getEquArboles() {
+    public Double getEquArboles() {
         return equArboles;
     }
 
-    public void setEquArboles(Integer equArboles) {
+    public void setEquArboles(Double equArboles) {
         this.equArboles = equArboles;
     }
 
-    public Integer getEquEnergia() {
+    public Double getEquEnergia() {
         return equEnergia;
     }
 
-    public void setEquEnergia(Integer equEnergia) {
+    public void setEquEnergia(Double equEnergia) {
         this.equEnergia = equEnergia;
     }
 
-    public Integer getEquAgua() {
+    public Double getEquAgua() {
         return equAgua;
     }
 
-    public void setEquAgua(Integer equAgua) {
+    public void setEquAgua(Double equAgua) {
         this.equAgua = equAgua;
     }
 
-    public Integer getEquEmisiones() {
+    public Double getEquEmisiones() {
         return equEmisiones;
     }
 
-    public void setEquEmisiones(Integer equEmisiones) {
+    public void setEquEmisiones(Double equEmisiones) {
         this.equEmisiones = equEmisiones;
     }
 
-    public Integer getPuntosOtorgados() {
+    public Double getPuntosOtorgados() {
         return puntosOtorgados;
     }
 
-    public void setPuntosOtorgados(Integer puntosOtorgados) {
+    public void setPuntosOtorgados(Double puntosOtorgados) {
         this.puntosOtorgados = puntosOtorgados;
     }
 

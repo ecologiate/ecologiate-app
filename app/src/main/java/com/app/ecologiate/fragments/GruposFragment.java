@@ -1,30 +1,37 @@
 package com.app.ecologiate.fragments;
 
 import android.app.Dialog;
-import android.content.Context;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageButton;
+import android.widget.Toast;
 
 import com.app.ecologiate.R;
+import com.app.ecologiate.models.Grupo;
 import com.app.ecologiate.models.GrupoAdapter;
-import com.app.ecologiate.models.Grupos;
-import com.app.ecologiate.models.Tip;
-import com.app.ecologiate.models.TipAdapter;
 import com.app.ecologiate.models.Usuario;
+import com.app.ecologiate.services.ApiCallService;
+import com.app.ecologiate.services.UserManager;
+import com.loopj.android.http.JsonHttpResponseHandler;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import cz.msebera.android.httpclient.Header;
 
 
 public class GruposFragment extends AbstractEcologiateFragment {
@@ -32,12 +39,21 @@ public class GruposFragment extends AbstractEcologiateFragment {
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private OnFragmentInteractionListener mListener;
+    private ProgressDialog prgDialog;
+
+    private ApiCallService apiCallService = new ApiCallService();
+
 
     Button crearGrupo;
 
 
     @Override
-    public void onCreate(Bundle savedInstanceState) { super.onCreate(savedInstanceState);    }
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        prgDialog = new ProgressDialog(getContext());
+        prgDialog.setMessage("Cargando...");
+        prgDialog.setCancelable(false);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -52,19 +68,7 @@ public class GruposFragment extends AbstractEcologiateFragment {
         mLayoutManager = new LinearLayoutManager(view.getContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-        List<Grupos> myDataset = new ArrayList<>();
-        List<Usuario> integrantesGrupo1 = new ArrayList<>();
-        integrantesGrupo1.add(new Usuario("Juan","Perez",150L));
-        integrantesGrupo1.add(new Usuario("Manuel","Chota",450L));
-        integrantesGrupo1.add(new Usuario("Riquelme","Pechofrio",10L));
-        List<Usuario> integrantesGrupo2 = new ArrayList<>();
-        integrantesGrupo2.add(new Usuario("Gonza","Albarracin",1150L));
-        integrantesGrupo2.add(new Usuario("Diego","Fernandez",1750L));
-        myDataset.add(new Grupos("Proyecto", integrantesGrupo1, "1000","50","20","100"));
-        myDataset.add(new Grupos("lalala", integrantesGrupo2, "1000","2000","4","5000"));
-        mAdapter = new GrupoAdapter(myDataset);
-        mRecyclerView.setAdapter(mAdapter);
-
+        obtenerGruposDelUsuario();
 
         Button botonCrearGrupo = (Button) view.findViewById(R.id.btnCrearGrupo);
 
@@ -93,6 +97,57 @@ public class GruposFragment extends AbstractEcologiateFragment {
 
         return  view;
     }
+
+
+    private void obtenerGruposDelUsuario(){
+        Usuario usuarioLogueado = UserManager.getUser();
+        prgDialog.show();
+        //DVP: agrego el código a ejecutar cuando vuelve del Back.
+        JsonHttpResponseHandler responseHandler = new JsonHttpResponseHandler(){
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response){
+                //DVP: oculto el "Buscando".
+                prgDialog.hide();
+                //DVP: Si encuentra el Producto.
+                if(response.has("grupos")){
+                    try {
+                        List<Grupo> grupos = new ArrayList<>();
+                        JSONArray arrayGruposJson = response.getJSONArray("grupos");
+                        for (int i = 0; i < arrayGruposJson.length(); i++) {
+                            JSONObject grupoJsonObject = arrayGruposJson.getJSONObject(i);
+                            Grupo grupo = Grupo.getFromJson(grupoJsonObject);
+                            grupos.add(grupo);
+                        }
+                        mAdapter = new GrupoAdapter(grupos);
+                        mRecyclerView.setAdapter(mAdapter);
+                    }catch (JSONException e){
+                        //DVP: Si encuentra algun error parseando el Json.
+                        Toast.makeText(getContext(), "Error en formato de Json", Toast.LENGTH_LONG).show();
+                        e.printStackTrace();
+                    }
+                }else {
+                    Toast.makeText(getContext(), "No se encontraron grupos para el usuario", Toast.LENGTH_LONG).show();
+                }
+            }
+
+            //DVP: Cuando falla la invocación al Back. (status code != 200).
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable){
+                prgDialog.hide();
+                if (statusCode == 404){
+                    Toast.makeText(getContext(), "URL no encontrada", Toast.LENGTH_LONG).show();
+                }else if (statusCode == 500){
+                    Toast.makeText(getContext(), "Error en el Backend", Toast.LENGTH_LONG).show();
+                }else{
+                    Toast.makeText(getContext(), throwable.getLocalizedMessage(), Toast.LENGTH_LONG).show();
+                    Log.e("API_ERROR", "Error Inesperado ["+statusCode+"]", throwable);
+                }
+            }
+        };
+        //DVP: invoco al servicio del Back
+        apiCallService.getGruposDelUsuario(getContext(), usuarioLogueado.getId(), responseHandler);
+    }
+
 
     @Override
     public String getTitle() {

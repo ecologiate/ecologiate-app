@@ -114,9 +114,9 @@ public class ResultadoFragment extends AbstractEcologiateFragment {
                 prgDialog.hide();
                 if (response != null) {
                     Toast.makeText(getContext(), "Producto reciclado", Toast.LENGTH_LONG).show();
-                    Long puntosSumados = null;
+                    Double puntosSumados = 0d;
                     try{
-                        puntosSumados = response.getLong("puntos_sumados");
+                        puntosSumados = response.getDouble("puntos_sumados");
                     }catch (JSONException e){
                         Toast.makeText(getContext(), "Error en json de respuesta", Toast.LENGTH_LONG).show();
                     }

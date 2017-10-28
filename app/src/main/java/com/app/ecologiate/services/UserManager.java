@@ -42,9 +42,9 @@ public class UserManager {
     /* *****************************/
 
     private static Usuario loggedUser = new Usuario(1L, "Ecologiate", "",
-            "ecologiateapp@gmail.com", 0L, true, new Nivel(1L,"Novato",
+            "ecologiateapp@gmail.com", 0d, true, new Nivel(1L,"Novato",
             "/images/avatar_novato.png",
-            0L,1000L), new Impacto(0L,0L,0L,0L));
+            0L,1000L), new Impacto(0d,0d,0d,0d));
 
     public static Usuario getUser(){
         return loggedUser;

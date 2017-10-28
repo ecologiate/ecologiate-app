@@ -7,18 +7,18 @@ import org.json.JSONObject;
 
 public class Impacto {
 
-    private Long arboles;
-    private Long agua;
-    private Long energia;
-    private Long emisiones;
+    private Double arboles;
+    private Double agua;
+    private Double energia;
+    private Double emisiones;
 
     public static Impacto getFromJson(JSONObject jsonObject){
         try {
             return new Impacto(
-                    jsonObject.has("arboles") ? jsonObject.getLong("arboles") : 0 ,
-                    jsonObject.has("agua") ? jsonObject.getLong("agua") : 0 ,
-                    jsonObject.has("energia") ? jsonObject.getLong("energia") : 0 ,
-                    jsonObject.has("emisiones") ? jsonObject.getLong("emisiones") : 0
+                    jsonObject.has("arboles") ? jsonObject.getDouble("arboles") : 0d ,
+                    jsonObject.has("agua") ? jsonObject.getDouble("agua") : 0d ,
+                    jsonObject.has("energia") ? jsonObject.getDouble("energia") : 0d ,
+                    jsonObject.has("emisiones") ? jsonObject.getDouble("emisiones") : 0d
             );
         }catch (Exception e){
             Log.e("JSON_ERROR", e.getMessage());
@@ -26,42 +26,42 @@ public class Impacto {
         }
     }
 
-    public Impacto(Long arboles, Long agua, Long energia, Long emisiones) {
+    public Impacto(Double arboles, Double agua, Double energia, Double emisiones) {
         this.arboles = arboles;
         this.agua = agua;
         this.energia = energia;
         this.emisiones = emisiones;
     }
 
-    public Long getArboles() {
+    public Double getArboles() {
         return arboles;
     }
 
-    public void setArboles(Long arboles) {
+    public void setArboles(Double arboles) {
         this.arboles = arboles;
     }
 
-    public Long getAgua() {
+    public Double getAgua() {
         return agua;
     }
 
-    public void setAgua(Long agua) {
+    public void setAgua(Double agua) {
         this.agua = agua;
     }
 
-    public Long getEnergia() {
+    public Double getEnergia() {
         return energia;
     }
 
-    public void setEnergia(Long energia) {
+    public void setEnergia(Double energia) {
         this.energia = energia;
     }
 
-    public Long getEmisiones() {
+    public Double getEmisiones() {
         return emisiones;
     }
 
-    public void setEmisiones(Long emisiones) {
+    public void setEmisiones(Double emisiones) {
         this.emisiones = emisiones;
     }
 }

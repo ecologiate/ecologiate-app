@@ -86,6 +86,11 @@ public class ApiCallService {
         put(url, context, entityBody, responseHandler);
     }
 
+    public void getGruposDelUsuario(Context context, Long idUsuario, JsonHttpResponseHandler responseHandler){
+        String url = SERVER_URL + "/api/grupos/" + idUsuario;
+        get(url, responseHandler);
+    }
+
 
     /**
      ***************************************************************

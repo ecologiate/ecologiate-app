@@ -17,7 +17,7 @@ import java.util.List;
 
 public class GrupoAdapter extends RecyclerView.Adapter<GrupoAdapter.ViewHolder>{
 
-    private List<Grupos> mDataset;
+    private List<Grupo> gruposDataset;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
@@ -26,6 +26,7 @@ public class GrupoAdapter extends RecyclerView.Adapter<GrupoAdapter.ViewHolder>{
         public TextView txMetricaArboles;
         public TextView txMetricaAgua;
         public TextView txMetricaEnergia;
+        public TextView txMetricaEmisiones;
         public Button btnInvitar;
         public Button btnSalir;
 
@@ -38,6 +39,7 @@ public class GrupoAdapter extends RecyclerView.Adapter<GrupoAdapter.ViewHolder>{
             txMetricaArboles = (TextView) v.findViewById(R.id.grupoContenidoAboles);
             txMetricaAgua = (TextView) v.findViewById(R.id.grupoContenidoAgua);
             txMetricaEnergia = (TextView) v.findViewById(R.id.grupoContenidoEnergia);
+            txMetricaEmisiones = (TextView) v.findViewById(R.id.grupoContenidoEmisiones);
             btnInvitar = (Button) v.findViewById(R.id.btnInvitarGrupo);
             btnSalir = (Button) v.findViewById(R.id.btnSalirGrupo);
 
@@ -45,8 +47,8 @@ public class GrupoAdapter extends RecyclerView.Adapter<GrupoAdapter.ViewHolder>{
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public GrupoAdapter(List<Grupos> myDataset) {
-        mDataset = myDataset;
+    public GrupoAdapter(List<Grupo> myDataset) {
+        gruposDataset = myDataset;
     }
 
     // Create new views (invoked by the layout manager)
@@ -63,23 +65,26 @@ public class GrupoAdapter extends RecyclerView.Adapter<GrupoAdapter.ViewHolder>{
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        Grupos model = mDataset.get(position);
+        Grupo model = gruposDataset.get(position);
         //armo string de integrantes
         String htmlIntegrantes = "";
-        List<Usuario> integrantes = model.getIntegrantes();
+        List<Usuario> integrantes = model.getUsuarios();
         for(int i=0; i< integrantes.size(); i++){
             Usuario usuario = integrantes.get(i);
             htmlIntegrantes += usuario.getNombreCompleto()+" ("+usuario.getPuntos()+") <br/>";
         }
-        holder.txTitulo.setText(model.getTitulo());
+        holder.txTitulo.setText(model.getNombre());
         holder.txIntegrantes.setText(Html.fromHtml(htmlIntegrantes));
-        holder.txMetricaArboles.setText(model.getMetricaArboles());
-        holder.txMetricaAgua.setText(model.getMetricaAgua());
-        holder.txMetricaEnergia.setText(model.getMetricaEnergia());
+        Impacto impactoDelGrupo = model.getImpacto();
+
+        holder.txMetricaArboles.setText(String.format("%.0f", impactoDelGrupo.getArboles()));
+        holder.txMetricaAgua.setText(String.format("%.0f",impactoDelGrupo.getAgua()));
+        holder.txMetricaEnergia.setText(String.format("%.0f",impactoDelGrupo.getEnergia()));
+        holder.txMetricaEmisiones.setText(String.format("%.0f",impactoDelGrupo.getEmisiones()));
 
         final Context context = holder.holderContext;
 
-        final String nombreGrupo = model.getTitulo();
+        final String nombreGrupo = model.getNombre();
 
         holder.btnInvitar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -113,7 +118,7 @@ public class GrupoAdapter extends RecyclerView.Adapter<GrupoAdapter.ViewHolder>{
 
     @Override
     public int getItemCount() {
-        return mDataset.size();
+        return gruposDataset.size();
     }
 
 }

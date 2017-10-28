@@ -33,6 +33,7 @@
             android:drawableLeft="@drawable/ic_reciclaje"
             android:text="@string/Reciclar"
             android:textSize="20sp"
+            android:drawableTint="@android:color/white"
             android:layout_weight="0.30" />
 
         <Button

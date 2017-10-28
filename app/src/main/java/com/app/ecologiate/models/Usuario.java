@@ -12,7 +12,7 @@ public class Usuario {
     private String nombre;
     private String apellido;
     private String mail;
-    private Long puntos;
+    private Double puntos;
     private Boolean admin;
     private Nivel nivel;
     private String fotoUri;
@@ -28,7 +28,7 @@ public class Usuario {
                     jsonObject.has("nombre") ? jsonObject.getString("nombre") : null,
                     jsonObject.has("apellido") ? jsonObject.getString("apellido") : null,
                     jsonObject.has("mail") ? jsonObject.getString("mail") : null,
-                    jsonObject.has("puntos") ? jsonObject.getLong("puntos") : null,
+                    jsonObject.has("puntos") ? jsonObject.getDouble("puntos") : null,
                     jsonObject.has("admin") ? jsonObject.getBoolean("admin") : false,
                     jsonObject.has("nivel") ? Nivel.getFromJson(jsonObject.getJSONObject("nivel")) : null,
                     jsonObject.has("impacto") ? Impacto.getFromJson(jsonObject.getJSONObject("impacto")) : null
@@ -40,7 +40,7 @@ public class Usuario {
     }
 
 
-    public Usuario(Long id, String nombre, String apellido, String mail, Long puntos, Boolean admin, Nivel nivel, Impacto impacto) {
+    public Usuario(Long id, String nombre, String apellido, String mail, Double puntos, Boolean admin, Nivel nivel, Impacto impacto) {
         this.id = id;
         this.nombre = nombre;
         this.apellido = apellido;
@@ -51,7 +51,7 @@ public class Usuario {
         this.impacto = impacto;
     }
 
-    public Usuario(String nombre, String apellido, Long puntos) {
+    public Usuario(String nombre, String apellido, Double puntos) {
         this.nombre = nombre;
         this.apellido = apellido;
         this.puntos = puntos;
@@ -97,11 +97,11 @@ public class Usuario {
         this.admin = admin;
     }
 
-    public Long getPuntos() {
+    public Double getPuntos() {
         return puntos;
     }
 
-    public void setPuntos(Long puntos) {
+    public void setPuntos(Double puntos) {
         this.puntos = puntos;
     }
 

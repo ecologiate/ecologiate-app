@@ -100,6 +100,24 @@
                     android:padding="6dp"
                     android:textSize="18dp" />
 
+                <TextView
+                    android:id="@+id/tituloEmisiones"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tituloEnergia"
+                    android:padding="6dp"
+                    android:text="@string/emisiones"
+                    android:textSize="18dp" />
+
+                <TextView
+                    android:id="@+id/grupoContenidoEmisiones"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tituloEnergia"
+                    android:layout_toRightOf="@+id/tituloEmisiones"
+                    android:padding="6dp"
+                    android:textSize="18dp" />
+
             </RelativeLayout>
 
         <RelativeLayout
