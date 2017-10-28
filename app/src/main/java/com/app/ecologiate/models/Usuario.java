@@ -51,6 +51,12 @@ public class Usuario {
         this.impacto = impacto;
     }
 
+    public Usuario(String nombre, String apellido, Long puntos) {
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.puntos = puntos;
+    }
+
     public Long getId() {
         return id;
     }
@@ -121,5 +127,9 @@ public class Usuario {
 
     public void setImpacto(Impacto impacto) {
         this.impacto = impacto;
+    }
+
+    public String getNombreCompleto(){
+        return this.nombre+" "+this.apellido;
     }
 }

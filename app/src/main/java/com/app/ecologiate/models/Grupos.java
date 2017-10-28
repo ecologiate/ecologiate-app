@@ -1,11 +1,13 @@
 package com.app.ecologiate.models;
 
 
-import android.widget.ImageView;
+
+
+import java.util.List;
 
 public class Grupos {
     public String titulo;
-    public String integrante;
+    public List<Usuario> integrantes;
     public String puntos;
     public String metricaArboles;
     public String metricaAgua;
@@ -13,9 +15,9 @@ public class Grupos {
 
 
 
-    public Grupos(String titulo, String integrante, String puntos, String metricaArboles, String metricaAgua, String metricaEnergia) {
+    public Grupos(String titulo, List<Usuario> integrantes, String puntos, String metricaArboles, String metricaAgua, String metricaEnergia) {
         this.titulo = titulo;
-        this.integrante = integrante;
+        this.integrantes = integrantes;
         this.puntos = puntos;
         this.metricaArboles = metricaArboles;
         this.metricaAgua = metricaAgua;
@@ -33,12 +35,12 @@ public class Grupos {
         this.titulo = titulo;
     }
 
-    public String getIntegrante() {
-        return integrante;
+    public List<Usuario> getIntegrantes() {
+        return integrantes;
     }
 
-    public void setIntegrante(String integrante) {
-        this.integrante = integrante;
+    public void setIntegrantes(List<Usuario> integrantes) {
+        this.integrantes = integrantes;
     }
 
     public String getPuntos() {

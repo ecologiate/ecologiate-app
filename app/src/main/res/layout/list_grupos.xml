@@ -24,25 +24,17 @@
                 android:textSize="24sp" />
 
             <TextView
-            android:id="@+id/grupoIntegrante"
+            android:id="@+id/grupoIntegrantes"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/grupoTitulo"
             android:textSize="18sp" />
 
-            <TextView
-                android:id="@+id/grupoIntegrantePuntos"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/grupoTitulo"
-                android:layout_alignParentRight="true"
-                android:textSize="18sp"/>
-
             <RelativeLayout
                 android:id="@+id/relativeMetricasGrupos"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/grupoIntegrante"
+                android:layout_below="@+id/grupoIntegrantes"
                 android:background="@android:color/white">
 
                 <TextView
