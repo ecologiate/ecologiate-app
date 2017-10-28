@@ -49,6 +49,8 @@
     <string name="creargrupo">Crear Grupo</string>
     <string name="invitargrupo">Invitar Amigo</string>
     <string name="salirgrupo">Salir del Grupo</string>
+    <string name="nombregrupo">Nombre del Grupo</string>
+    <string name="mailgrupo">Ingrese el e-mail</string>
 
 
     /*Strings de alta de punto de recoleccion*/
