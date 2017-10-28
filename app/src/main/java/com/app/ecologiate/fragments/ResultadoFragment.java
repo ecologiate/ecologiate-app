@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.text.Html;
 import android.util.Log;
@@ -17,6 +18,8 @@ import com.app.ecologiate.R;
 import com.app.ecologiate.models.Producto;
 import com.app.ecologiate.services.ApiCallService;
 import com.app.ecologiate.services.UserManager;
+import com.google.android.gms.common.api.Result;
+import com.google.android.gms.common.api.ResultCallback;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
 import org.json.JSONException;
@@ -118,11 +121,16 @@ public class ResultadoFragment extends AbstractEcologiateFragment {
                         Toast.makeText(getContext(), "Error en json de respuesta", Toast.LENGTH_LONG).show();
                     }
                     Toast.makeText(getContext(), "Puntos sumados: "+puntosSumados, Toast.LENGTH_LONG).show();
-                    Fragment inicioFragment = new InicioFragment();
-                    getActivity().getSupportFragmentManager().beginTransaction()
-                            .replace(R.id.contentFragment, inicioFragment)
-                            //.addToBackStack(String.valueOf(resultadoFragment.getId())) //no quiero que pueda volver
-                            .commit();
+                    UserManager.updateUser(getContext(), new ResultCallback() {
+                        @Override
+                        public void onResult(@NonNull Result result) {
+                            Fragment inicioFragment = new InicioFragment();
+                            getActivity().getSupportFragmentManager().beginTransaction()
+                                    .replace(R.id.contentFragment, inicioFragment)
+                                    //.addToBackStack(String.valueOf(resultadoFragment.getId())) //no quiero que pueda volver
+                                    .commit();
+                        }
+                    });
                 }
             }
 

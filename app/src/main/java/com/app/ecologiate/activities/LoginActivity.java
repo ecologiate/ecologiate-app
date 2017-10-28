@@ -26,6 +26,7 @@ import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
 import com.facebook.Profile;
 import com.facebook.appevents.AppEventsLogger;
+import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.auth.api.Auth;
@@ -34,6 +35,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.Result;
 import com.google.android.gms.common.api.ResultCallback;
 
 import org.json.JSONException;
@@ -132,7 +134,7 @@ public class LoginActivity extends AppCompatActivity implements
             String name = "";
             String lastName = "";
             String email = "";
-            String uriPicture = "";
+            final String uriPicture = account.getPhotoUrl().toString();
             if (account.getGivenName() != null) {
                 name = account.getGivenName();
             }
@@ -142,25 +144,25 @@ public class LoginActivity extends AppCompatActivity implements
             if (account.getEmail() != null) {
                 email = account.getEmail();
             }
-            if (account.getPhotoUrl() != null) {
-                uriPicture = account.getPhotoUrl().toString();
-            }
+
             // save profile information to preferences
             SharedPreferences prefs = getSharedPreferences("com.app.ecologiate", Context.MODE_PRIVATE);
             prefs.edit().putString("com.app.ecologiate.nombre", name).apply();
             prefs.edit().putString("com.app.ecologiate.lastname", lastName).apply();
             prefs.edit().putString("com.app.ecologiate.email", email).apply();
             prefs.edit().putString("com.app.ecologiate.uriPicture", uriPicture).apply();
-            UserManager.getUser().setNombre(name);
-            UserManager.getUser().setApellido(lastName);
-            UserManager.getUser().setFotoUri(uriPicture);
-            UserManager.getUser().setMail(email);
 
             if(!silent) {
                 Toast.makeText(getApplicationContext(), "Logueado con Google: " + name,
                         Toast.LENGTH_LONG).show();
             }
-            goToNextActivity();
+            UserManager.login(this, email, name, lastName, gToken, new ResultCallback() {
+                @Override
+                public void onResult(@NonNull Result result) {
+                    UserManager.getUser().setFotoUri(uriPicture);
+                    goToNextActivity();
+                }
+            });
         } else {
             //failed
             if(!silent) {
@@ -172,7 +174,7 @@ public class LoginActivity extends AppCompatActivity implements
         }
     }
 
-    private void handleFacebookSignInResult(AccessToken fbToken, Boolean silent){
+    private void handleFacebookSignInResult(final AccessToken fbToken, Boolean silent){
         final Profile fbProfile = Profile.getCurrentProfile();
         if(!silent) {
             Toast.makeText(getApplicationContext(),
@@ -189,15 +191,13 @@ public class LoginActivity extends AppCompatActivity implements
                             GraphResponse response) {
                         Log.v("LoginActivity Response ", response.toString());
                         hideProgressDialog();
+                        String name = fbProfile.getFirstName();//object.getString("name");
+                        String lastName = fbProfile.getLastName();
+                        String fbEmail = "";
+                        final String uriPicture = fbProfile.getProfilePictureUri(192,192).toString();
+                        String token = fbToken.getToken();
                         try {
-                            String name = fbProfile.getFirstName();//object.getString("name");
-                            String lastName = fbProfile.getLastName();
-                            String fbEmail = object.getString("email");
-                            String uriPicture = fbProfile.getProfilePictureUri(192,192).toString();
-                            UserManager.getUser().setNombre(name);
-                            UserManager.getUser().setApellido(lastName);
-                            UserManager.getUser().setFotoUri(uriPicture);
-                            UserManager.getUser().setMail(fbEmail);
+                            fbEmail = object.getString("email");
 
                             SharedPreferences prefs = getSharedPreferences("com.app.ecologiate", Context.MODE_PRIVATE);
                             prefs.edit().putString("com.app.ecologiate.nombre", name).apply();
@@ -207,7 +207,13 @@ public class LoginActivity extends AppCompatActivity implements
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-                        goToNextActivity();
+                        UserManager.login(LoginActivity.this, fbEmail, name, lastName, token, new ResultCallback() {
+                            @Override
+                            public void onResult(@NonNull Result result) {
+                                UserManager.getUser().setFotoUri(uriPicture);
+                                goToNextActivity();
+                            }
+                        });
                     }
                 });
         Bundle parameters = new Bundle();
@@ -251,16 +257,15 @@ public class LoginActivity extends AppCompatActivity implements
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
         alertDialog.setTitle("Copate");
         alertDialog.setMessage("Usá el login con Facebook o Google");
-        alertDialog.setPositiveButton("Dale", new DialogInterface.OnClickListener() {
+        alertDialog.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 Toast.makeText(LoginActivity.this,"Crack", Toast.LENGTH_SHORT).show();
             }
         });
-        alertDialog.setNegativeButton("No jodas", new DialogInterface.OnClickListener() {
+        alertDialog.setNegativeButton("No gracias", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                Toast.makeText(LoginActivity.this,"Forro", Toast.LENGTH_SHORT).show();
                 goToNextActivity();
             }
         });
