@@ -3,7 +3,11 @@ package com.app.ecologiate.models;
 
 import android.util.Log;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @SuppressWarnings("unused")
 public class Usuario {
@@ -16,14 +20,14 @@ public class Usuario {
     private Boolean admin;
     private Nivel nivel;
     private String fotoUri;
-    //private List<Reciclaje> reciclajes;
-    //private List<Objetivo> objetivosCumplidos;
+    private List<Reciclaje> reciclajes;
+    private List<Objetivo> objetivosCumplidos;
     //private List<Campania> campaniasCumplidas;
     private Impacto impacto;
 
     public static Usuario getFromJson(JSONObject jsonObject){
         try {
-            return new Usuario(
+            Usuario usuario = new Usuario(
                     jsonObject.has("id") ? jsonObject.getLong("id") : null ,
                     jsonObject.has("nombre") ? jsonObject.getString("nombre") : null,
                     jsonObject.has("apellido") ? jsonObject.getString("apellido") : null,
@@ -33,12 +37,50 @@ public class Usuario {
                     jsonObject.has("nivel") ? Nivel.getFromJson(jsonObject.getJSONObject("nivel")) : null,
                     jsonObject.has("impacto") ? Impacto.getFromJson(jsonObject.getJSONObject("impacto")) : null
             );
+            if(jsonObject.has("reciclajes")){
+                JSONArray arrayReciclajesJson = jsonObject.getJSONArray("reciclajes");
+                List<Reciclaje> reciclajesFromJson = new ArrayList<>();
+                for(int i = 0; i < arrayReciclajesJson.length(); i++){
+                    JSONObject reciclajeJsonObject = arrayReciclajesJson.getJSONObject(i);
+                    Reciclaje reciclaje = Reciclaje.getFromJson(reciclajeJsonObject);
+                    reciclajesFromJson.add(reciclaje);
+                }
+                usuario.setReciclajes(reciclajesFromJson);
+            }
+            if(jsonObject.has("objetivos_cumplidos")){
+                JSONArray arrayObjetivosJson = jsonObject.getJSONArray("objetivos_cumplidos");
+                List<Objetivo> objetivos = new ArrayList<>();
+                for(int i = 0; i < arrayObjetivosJson.length(); i++){
+                    JSONObject objetivoJsonObject = arrayObjetivosJson.getJSONObject(i);
+                    Objetivo objetivo = Objetivo.getFromJson(objetivoJsonObject);
+                    objetivos.add(objetivo);
+                }
+                usuario.setObjetivosCumplidos(objetivos);
+            }
+
+            return usuario;
         }catch (Exception e){
             Log.e("JSON_ERROR", e.getMessage());
             throw new RuntimeException("Error en formato de json para Usuario: "+ e.getMessage());
         }
     }
 
+
+    public Usuario(Long id, String nombre, String apellido, String mail, Double puntos,
+                   Boolean admin, Nivel nivel, String fotoUri, List<Reciclaje> reciclajes,
+                   List<Objetivo> objetivosCumplidos, Impacto impacto) {
+        this.id = id;
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.mail = mail;
+        this.puntos = puntos;
+        this.admin = admin;
+        this.nivel = nivel;
+        this.fotoUri = fotoUri;
+        this.reciclajes = reciclajes;
+        this.objetivosCumplidos = objetivosCumplidos;
+        this.impacto = impacto;
+    }
 
     public Usuario(Long id, String nombre, String apellido, String mail, Double puntos, Boolean admin, Nivel nivel, Impacto impacto) {
         this.id = id;
@@ -131,5 +173,21 @@ public class Usuario {
 
     public String getNombreCompleto(){
         return this.nombre+" "+this.apellido;
+    }
+
+    public List<Reciclaje> getReciclajes() {
+        return reciclajes;
+    }
+
+    public void setReciclajes(List<Reciclaje> reciclajes) {
+        this.reciclajes = reciclajes;
+    }
+
+    public List<Objetivo> getObjetivosCumplidos() {
+        return objetivosCumplidos;
+    }
+
+    public void setObjetivosCumplidos(List<Objetivo> objetivosCumplidos) {
+        this.objetivosCumplidos = objetivosCumplidos;
     }
 }
