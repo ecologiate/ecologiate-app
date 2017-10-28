@@ -75,8 +75,8 @@ public class GruposFragment extends AbstractEcologiateFragment {
         });
 
         //CAMBIAR LA LOGICA ASI SE ROMPE JAJAJA
-        /*
 
+/*
         Button invitarGrupo = (Button) view.findViewById(R.id.btnInvitarGrupo);
 
         invitarGrupo.setOnClickListener(new View.OnClickListener() {
@@ -99,11 +99,11 @@ public class GruposFragment extends AbstractEcologiateFragment {
                 Dialog dialog = builder.create();
                 dialog.show();
             }
-        }); */
-
+        });
+*/
                 List<Grupos> myDataset = new ArrayList<>();
         myDataset.add(new Grupos("Proyecto", "Gonzalo ", "1000","50","20","100"));
-        myDataset.add(new Grupos("lalala", "evi ", "1000","2000","4","5000"));
+        //myDataset.add(new Grupos("lalala", "evi ", "1000","2000","4","5000"));
         mAdapter = new GrupoAdapter(myDataset);
         mRecyclerView.setAdapter(mAdapter);
 
