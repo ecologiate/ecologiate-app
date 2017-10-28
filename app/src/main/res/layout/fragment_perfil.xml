@@ -322,7 +322,7 @@
                 android:text="@string/arboles"
                 android:layout_below="@+id/tituloMetrica"
                 android:padding="6dp"
-                android:textSize="20dp"/>
+                android:textSize="16dp"/>
 
             <TextView
                 android:id="@+id/contenidoAboles"
@@ -332,7 +332,7 @@
                 android:layout_below="@+id/tituloMetrica"
                 android:text="5"
                 android:padding="6dp"
-                android:textSize="20dp"/>
+                android:textSize="16dp"/>
 
             <TextView
                 android:id="@+id/tituloAgua"
@@ -341,7 +341,7 @@
                 android:layout_below="@+id/tituloArboles"
                 android:text="@string/agua"
                 android:padding="6dp"
-                android:textSize="20dp"/>
+                android:textSize="16dp"/>
 
             <TextView
                 android:id="@+id/contenidoAgua"
@@ -351,7 +351,7 @@
                 android:layout_toRightOf="@+id/tituloAgua"
                 android:text="25"
                 android:padding="6dp"
-                android:textSize="20dp"/>
+                android:textSize="16dp"/>
 
             <TextView
                 android:id="@+id/tituloEnergia"
@@ -360,7 +360,7 @@
                 android:layout_below="@+id/tituloAgua"
                 android:text="@string/energia"
                 android:padding="6dp"
-                android:textSize="20dp"/>
+                android:textSize="16dp"/>
 
             <TextView
                 android:id="@+id/contenidoEnergia"
@@ -370,7 +370,7 @@
                 android:layout_toRightOf="@+id/tituloEnergia"
                 android:text="30"
                 android:padding="6dp"
-                android:textSize="20dp"/>
+                android:textSize="16dp"/>
 
         <TextView
             android:id="@+id/tituloEmisiones"
@@ -379,7 +379,7 @@
             android:layout_below="@+id/tituloEnergia"
             android:text="@string/emisiones"
             android:padding="6dp"
-            android:textSize="20dp"/>
+            android:textSize="16dp"/>
 
         <TextView
             android:id="@+id/contenidoEmisiones"
@@ -389,7 +389,7 @@
             android:layout_toRightOf="@+id/tituloEmisiones"
             android:text="45"
             android:padding="6dp"
-            android:textSize="20dp"/>
+            android:textSize="16dp"/>
 
         </RelativeLayout>
 

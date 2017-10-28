@@ -44,7 +44,7 @@
                     android:gravity="center_horizontal"
                     android:padding="10dp"
                     android:text="@string/metricasgrupo"
-                    android:textSize="20dp" />
+                    android:textSize="16dp" />
 
                 <TextView
                     android:id="@+id/tituloArboles"
@@ -53,7 +53,7 @@
                     android:layout_below="@+id/tituloMetrica"
                     android:padding="6dp"
                     android:text="@string/arboles"
-                    android:textSize="18dp" />
+                    android:textSize="16dp" />
 
                 <TextView
                     android:id="@+id/grupoContenidoAboles"
@@ -62,7 +62,7 @@
                     android:layout_below="@+id/tituloMetrica"
                     android:layout_toRightOf="@+id/tituloArboles"
                     android:padding="6dp"
-                    android:textSize="18dp" />
+                    android:textSize="16dp" />
 
                 <TextView
                     android:id="@+id/tituloAgua"
@@ -71,7 +71,7 @@
                     android:layout_below="@+id/tituloArboles"
                     android:padding="6dp"
                     android:text="@string/agua"
-                    android:textSize="18dp" />
+                    android:textSize="16dp" />
 
                 <TextView
                     android:id="@+id/grupoContenidoAgua"
@@ -80,7 +80,7 @@
                     android:layout_below="@+id/tituloArboles"
                     android:layout_toRightOf="@+id/tituloAgua"
                     android:padding="6dp"
-                    android:textSize="18dp" />
+                    android:textSize="16dp" />
 
                 <TextView
                     android:id="@+id/tituloEnergia"
@@ -89,7 +89,7 @@
                     android:layout_below="@+id/tituloAgua"
                     android:padding="6dp"
                     android:text="@string/energia"
-                    android:textSize="18dp" />
+                    android:textSize="16dp" />
 
                 <TextView
                     android:id="@+id/grupoContenidoEnergia"
@@ -98,7 +98,7 @@
                     android:layout_below="@+id/tituloAgua"
                     android:layout_toRightOf="@+id/tituloEnergia"
                     android:padding="6dp"
-                    android:textSize="18dp" />
+                    android:textSize="16dp" />
 
                 <TextView
                     android:id="@+id/tituloEmisiones"
@@ -107,7 +107,7 @@
                     android:layout_below="@+id/tituloEnergia"
                     android:padding="6dp"
                     android:text="@string/emisiones"
-                    android:textSize="18dp" />
+                    android:textSize="16dp" />
 
                 <TextView
                     android:id="@+id/grupoContenidoEmisiones"
@@ -116,7 +116,7 @@
                     android:layout_below="@+id/tituloEnergia"
                     android:layout_toRightOf="@+id/tituloEmisiones"
                     android:padding="6dp"
-                    android:textSize="18dp" />
+                    android:textSize="16dp" />
 
             </RelativeLayout>
 

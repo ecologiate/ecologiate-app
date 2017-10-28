@@ -40,7 +40,7 @@
                         android:layout_toRightOf="@+id/avatar"
                         android:padding="10dp"
                         android:text="@string/nivel"
-                        android:textSize="22dp" />
+                        android:textSize="18dp" />
 
                     <TextView
                         android:id="@+id/nivelActual"
@@ -48,7 +48,7 @@
                         android:layout_height="wrap_content"
                         android:layout_toRightOf="@+id/nivelharcode"
                         android:padding="10dp"
-                        android:textSize="22dp" />
+                        android:textSize="16dp" />
 
 
                     <ProgressBar
@@ -92,7 +92,7 @@
                         android:layout_below="@+id/tituloMetrica"
                         android:padding="6dp"
                         android:text="@string/arboles"
-                        android:textSize="20dp" />
+                        android:textSize="16dp" />
 
                     <TextView
                         android:id="@+id/contenidoAboles"
@@ -102,7 +102,7 @@
                         android:layout_toRightOf="@+id/tituloArboles"
                         android:padding="6dp"
                         android:text="0"
-                        android:textSize="20dp" />
+                        android:textSize="16dp" />
 
                     <TextView
                         android:id="@+id/tituloAgua"
@@ -111,7 +111,7 @@
                         android:layout_below="@+id/tituloArboles"
                         android:padding="6dp"
                         android:text="@string/agua"
-                        android:textSize="20dp" />
+                        android:textSize="16dp" />
 
                     <TextView
                         android:id="@+id/contenidoAgua"
@@ -121,7 +121,7 @@
                         android:layout_toRightOf="@+id/tituloAgua"
                         android:padding="6dp"
                         android:text="0"
-                        android:textSize="20dp" />
+                        android:textSize="16dp" />
 
                     <TextView
                         android:id="@+id/tituloEnergia"
@@ -130,7 +130,7 @@
                         android:layout_below="@+id/tituloAgua"
                         android:padding="6dp"
                         android:text="@string/energia"
-                        android:textSize="20dp" />
+                        android:textSize="16dp" />
 
                     <TextView
                         android:id="@+id/contenidoEnergia"
@@ -140,7 +140,7 @@
                         android:layout_toRightOf="@+id/tituloEnergia"
                         android:padding="6dp"
                         android:text="0"
-                        android:textSize="20dp" />
+                        android:textSize="16dp" />
 
                     <TextView
                         android:id="@+id/tituloEmisiones"
@@ -149,7 +149,7 @@
                         android:layout_below="@+id/tituloEnergia"
                         android:padding="6dp"
                         android:text="@string/emisiones"
-                        android:textSize="20dp" />
+                        android:textSize="16dp" />
 
                     <TextView
                         android:id="@+id/contenidoEmisiones"
@@ -159,7 +159,7 @@
                         android:layout_toRightOf="@+id/tituloEmisiones"
                         android:padding="6dp"
                         android:text="0"
-                        android:textSize="20dp" />
+                        android:textSize="16dp" />
 
                 </RelativeLayout>
 
