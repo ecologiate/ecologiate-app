@@ -57,15 +57,15 @@ public class Usuario {
                 }
                 usuario.setObjetivosCumplidos(objetivos);
             }
-            if(jsonObject.has("objetivos_cumplidos")){
-                JSONArray arrayObjetivosJson = jsonObject.getJSONArray("objetivos_cumplidos");
-                List<Objetivo> objetivos = new ArrayList<>();
-                for(int i = 0; i < arrayObjetivosJson.length(); i++){
-                    JSONObject objetivoJsonObject = arrayObjetivosJson.getJSONObject(i);
-                    Objetivo objetivo = Objetivo.getFromJson(objetivoJsonObject);
-                    objetivos.add(objetivo);
+            if(jsonObject.has("campanias_cumplidas")){
+                JSONArray arrayCampaniasJson = jsonObject.getJSONArray("campanias_cumplidas");
+                List<Campania> campanias = new ArrayList<>();
+                for(int i = 0; i < arrayCampaniasJson.length(); i++){
+                    JSONObject campaniaJsonObject = arrayCampaniasJson.getJSONObject(i);
+                    Campania campania = Campania.getFromJson(campaniaJsonObject);
+                    campanias.add(campania);
                 }
-                usuario.setObjetivosCumplidos(objetivos);
+                usuario.setCampaniasCumplidas(campanias);
             }
 
             return usuario;
@@ -199,5 +199,13 @@ public class Usuario {
 
     public void setObjetivosCumplidos(List<Objetivo> objetivosCumplidos) {
         this.objetivosCumplidos = objetivosCumplidos;
+    }
+
+    public List<Campania> getCampaniasCumplidas() {
+        return campaniasCumplidas;
+    }
+
+    public void setCampaniasCumplidas(List<Campania> campaniasCumplidas) {
+        this.campaniasCumplidas = campaniasCumplidas;
     }
 }

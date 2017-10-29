@@ -65,7 +65,7 @@ public class EscaneoFragment extends AbstractEcologiateFragment implements
             //barcodeScannerView.setStatusText(result.getText());
             barcodeScannerView.pause();
             scanEnabled = false;
-            soundService.playBastaChicos(true);
+            //soundService.playBastaChicos(true);
             getProducto(code);
             //mensaje emergente
             //Toast.makeText(getContext(), code, Toast.LENGTH_LONG).show();

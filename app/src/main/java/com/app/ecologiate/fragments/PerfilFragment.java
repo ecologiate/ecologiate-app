@@ -22,6 +22,7 @@ import com.app.ecologiate.models.Impacto;
 import com.app.ecologiate.models.Nivel;
 import com.app.ecologiate.models.Usuario;
 import com.app.ecologiate.services.UserManager;
+import com.app.ecologiate.utils.NumberUtils;
 import com.squareup.picasso.Picasso;
 
 import butterknife.BindView;
@@ -71,10 +72,10 @@ public class PerfilFragment extends AbstractEcologiateFragment {
         progressBarNivel.setProgress((int) (usuario.getPuntos() - nivel.getPuntosDesde()));
         Impacto impacto = usuario.getImpacto();
         if(impacto != null){
-            contenidoAgua.setText(String.format("%.0f",impacto.getAgua().toString()));
-            contenidoArboles.setText(String.format("%.0f",impacto.getArboles().toString()));
-            contenidoEmisiones.setText(String.format("%.0f",impacto.getEmisiones().toString()));
-            contenidoEnergia.setText(String.format("%.0f",impacto.getEnergia().toString()));
+            contenidoAgua.setText(NumberUtils.format(impacto.getAgua()));
+            contenidoArboles.setText(NumberUtils.format(impacto.getArboles()));
+            contenidoEmisiones.setText(NumberUtils.format(impacto.getEmisiones()));
+            contenidoEnergia.setText(NumberUtils.format(impacto.getEnergia()));
         }
 
         ImageButton imagen = (ImageButton) view.findViewById(R.id.ibAceite);
