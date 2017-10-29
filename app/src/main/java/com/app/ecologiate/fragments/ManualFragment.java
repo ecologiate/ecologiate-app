@@ -5,6 +5,9 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,8 +17,11 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.app.ecologiate.R;
+import com.app.ecologiate.models.Grupo;
+import com.app.ecologiate.models.GrupoAdapter;
 import com.app.ecologiate.models.Material;
 import com.app.ecologiate.models.Producto;
+import com.app.ecologiate.models.ProductoEncontradoAdapter;
 import com.app.ecologiate.services.ApiCallService;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
@@ -31,6 +37,9 @@ import cz.msebera.android.httpclient.Header;
 
 public class ManualFragment extends AbstractEcologiateFragment {
 
+    private RecyclerView mRecyclerView;
+    private RecyclerView.Adapter mAdapter;
+    private RecyclerView.LayoutManager mLayoutManager;
     private OnFragmentInteractionListener mListener;
 
     //DVP: Defino Barra de progreso y ApiCall.
@@ -60,6 +69,13 @@ public class ManualFragment extends AbstractEcologiateFragment {
         View view = inflater.inflate(R.layout.fragment_manual, container, false);
         Button botonBuscaManual = (Button) view.findViewById(R.id.btnBuscaManual);
         et = (EditText) view.findViewById(R.id.etProductoBuscado);
+
+        mRecyclerView = (RecyclerView) view.findViewById(R.id.manualFragment);
+        mRecyclerView.setHasFixedSize(true);
+        mRecyclerView.addItemDecoration(new DividerItemDecoration(view.getContext(), DividerItemDecoration.VERTICAL));
+        // use a linear layout manager
+        mLayoutManager = new LinearLayoutManager(view.getContext());
+        mRecyclerView.setLayoutManager(mLayoutManager);
 
         botonBuscaManual.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -114,7 +130,7 @@ public class ManualFragment extends AbstractEcologiateFragment {
                     if(response.has("productos")){
                         //DVP: Hago el parseo del Json.
 
-                        //TODO devuelve una lista ahora, tengo que dejarle elegir al usuario con un recyclerview
+
                         JSONArray productosJsonArray = response.getJSONArray("productos");
                         List<Producto> productos = new ArrayList<>();
                         for(int i = 0; i < productosJsonArray.length(); i++){
@@ -123,14 +139,10 @@ public class ManualFragment extends AbstractEcologiateFragment {
                             productos.add(prod);
                         }
 
-                        //Producto productoEncontrado = Producto.getFromJson(response.getJSONObject("producto"));
-                        Producto productoEncontrado = productos.get(0); //por ahora
+                        mAdapter = new ProductoEncontradoAdapter(productos);
+                        mRecyclerView.setAdapter(mAdapter);
 
-                        Fragment resultadoFragment = ResultadoFragment.newInstance(productoEncontrado);
-                        getActivity().getSupportFragmentManager().beginTransaction()
-                                .replace(R.id.contentFragment, resultadoFragment)
-                                //.addToBackStack(String.valueOf(resultadoFragment.getId()))
-                                .commit();
+
                     }else {
                         Toast.makeText(getContext(), "No se encontraron resultados", Toast.LENGTH_LONG).show();
                     }
