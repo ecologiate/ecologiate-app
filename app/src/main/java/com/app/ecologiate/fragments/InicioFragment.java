@@ -23,6 +23,7 @@ import com.app.ecologiate.models.Nivel;
 import com.app.ecologiate.models.Tip;
 import com.app.ecologiate.models.Usuario;
 import com.app.ecologiate.services.UserManager;
+import com.app.ecologiate.utils.NumberUtils;
 import com.squareup.picasso.Picasso;
 
 
@@ -112,10 +113,10 @@ public class InicioFragment extends AbstractEcologiateFragment {
         progressBarNivel.setProgress((int) (usuario.getPuntos() - nivel.getPuntosDesde()));
         Impacto impacto = usuario.getImpacto();
         if(impacto != null){
-            contenidoAgua.setText(impacto.getAgua().toString());
-            contenidoArboles.setText(impacto.getArboles().toString());
-            contenidoEmisiones.setText(impacto.getEmisiones().toString());
-            contenidoEnergia.setText(impacto.getEnergia().toString());
+            contenidoAgua.setText(NumberUtils.format(impacto.getAgua()));
+            contenidoArboles.setText(NumberUtils.format(impacto.getArboles()));
+            contenidoEmisiones.setText(NumberUtils.format(impacto.getEmisiones()));
+            contenidoEnergia.setText(NumberUtils.format(impacto.getEnergia()));
         }
     }
 

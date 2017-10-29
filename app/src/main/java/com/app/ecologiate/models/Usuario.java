@@ -22,7 +22,7 @@ public class Usuario {
     private String fotoUri;
     private List<Reciclaje> reciclajes;
     private List<Objetivo> objetivosCumplidos;
-    //private List<Campania> campaniasCumplidas;
+    private List<Campania> campaniasCumplidas;
     private Impacto impacto;
 
     public static Usuario getFromJson(JSONObject jsonObject){
@@ -46,6 +46,16 @@ public class Usuario {
                     reciclajesFromJson.add(reciclaje);
                 }
                 usuario.setReciclajes(reciclajesFromJson);
+            }
+            if(jsonObject.has("objetivos_cumplidos")){
+                JSONArray arrayObjetivosJson = jsonObject.getJSONArray("objetivos_cumplidos");
+                List<Objetivo> objetivos = new ArrayList<>();
+                for(int i = 0; i < arrayObjetivosJson.length(); i++){
+                    JSONObject objetivoJsonObject = arrayObjetivosJson.getJSONObject(i);
+                    Objetivo objetivo = Objetivo.getFromJson(objetivoJsonObject);
+                    objetivos.add(objetivo);
+                }
+                usuario.setObjetivosCumplidos(objetivos);
             }
             if(jsonObject.has("objetivos_cumplidos")){
                 JSONArray arrayObjetivosJson = jsonObject.getJSONArray("objetivos_cumplidos");

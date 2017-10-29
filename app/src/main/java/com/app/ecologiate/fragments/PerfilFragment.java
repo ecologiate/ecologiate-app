@@ -71,10 +71,10 @@ public class PerfilFragment extends AbstractEcologiateFragment {
         progressBarNivel.setProgress((int) (usuario.getPuntos() - nivel.getPuntosDesde()));
         Impacto impacto = usuario.getImpacto();
         if(impacto != null){
-            contenidoAgua.setText(impacto.getAgua().toString());
-            contenidoArboles.setText(impacto.getArboles().toString());
-            contenidoEmisiones.setText(impacto.getEmisiones().toString());
-            contenidoEnergia.setText(impacto.getEnergia().toString());
+            contenidoAgua.setText(String.format("%.0f",impacto.getAgua().toString()));
+            contenidoArboles.setText(String.format("%.0f",impacto.getArboles().toString()));
+            contenidoEmisiones.setText(String.format("%.0f",impacto.getEmisiones().toString()));
+            contenidoEnergia.setText(String.format("%.0f",impacto.getEnergia().toString()));
         }
 
         ImageButton imagen = (ImageButton) view.findViewById(R.id.ibAceite);
