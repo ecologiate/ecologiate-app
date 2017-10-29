@@ -13,6 +13,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 import com.app.ecologiate.R;
+import com.app.ecologiate.utils.NumberUtils;
+
 import java.util.List;
 
 public class GrupoAdapter extends RecyclerView.Adapter<GrupoAdapter.ViewHolder>{
@@ -71,16 +73,16 @@ public class GrupoAdapter extends RecyclerView.Adapter<GrupoAdapter.ViewHolder>{
         List<Usuario> integrantes = model.getUsuarios();
         for(int i=0; i< integrantes.size(); i++){
             Usuario usuario = integrantes.get(i);
-            htmlIntegrantes += usuario.getNombreCompleto()+" ("+usuario.getPuntos()+") <br/>";
+            htmlIntegrantes += usuario.getNombreCompleto()+" ("+NumberUtils.format(usuario.getPuntos())+") <br/>";
         }
         holder.txTitulo.setText(model.getNombre());
         holder.txIntegrantes.setText(Html.fromHtml(htmlIntegrantes));
         Impacto impactoDelGrupo = model.getImpacto();
 
-        holder.txMetricaArboles.setText(String.format("%.0f", impactoDelGrupo.getArboles()));
-        holder.txMetricaAgua.setText(String.format("%.0f",impactoDelGrupo.getAgua()));
-        holder.txMetricaEnergia.setText(String.format("%.0f",impactoDelGrupo.getEnergia()));
-        holder.txMetricaEmisiones.setText(String.format("%.0f",impactoDelGrupo.getEmisiones()));
+        holder.txMetricaArboles.setText(NumberUtils.format(impactoDelGrupo.getArboles()));
+        holder.txMetricaAgua.setText(NumberUtils.format(impactoDelGrupo.getAgua()));
+        holder.txMetricaEnergia.setText(NumberUtils.format(impactoDelGrupo.getEnergia()));
+        holder.txMetricaEmisiones.setText(NumberUtils.format(impactoDelGrupo.getEmisiones()));
 
         final Context context = holder.holderContext;
 

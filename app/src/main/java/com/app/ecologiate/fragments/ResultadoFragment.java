@@ -18,6 +18,7 @@ import com.app.ecologiate.R;
 import com.app.ecologiate.models.Producto;
 import com.app.ecologiate.services.ApiCallService;
 import com.app.ecologiate.services.UserManager;
+import com.app.ecologiate.utils.NumberUtils;
 import com.google.android.gms.common.api.Result;
 import com.google.android.gms.common.api.ResultCallback;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -68,11 +69,18 @@ public class ResultadoFragment extends AbstractEcologiateFragment {
         View view = inflater.inflate(R.layout.fragment_resultado, container, false);
         ButterKnife.bind(this, view);
 
+        double arboles = producto.getMaterial()!=null ? (producto.getCantMaterial() * producto.getMaterial().getEquArboles()) : 0d;
+        double agua = producto.getMaterial()!=null ? (producto.getCantMaterial() * producto.getMaterial().getEquAgua()) : 0d;
+        double energia = producto.getMaterial()!=null ? (producto.getCantMaterial() * producto.getMaterial().getEquEnergia()) : 0d;
+        double emisiones = producto.getMaterial()!=null ? (producto.getCantMaterial() * producto.getMaterial().getEquEmisiones()) : 0d;
+
         String mensajeResultado = "<b>Nombre del producto</b><br/> "+ producto.getNombreProducto() + "<br/><br/>"+
                 "<b>Categoría</b><br/> "+ (producto.getCategoria()!=null ? producto.getCategoria().getDescripcion() : "?") + "<br/><br/>"+
                 "<b>Material</b><br/> "+ (producto.getMaterial()!=null ? producto.getMaterial().getDescripcion() : "?") + "<br/><br/>"+
-                "<b>Emisiones ahorradas</b><br/> "+ (producto.getMaterial()!=null ? (producto.getCantMaterial() * producto.getMaterial().getEquEmisiones()) : "?");
-
+                "<b>Arboles por salvar: </b>"+ NumberUtils.format(arboles)+ "<br/><br/>"+
+                "<b>Agua por ahorrar: </b>"+ NumberUtils.format(agua)+ "<br/><br/>"+
+                "<b>Energia por ahorrar: </b>"+ NumberUtils.format(energia)+ "<br/><br/>"+
+                "<b>Emisiones por ahorrar: </b>"+ NumberUtils.format(emisiones);
         tvResultado.setText(Html.fromHtml(mensajeResultado));
 
         return view;

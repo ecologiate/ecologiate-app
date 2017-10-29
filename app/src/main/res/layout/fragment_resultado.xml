@@ -6,16 +6,22 @@
     android:orientation="vertical"
     tools:context="com.app.ecologiate.fragments.ResultadoFragment">
 
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.8"
+        android:scrollIndicators="top">
     <TextView
         android:id="@+id/textViewResultado"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"
-        android:layout_marginTop="40dp"
-        android:layout_weight="0.8"
+        android:layout_marginTop="10dp"
         android:gravity="center"
         android:text="@string/buscando"
         android:textSize="18sp" />
+    </ScrollView>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -30,6 +36,7 @@
             style="@style/ecoButtonStyle"
             android:layout_width="210dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             android:drawableLeft="@drawable/ic_reciclaje"
             android:text="@string/Reciclar"
             android:textSize="20sp"
