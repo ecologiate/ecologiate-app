@@ -91,6 +91,11 @@ public class ApiCallService {
         get(url, responseHandler);
     }
 
+    public void getObjetivos(Context context, JsonHttpResponseHandler responseHandler){
+        String url = SERVER_URL + "/api/objetivo";
+        get(url, responseHandler);
+    }
+
 
     /**
      ***************************************************************

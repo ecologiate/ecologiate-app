@@ -5,13 +5,14 @@ import android.util.Log;
 
 import org.json.JSONObject;
 
-public class Objetivo {
+public class Objetivo{
 
     private Long id;
     private String descripcion;
     private Integer cantMeta;
     private Material material;
     private Medalla medalla;
+    private Boolean cumplido = false;
 
     public static Objetivo getFromJson(JSONObject jsonObject){
         try {
@@ -75,4 +76,13 @@ public class Objetivo {
     public void setMedalla(Medalla medalla) {
         this.medalla = medalla;
     }
+
+    public Boolean getCumplido() {
+        return cumplido;
+    }
+
+    public void setCumplido(Boolean cumplido) {
+        this.cumplido = cumplido;
+    }
+
 }

@@ -33,6 +33,7 @@ import com.app.ecologiate.fragments.ReciclarFragment;
 import com.app.ecologiate.fragments.ResultadoFragment;
 import com.app.ecologiate.fragments.TipsFragment;
 import com.app.ecologiate.fragments.TriviaFragment;
+import com.app.ecologiate.services.ObjetivosManager;
 import com.app.ecologiate.services.UserManager;
 import com.app.ecologiate.utils.CircleTransform;
 import com.google.android.gms.common.ConnectionResult;
@@ -90,6 +91,12 @@ public class WelcomeMenuActivity extends AppCompatActivity
                     .commit();
             navigationView.setCheckedItem(R.id.nav_inicio);
         }
+
+        inicializarDatos();
+    }
+
+    private void inicializarDatos(){
+        ObjetivosManager.init(this, null);
     }
 
     @Override

@@ -85,7 +85,18 @@
             android:gravity="center_horizontal"
             android:textSize="20dp"/>
 
-            <GridLayout
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/grillaMedallas"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tituloMedaXMat"
+            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginEnd="10dp"
+            android:alignmentMode="alignBounds"/>
+
+            <!--GridLayout
                 android:id="@+id/grilla"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -224,13 +235,13 @@
                     android:tint="@color/colorBoton"
                     app:srcCompat="@drawable/ic_vidrio" />
 
-            </GridLayout>
+            </GridLayout-->
 
         <View
             android:layout_width="wrap_content"
             android:layout_height="2dip"
             android:background="@color/violetaOscuro"
-            android:layout_below="@+id/grilla"
+            android:layout_below="@+id/grillaMedallas"
             android:padding="10dp"/>
 
     </RelativeLayout>

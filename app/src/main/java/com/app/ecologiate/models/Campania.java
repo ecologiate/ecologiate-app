@@ -20,7 +20,7 @@ public class Campania {
 
     public static Campania getFromJson(JSONObject jsonObject){
         try {
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-ddTHH:mm:ss");
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
             return new Campania(
                     jsonObject.has("id") ? jsonObject.getLong("id") : null ,
                     jsonObject.has("titulo") ? jsonObject.getString("titulo") : null ,

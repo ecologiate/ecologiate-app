@@ -2,6 +2,8 @@ package com.app.ecologiate.services;
 
 import android.support.v4.util.SimpleArrayMap;
 
+import com.app.ecologiate.models.Material;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,9 +14,9 @@ import java.util.List;
 
 public class MaterialsManager {
 
-    public static SimpleArrayMap<Long, String> materiales = new SimpleArrayMap<Long, String>();
+    public static SimpleArrayMap<Long, String> materiales = new SimpleArrayMap<>();
     static {
-        //inicializo
+        //inicializo con hardcodeo, luego se completa desde el backend
         materiales.put(1L, "Papel y cartón");
         materiales.put(2L, "Vidrio");
         materiales.put(3L, "Plástico");
@@ -31,8 +33,23 @@ public class MaterialsManager {
         materiales.put(14L, "Orgánicos");
     }
 
-    public static List<String> array = new ArrayList<String>();
+    public static List<String> array = new ArrayList<>();
     static{
+        for(int i = 0; i < materiales.size(); i++){
+            array.add(materiales.get(materiales.keyAt(i)));
+        }
+    }
+
+    public static void init(List<Material> listMateriales){
+        //limpio
+        materiales = new SimpleArrayMap<>();
+        array = new ArrayList<>();
+
+        //completo
+        for(int i = 0; i<listMateriales.size(); i++){
+            Material material = listMateriales.get(i);
+            materiales.put(material.getId(), material.getDescripcion());
+        }
         for(int i = 0; i < materiales.size(); i++){
             array.add(materiales.get(materiales.keyAt(i)));
         }
