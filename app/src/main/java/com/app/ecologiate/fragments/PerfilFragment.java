@@ -114,8 +114,8 @@ public class PerfilFragment extends AbstractEcologiateFragment implements Medall
         View view1 = inflater.inflate(R.layout.dialogo_medallas,null);
         TextView titulo = (TextView) view1.findViewById(R.id.titMed);
         TextView cantReciclada = (TextView) view1.findViewById(R.id.nroReciclado);
-        titulo.setText("Medallas por "+selected.getMaterial().getDescripcion());
-        cantReciclada.setText(selected.getCantReciclada());
+        titulo.setText("Medallas por "+selected.getMaterial().getDescripcion().toLowerCase());
+        cantReciclada.setText(String.valueOf(selected.getCantReciclada()));
         //TODO Recorrer los objetivos y pintar los que estén con el boolean cumplido en true
         //falta terminar
         builder.setView(view1);
