@@ -8,6 +8,8 @@ import android.widget.Toast;
 import com.app.ecologiate.models.Material;
 import com.app.ecologiate.models.MaterialConObjetivos;
 import com.app.ecologiate.models.Objetivo;
+import com.app.ecologiate.models.Reciclaje;
+import com.app.ecologiate.models.Usuario;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -18,6 +20,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -102,8 +105,50 @@ public class ObjetivosManager {
         }
     }
 
-    public static void marcarObjetivosCumplidos(List<Objetivo> objetivosCumplidos){
-        //TODO terminar
+    public static void completarObjetivosDelUser(Usuario usuario){
+        List<Objetivo> objetivosCumplidos = usuario.getObjetivosCumplidos();
+        List<Reciclaje> reciclajes = usuario.getReciclajes();
+
+        if(objetivosCumplidos != null && !objetivosCumplidos.isEmpty()){
+            Iterator<Objetivo> it = objetivosCumplidos.iterator();
+            while(it.hasNext()){
+                Objetivo objetivoCumplido = it.next();
+                Material material = objetivoCumplido.getMaterial();
+                //Producto producto = objetivo.getProducto();
+                Iterator<MaterialConObjetivos> matConObjIt = materialesConObjetivos.iterator();
+                while(matConObjIt.hasNext()){
+                    MaterialConObjetivos matConObjetivos = matConObjIt.next();
+                    if(matConObjetivos.getMaterial().equals(material)){
+                        //cumplí algún objetivo del material
+                        List<Objetivo> objetivosDelMaterial = matConObjetivos.getObjetivos();
+                        Iterator<Objetivo> objetivoDelMaterialIt = objetivosDelMaterial.iterator();
+                        while(objetivoDelMaterialIt.hasNext()){
+                            Objetivo objetivoDelMaterial = objetivoDelMaterialIt.next();
+                            if(objetivoDelMaterial.equals(objetivoCumplido)){
+                                //finalmente marco como cumplido el material para este usuario
+                                objetivoDelMaterial.setCumplido(true);
+                            }
+                        }
+
+                    }
+                }
+            }
+        }
+        if(reciclajes!=null && !reciclajes.isEmpty()){
+            Iterator<Reciclaje> reciclajeIterator = reciclajes.iterator();
+            while(reciclajeIterator.hasNext()){
+                Reciclaje reciclaje = reciclajeIterator.next();
+                Material materialReciclado = reciclaje.getProducto().getMaterial();
+                Iterator<MaterialConObjetivos> matConObjIt = materialesConObjetivos.iterator();
+                while(matConObjIt.hasNext()) {
+                    MaterialConObjetivos matConObjetivos = matConObjIt.next();
+                    if(matConObjetivos.getMaterial().equals(materialReciclado)){
+                        //incremento la cant reciclada
+                        matConObjetivos.setCantReciclada(matConObjetivos.getCantReciclada() + reciclaje.getCantProd());
+                    }
+                }
+            }
+        }
     }
 
 

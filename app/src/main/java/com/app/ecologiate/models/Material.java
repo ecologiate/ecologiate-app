@@ -57,15 +57,15 @@ public class Material {
 
         Material material = (Material) o;
 
-        if (!id.equals(material.id)) return false;
-        return descripcion.equals(material.descripcion);
+        if (id != null ? !id.equals(material.id) : material.id != null) return false;
+        return descripcion != null ? descripcion.equals(material.descripcion) : material.descripcion == null;
 
     }
 
     @Override
     public int hashCode() {
-        int result = id.hashCode();
-        result = 31 * result + descripcion.hashCode();
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (descripcion != null ? descripcion.hashCode() : 0);
         return result;
     }
 

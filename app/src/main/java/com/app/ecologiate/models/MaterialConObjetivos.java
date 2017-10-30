@@ -9,7 +9,7 @@ import java.util.List;
 public class MaterialConObjetivos {
 
     private Material material;
-    private int cantReciclada;
+    private int cantReciclada = 0;
     private List<Objetivo> objetivos = new ArrayList<>();
 
 

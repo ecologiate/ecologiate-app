@@ -37,6 +37,31 @@ public class Objetivo{
         this.medalla = medalla;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Objetivo objetivo = (Objetivo) o;
+
+        if (id != null ? !id.equals(objetivo.id) : objetivo.id != null) return false;
+        if (descripcion != null ? !descripcion.equals(objetivo.descripcion) : objetivo.descripcion != null)
+            return false;
+        if (cantMeta != null ? !cantMeta.equals(objetivo.cantMeta) : objetivo.cantMeta != null)
+            return false;
+        return material != null ? material.equals(objetivo.material) : objetivo.material == null;
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (descripcion != null ? descripcion.hashCode() : 0);
+        result = 31 * result + (cantMeta != null ? cantMeta.hashCode() : 0);
+        result = 31 * result + (material != null ? material.hashCode() : 0);
+        return result;
+    }
+
     public Long getId() {
         return id;
     }

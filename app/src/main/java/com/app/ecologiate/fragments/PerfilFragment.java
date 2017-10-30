@@ -93,6 +93,7 @@ public class PerfilFragment extends AbstractEcologiateFragment implements Medall
         }
 
         //grilla de medallas
+        ObjetivosManager.completarObjetivosDelUser(usuario);
         recyclerView = (RecyclerView) view.findViewById(R.id.grillaMedallas);
         int numberOfColumns = 5;
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), numberOfColumns));
