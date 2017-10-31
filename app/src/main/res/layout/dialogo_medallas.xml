@@ -96,7 +96,7 @@
             android:layout_height="30dp"
             android:layout_below="@+id/medalla3"
             android:layout_toRightOf="@+id/tvPlata"
-            android:text="BRONCE (15)" />
+            android:text="BRONCE (10)" />
 
     </RelativeLayout>
 

@@ -4,6 +4,7 @@ package com.app.ecologiate.models;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Iterator;
 import java.util.List;
 
 public class MaterialConObjetivos {
@@ -25,6 +26,20 @@ public class MaterialConObjetivos {
                 return o1.getCantMeta().compareTo(o2.getCantMeta());
             }
         });
+    }
+
+    public List<Objetivo> getObjetivosCumplidos(){
+        List<Objetivo> result = new ArrayList<>();
+        if(this.objetivos != null && !this.objetivos.isEmpty()){
+            Iterator<Objetivo> it = this.objetivos.iterator();
+            while (it.hasNext()){
+                Objetivo o = it.next();
+                if(o.getCumplido()){
+                    result.add(o);
+                }
+            }
+        }
+        return result;
     }
 
     public Material getMaterial() {

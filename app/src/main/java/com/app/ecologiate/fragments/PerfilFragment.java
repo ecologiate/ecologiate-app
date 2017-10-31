@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -117,8 +118,32 @@ public class PerfilFragment extends AbstractEcologiateFragment implements Medall
         TextView cantReciclada = (TextView) view1.findViewById(R.id.nroReciclado);
         titulo.setText("Medallas por "+selected.getMaterial().getDescripcion().toLowerCase());
         cantReciclada.setText(String.valueOf(selected.getCantReciclada()));
-        //TODO Recorrer los objetivos y pintar los que estén con el boolean cumplido en true
-        //falta terminar
+        //Recorro los objetivos y pintar los que estén con el boolean cumplido en true
+        List<Objetivo> objetivosCumplidosDelMaterial = selected.getObjetivosCumplidos();
+
+
+        //tengo sueño, por el momento lo hago así
+        ImageView imgOro = (ImageView) view1.findViewById(R.id.medalla1);
+        ImageView imgPlata = (ImageView) view1.findViewById(R.id.medalla2);
+        ImageView imgBronce = (ImageView) view1.findViewById(R.id.medalla3);
+        List<Objetivo> objetivos = selected.getObjetivos();
+        for(int i = 0; i<objetivos.size(); i++){
+            Objetivo obj = objetivos.get(i);
+            if(!obj.getCumplido()){
+                //si no está cumplido lo pongo gris
+                int colorDisabled = ContextCompat.getColor(getContext(), R.color.medalla_icon_disabled);
+                if(obj.getMedalla().getNombre().toLowerCase().contains("oro")){
+                    imgOro.setColorFilter(colorDisabled);
+                }
+                if(obj.getMedalla().getNombre().toLowerCase().contains("plata")){
+                    imgPlata.setColorFilter(colorDisabled);
+                }
+                if(obj.getMedalla().getNombre().toLowerCase().contains("bronce")){
+                    imgBronce.setColorFilter(colorDisabled);
+                }
+            }
+        }
+
         builder.setView(view1);
         Dialog dialog = builder.create();
         dialog.show();
