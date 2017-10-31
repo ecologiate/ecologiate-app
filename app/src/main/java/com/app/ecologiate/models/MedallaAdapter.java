@@ -2,7 +2,6 @@ package com.app.ecologiate.models;
 
 
 import android.content.Context;
-import android.content.res.Resources;
 import android.graphics.PorterDuff;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
@@ -30,7 +29,7 @@ public class MedallaAdapter extends RecyclerView.Adapter<MedallaAdapter.ViewHold
     // inflates the cell layout from xml when needed
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = mInflater.inflate(R.layout.item_medalla, parent, false);
+        View view = mInflater.inflate(R.layout.item_medalla_material, parent, false);
         return new ViewHolder(view);
     }
 

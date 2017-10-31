@@ -1,18 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="5dp">
 
-    <ImageButton
-        android:id="@+id/imagenMedalla"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_margin="10dp"
-        android:background="@drawable/borde_redondo_solid"
-        android:tint="@color/medalla_icon_disabled"
-        android:backgroundTint="@color/medalla_disabled"
-        app:srcCompat="@drawable/ic_reciclaje" />
-
+    <!-- android:tint="@color/medalla_disabled" -->
+    <ImageView
+        android:id="@+id/medalla"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        app:srcCompat="@drawable/ic_medalla3"/>
+    <TextView
+        android:id="@+id/tvMedalla"
+        android:gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="BRONCE (10)" />
 </LinearLayout>
+
