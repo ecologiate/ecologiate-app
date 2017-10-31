@@ -106,6 +106,7 @@ public class ObjetivosManager {
     }
 
     public static void completarObjetivosDelUser(Usuario usuario){
+        completarMaterialesConObjetivos();
         List<Objetivo> objetivosCumplidos = usuario.getObjetivosCumplidos();
         List<Reciclaje> reciclajes = usuario.getReciclajes();
 

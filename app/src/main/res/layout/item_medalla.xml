@@ -10,9 +10,9 @@
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_margin="10dp"
-        android:background="@drawable/borde_redondo"
-        android:tint="@android:color/white"
-        android:backgroundTint="@android:color/darker_gray"
+        android:background="@drawable/borde_redondo_solid"
+        android:tint="@color/medalla_icon_disabled"
+        android:backgroundTint="@color/medalla_disabled"
         app:srcCompat="@drawable/ic_reciclaje" />
 
 </LinearLayout>

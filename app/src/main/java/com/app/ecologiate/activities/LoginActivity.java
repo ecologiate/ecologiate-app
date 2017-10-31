@@ -176,6 +176,9 @@ public class LoginActivity extends AppCompatActivity implements
 
     private void handleFacebookSignInResult(final AccessToken fbToken, Boolean silent){
         final Profile fbProfile = Profile.getCurrentProfile();
+        if(fbProfile == null){
+            Profile.fetchProfileForCurrentAccessToken();
+        }
         if(!silent) {
             Toast.makeText(getApplicationContext(),
                     "Logueado con Facebook: " + (fbProfile != null ? fbProfile.getFirstName() : fbToken.getUserId()),
@@ -191,13 +194,17 @@ public class LoginActivity extends AppCompatActivity implements
                             GraphResponse response) {
                         Log.v("LoginActivity Response ", response.toString());
                         hideProgressDialog();
-                        String name = fbProfile.getFirstName();//object.getString("name");
-                        String lastName = fbProfile.getLastName();
+                        String name = "";
+                        String lastName = "";
                         String fbEmail = "";
-                        final String uriPicture = fbProfile.getProfilePictureUri(192,192).toString();
                         String token = fbToken.getToken();
+                        final String uriPicture = fbProfile != null ? fbProfile.getProfilePictureUri(192,192).toString() : null;
                         try {
+
+                            name = fbProfile != null ? fbProfile.getFirstName() : object.getString("first_name");
+                            lastName = fbProfile != null ? fbProfile.getLastName() : object.getString("last_name");
                             fbEmail = object.getString("email");
+
 
                             SharedPreferences prefs = getSharedPreferences("com.app.ecologiate", Context.MODE_PRIVATE);
                             prefs.edit().putString("com.app.ecologiate.nombre", name).apply();
@@ -217,7 +224,7 @@ public class LoginActivity extends AppCompatActivity implements
                     }
                 });
         Bundle parameters = new Bundle();
-        parameters.putString("fields", "id,name,email,gender, birthday");
+        parameters.putString("fields", "id,name,first_name,last_name,email,gender,birthday");
         request.setParameters(parameters);
         request.executeAsync();
     }

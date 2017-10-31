@@ -2,6 +2,9 @@ package com.app.ecologiate.models;
 
 
 import android.content.Context;
+import android.content.res.Resources;
+import android.graphics.PorterDuff;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -37,6 +40,36 @@ public class MedallaAdapter extends RecyclerView.Adapter<MedallaAdapter.ViewHold
         MaterialConObjetivos materialConObjetivos = materialesConObjetivos.get(position);
         Material material = materialConObjetivos.getMaterial();
         holder.boton.setImageResource(material.getImageResourceId());
+        int colorIcon = ContextCompat.getColor(mInflater.getContext(), R.color.medalla_icon_disabled);
+        int colorBackground = ContextCompat.getColor(mInflater.getContext(), R.color.medalla_disabled);
+
+        Objetivo maxObjetivoCumplido = getObjetivoCumplidoMasAlto(materialConObjetivos.getObjetivos());
+        if(maxObjetivoCumplido != null){
+            colorIcon = ContextCompat.getColor(mInflater.getContext(), R.color.medalla_icon_enabled);
+            if(maxObjetivoCumplido.getMedalla().getNombre().toLowerCase().contains("oro")) {
+                colorBackground = ContextCompat.getColor(mInflater.getContext(), R.color.medalla_oro);
+            }
+            if(maxObjetivoCumplido.getMedalla().getNombre().toLowerCase().contains("plata")){
+                colorBackground = ContextCompat.getColor(mInflater.getContext(), R.color.medalla_plata);
+            }
+            if(maxObjetivoCumplido.getMedalla().getNombre().toLowerCase().contains("bronce")){
+                colorBackground = ContextCompat.getColor(mInflater.getContext(), R.color.medalla_bronce);
+            }
+        }
+        holder.boton.setColorFilter(colorIcon);
+        holder.boton.getBackground().setColorFilter(colorBackground, PorterDuff.Mode.SRC_IN);
+    }
+
+    private Objetivo getObjetivoCumplidoMasAlto(List<Objetivo> objetivos){
+        Objetivo result = null;
+        //ya vienen ordenados de menor a mayor por el sort en el constructor que le puse
+        for(int i = 0; i<objetivos.size(); i++){
+            Objetivo o = objetivos.get(i);
+            if(o.getCumplido()){
+                result = o;
+            }
+        }
+        return result;
     }
 
     // total number of cells

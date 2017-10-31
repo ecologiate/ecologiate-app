@@ -18,7 +18,10 @@
     <color name="violetaOscuro">#93056f</color>
     <color name="violetaClaro">#e3adfc</color>
 
-    <color name="oro">#ffd700</color>
-    <color name="plata">#8A9597</color>
-    <color name="bronce">#783D21</color>
+    <color name="medalla_oro">#ffd700</color>
+    <color name="medalla_plata">#b0bec5</color>
+    <color name="medalla_bronce">#a1887f</color>
+    <color name="medalla_disabled">#9e9e9e</color>
+    <color name="medalla_icon_disabled">#424242</color>
+    <color name="medalla_icon_enabled">#0e6012</color>
 </resources>
