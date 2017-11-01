@@ -4,22 +4,10 @@
     android:layout_height="match_parent"
     tools:context="com.app.ecologiate.fragments.GruposFragment">
 
-        <Button
-        android:id="@+id/btnCrearGrupo"
-        style="@style/ecoButtonStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="3dp"
-        android:layout_marginBottom="3dp"
-        android:text="@string/creargrupo"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
-
     <android.support.v7.widget.RecyclerView
         android:id="@+id/grupoFragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/btnCrearGrupo"
         android:scrollbars="vertical" />
 
 </RelativeLayout>

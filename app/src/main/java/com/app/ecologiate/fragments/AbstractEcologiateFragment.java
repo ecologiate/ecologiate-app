@@ -1,7 +1,10 @@
 package com.app.ecologiate.fragments;
 
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 
 import com.app.ecologiate.R;
 import com.app.ecologiate.services.UserManager;
@@ -29,5 +32,11 @@ public abstract class AbstractEcologiateFragment extends Fragment {
         }else{
             ((AppCompatActivity) getActivity()).getSupportActionBar().setSubtitle(null);
         }
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        setHasOptionsMenu(false);
     }
 }

@@ -5,15 +5,20 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.app.ecologiate.R;
@@ -22,6 +27,8 @@ import com.app.ecologiate.models.GrupoAdapter;
 import com.app.ecologiate.models.Usuario;
 import com.app.ecologiate.services.ApiCallService;
 import com.app.ecologiate.services.UserManager;
+import com.google.android.gms.common.api.Result;
+import com.google.android.gms.common.api.ResultCallback;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
 import org.json.JSONArray;
@@ -32,6 +39,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
+import cz.msebera.android.httpclient.entity.StringEntity;
 
 
 public class GruposFragment extends AbstractEcologiateFragment {
@@ -40,11 +48,10 @@ public class GruposFragment extends AbstractEcologiateFragment {
     private RecyclerView.LayoutManager mLayoutManager;
     private OnFragmentInteractionListener mListener;
     private ProgressDialog prgDialog;
+    private ResultCallback resultCallback;
 
     private ApiCallService apiCallService = new ApiCallService();
 
-
-    Button crearGrupo;
 
 
     @Override
@@ -70,33 +77,65 @@ public class GruposFragment extends AbstractEcologiateFragment {
 
         obtenerGruposDelUsuario();
 
-        Button botonCrearGrupo = (Button) view.findViewById(R.id.btnCrearGrupo);
-
-        botonCrearGrupo.setOnClickListener(new View.OnClickListener() {
+        //cada vez que vuelve de una apicall
+        resultCallback = new ResultCallback() {
             @Override
-            public void onClick(View view) {
+            public void onResult(@NonNull Result result) {
+                obtenerGruposDelUsuario();
+            }
+        };
+
+        return  view;
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        setHasOptionsMenu(true); //para que me agregue un menu, tiene que ir lo más al final posible
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.menu_superior_grupos, menu);
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_crear_grupo:
+                //crear grupo
                 AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
                 LayoutInflater inflater = getActivity().getLayoutInflater();
                 View view1 = inflater.inflate(R.layout.dialogo_creargrupo,null);
+                final EditText tvNombreGrupo = (EditText) view1.findViewById(R.id.nombreGrupo);
                 builder.setView(view1);
-                builder.setPositiveButton("OK",
+                builder.setPositiveButton("Crear",
                         new DialogInterface.OnClickListener() {
                             @Override
-                            public void onClick(DialogInterface dialog, int which) {  }
+                            public void onClick(DialogInterface dialog, int which) {
+                                String nombreGrupo = tvNombreGrupo.getText().toString();
+                                if(nombreGrupo!= null && nombreGrupo.length()>0){
+                                    crearGrupo(nombreGrupo);
+                                }else{
+                                    Toast.makeText(getContext(), "Debe insertar un nombre", Toast.LENGTH_LONG).show();
+                                }
+                            }
                         })
-                        .setNegativeButton("CANCELAR",
+                        .setNegativeButton("Cancelar",
                                 new DialogInterface.OnClickListener() {
                                     @Override
-                                    public void onClick(DialogInterface dialog, int which) { }
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        //do nothing Jon Snow
+                                    }
                                 });
                 Dialog dialog = builder.create();
                 dialog.show();
-
-            }
-        });
-
-
-        return  view;
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
 
@@ -119,7 +158,9 @@ public class GruposFragment extends AbstractEcologiateFragment {
                             Grupo grupo = Grupo.getFromJson(grupoJsonObject);
                             grupos.add(grupo);
                         }
-                        mAdapter = new GrupoAdapter(grupos);
+
+                        mAdapter = new GrupoAdapter(getContext(), grupos, resultCallback);
+                        mAdapter.notifyDataSetChanged();
                         mRecyclerView.setAdapter(mAdapter);
                     }catch (JSONException e){
                         //DVP: Si encuentra algun error parseando el Json.
@@ -147,6 +188,61 @@ public class GruposFragment extends AbstractEcologiateFragment {
         };
         //DVP: invoco al servicio del Back
         apiCallService.getGruposDelUsuario(getContext(), usuarioLogueado.getId(), responseHandler);
+    }
+
+    private void crearGrupo(String nombreGrupo){
+        Long usuarioId = UserManager.getUser().getId();
+        JSONObject jsonBody = new JSONObject();
+        StringEntity bodyEntity = null;
+        try {
+            jsonBody.put("usuario_id", usuarioId);
+            jsonBody.put("nombre_grupo", nombreGrupo);
+            bodyEntity = new StringEntity(jsonBody.toString());
+        } catch (Exception e) {
+            e.printStackTrace();
+            Toast.makeText(getContext(), "Error armando Json", Toast.LENGTH_LONG).show();
+        }
+        prgDialog.show();
+        JsonHttpResponseHandler responseHandler = new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                prgDialog.hide();
+                try {
+                    if (response != null && response.has("status_code")) {
+                        if (response.getInt("status_code")==200 || response.getInt("status_code")==201) {
+                            //creado ok
+                            obtenerGruposDelUsuario();
+                        } else {
+                            if(response.getInt("status_code")==500)
+                                Toast.makeText(getContext(), "Ya existe un grupo con ese nombre", Toast.LENGTH_LONG).show();
+                            else
+                                Toast.makeText(getContext(), "Error creando grupo: "+response.getInt("status_code"), Toast.LENGTH_LONG).show();
+                        }
+                    } else {
+                        Toast.makeText(getContext(), "Error en respuesta", Toast.LENGTH_LONG).show();
+                    }
+                }catch (JSONException e) {
+                    //DVP: Si encuentra algun error parseando el Jason.
+                    Toast.makeText(getContext(), "Error en formato de Json", Toast.LENGTH_LONG).show();
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                if (statusCode == 404) {
+                    Toast.makeText(getContext(), "URL no encontrada", Toast.LENGTH_LONG).show();
+                } else if (statusCode == 500) {
+                    Toast.makeText(getContext(), "Error en el Backend", Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(getContext(), throwable.getLocalizedMessage(), Toast.LENGTH_LONG).show();
+                    Log.e("API_ERROR", "Error Inesperado [" + statusCode + "]", throwable);
+                }
+            }
+        };
+
+        apiCallService.postGrupo(getContext(), bodyEntity, responseHandler);
+
     }
 
 

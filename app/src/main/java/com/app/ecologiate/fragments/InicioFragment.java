@@ -2,6 +2,7 @@ package com.app.ecologiate.fragments;
 
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -85,20 +86,22 @@ public class InicioFragment extends AbstractEcologiateFragment {
         mLayoutManager = new LinearLayoutManager(view.getContext());
         mRecyclerViewCampania.setLayoutManager(mLayoutManager);
 
-        //creo mis mails
+        //creo mis campanias
         List<Tip> myDataset = new ArrayList<>();
-
-        myDataset.add(new Tip("Garrahan", "Juntemos las tapitas para ayudar a los chicos ", R.raw.tapitas));
-        myDataset.add(new Tip("Fort", "Mantene el aire a 24° para que no se corte la Looz", R.raw.fort));
-
+        myDataset.add(new Tip("Garrahan", "Juntemos las tapitas para ayudar a los chicos. Meta: 100 tapitas", R.raw.tapitas));
+        myDataset.add(new Tip("Electrónicos", "Desechá tus electrónicos viejos para que no hagan cortocircuito y se corte la looz. Meta: 100 electrónicos", R.raw.fort));
 
         // specify an adapter (see also next example)
         mAdapter = new CampaniaAdapter(myDataset);
         mRecyclerViewCampania.setAdapter(mAdapter);
 
-
-        setHasOptionsMenu(true); //para que me agregue un menu, tiene que ir al final
         return view;
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        setHasOptionsMenu(true); //para que me agregue un menu, tiene que ir lo más al final posible
     }
 
     @Override

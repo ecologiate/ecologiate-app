@@ -2,10 +2,8 @@ package com.app.ecologiate.fragments;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.GridLayoutManager;
@@ -13,25 +11,19 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.app.ecologiate.R;
 import com.app.ecologiate.models.Impacto;
-import com.app.ecologiate.models.Material;
 import com.app.ecologiate.models.MaterialConObjetivos;
-import com.app.ecologiate.models.Medalla;
 import com.app.ecologiate.models.MedallaAdapter;
 import com.app.ecologiate.models.Nivel;
 import com.app.ecologiate.models.Objetivo;
 import com.app.ecologiate.models.Usuario;
 import com.app.ecologiate.services.ObjetivosManager;
 import com.app.ecologiate.services.UserManager;
-import com.app.ecologiate.utils.MapReducer;
 import com.app.ecologiate.utils.NumberUtils;
 import com.squareup.picasso.Picasso;
 
@@ -39,8 +31,6 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-
-import static com.app.ecologiate.R.string.nivel;
 
 
 public class PerfilFragment extends AbstractEcologiateFragment implements MedallaAdapter.ItemClickListener {

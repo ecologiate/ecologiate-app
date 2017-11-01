@@ -4,13 +4,14 @@
     android:layout_height="match_parent">
 
     <EditText
-        android:id="@+id/invitarGrupo"
+        android:id="@+id/txtAmigo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:layout_marginLeft="4dp"
         android:layout_marginRight="4dp"
         android:layout_marginBottom="4dp"
+        android:inputType="textEmailAddress"
         android:hint="@string/mailgrupo" />
 
 

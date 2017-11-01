@@ -96,6 +96,16 @@ public class ApiCallService {
         get(url, responseHandler);
     }
 
+    public void postGrupo(Context context, HttpEntity entityBody, JsonHttpResponseHandler responseHandler){
+        String url = SERVER_URL + "/api/grupos/crear_grupo";
+        post(url, context, entityBody, responseHandler);
+    }
+
+    public void postGrupoAmigo(Context context, HttpEntity entityBody, JsonHttpResponseHandler responseHandler){
+        String url = SERVER_URL + "/api/grupos/invitar_grupo";
+        post(url, context, entityBody, responseHandler);
+    }
+
 
     /**
      ***************************************************************

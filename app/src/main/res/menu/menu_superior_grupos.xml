@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/menu_crear_grupo"
+        android:icon="@android:drawable/ic_menu_add"
+        android:drawableTint="@android:color/white"
+        app:showAsAction="ifRoom">
+    </item>
+</menu>
