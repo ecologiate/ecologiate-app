@@ -80,7 +80,8 @@ public class WelcomeMenuActivity extends AppCompatActivity
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         ImageView menuPicture = (ImageView) navigationView.getHeaderView(0).findViewById(R.id.imageViewMenuLateral);
-        Picasso.with(this).load(UserManager.getUser().getFotoUri()).transform(new CircleTransform()).into(menuPicture);
+        if(UserManager.getUser().getFotoUri() != null && UserManager.getUser().getFotoUri()!="")
+            Picasso.with(this).load(UserManager.getUser().getFotoUri()).transform(new CircleTransform()).into(menuPicture);
 
         //selecciono el inicioFragment por default
         if(savedInstanceState == null){
