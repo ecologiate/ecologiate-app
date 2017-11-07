@@ -18,7 +18,7 @@
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_margin="20dp"
-            app:srcCompat="@drawable/rsz_ecologiate_icon_2" />
+            app:srcCompat="@raw/rsz_ecologiate_icon_2_big" />
 
         <TextView
             android:layout_width="wrap_content"

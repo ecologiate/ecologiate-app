@@ -46,14 +46,8 @@ public class PerfilFragment extends AbstractEcologiateFragment implements Medall
     TextView txNivelUsuario;
     @BindView(R.id.simpleProgressBar)
     ProgressBar progressBarNivel;
-    @BindView(R.id.contenidoAboles)
-    TextView contenidoArboles;
-    @BindView(R.id.contenidoAgua)
-    TextView contenidoAgua;
-    @BindView(R.id.contenidoEnergia)
-    TextView contenidoEnergia;
-    @BindView(R.id.contenidoEmisiones)
-    TextView contenidoEmisiones;
+    @BindView(R.id.perfil_impacto)
+    ImpactoView impactoView;
 
     private MedallaAdapter medallaAdapter;
     private RecyclerView recyclerView;
@@ -77,10 +71,10 @@ public class PerfilFragment extends AbstractEcologiateFragment implements Medall
 
         Impacto impacto = usuario.getImpacto();
         if(impacto != null){
-            contenidoAgua.setText(NumberUtils.format(impacto.getAgua()));
-            contenidoArboles.setText(NumberUtils.format(impacto.getArboles()));
-            contenidoEmisiones.setText(NumberUtils.format(impacto.getEmisiones()));
-            contenidoEnergia.setText(NumberUtils.format(impacto.getEnergia()));
+            impactoView.setImpactoAgua(NumberUtils.format(impacto.getAgua())+" litros");
+            impactoView.setImpactoEnergia(NumberUtils.format(impacto.getEnergia())+" kw");
+            impactoView.setImpactoArboles(NumberUtils.format(impacto.getArboles())+" árboles");
+            impactoView.setImpactoEmisiones(NumberUtils.format(impacto.getEmisiones())+" kg");
         }
 
         //grilla de medallas

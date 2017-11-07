@@ -309,100 +309,24 @@
 
     </RelativeLayout>
 
-    <RelativeLayout
-            android:id="@+id/relativeMetricas"
-            android:layout_height="wrap_content"
-            android:layout_width="match_parent"
-            android:background="@android:color/white"
-            >
+    <TextView
+        android:id="@+id/tituloMetrica"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:padding="10dp"
+        android:text="@string/metricas"
+        android:textSize="20dp" />
 
-            <TextView
-                android:id="@+id/tituloMetrica"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/metricas"
-                android:gravity="center_horizontal"
-                android:padding="10dp"
-                android:textSize="20dp"
-                />
-
-            <TextView
-                android:id="@+id/tituloArboles"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/arboles"
-                android:layout_below="@+id/tituloMetrica"
-                android:padding="6dp"
-                android:textSize="16dp"/>
-
-            <TextView
-                android:id="@+id/contenidoAboles"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_toRightOf="@+id/tituloArboles"
-                android:layout_below="@+id/tituloMetrica"
-                android:text="5"
-                android:padding="6dp"
-                android:textSize="16dp"/>
-
-            <TextView
-                android:id="@+id/tituloAgua"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/tituloArboles"
-                android:text="@string/agua"
-                android:padding="6dp"
-                android:textSize="16dp"/>
-
-            <TextView
-                android:id="@+id/contenidoAgua"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/tituloArboles"
-                android:layout_toRightOf="@+id/tituloAgua"
-                android:text="25"
-                android:padding="6dp"
-                android:textSize="16dp"/>
-
-            <TextView
-                android:id="@+id/tituloEnergia"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/tituloAgua"
-                android:text="@string/energia"
-                android:padding="6dp"
-                android:textSize="16dp"/>
-
-            <TextView
-                android:id="@+id/contenidoEnergia"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/tituloAgua"
-                android:layout_toRightOf="@+id/tituloEnergia"
-                android:text="30"
-                android:padding="6dp"
-                android:textSize="16dp"/>
-
-        <TextView
-            android:id="@+id/tituloEmisiones"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/tituloEnergia"
-            android:text="@string/emisiones"
-            android:padding="6dp"
-            android:textSize="16dp"/>
-
-        <TextView
-            android:id="@+id/contenidoEmisiones"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/tituloEnergia"
-            android:layout_toRightOf="@+id/tituloEmisiones"
-            android:text="45"
-            android:padding="6dp"
-            android:textSize="16dp"/>
-
-        </RelativeLayout>
+    <com.app.ecologiate.fragments.ImpactoView
+        android:id="@+id/perfil_impacto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        app:impactoAgua="100 litros"
+        app:impactoEnergia="2000 kw"
+        app:impactoArboles="3 árboles"
+        app:impactoEmisiones="350 kg"/>
 
         <View
             android:layout_width="wrap_content"

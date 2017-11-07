@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_weight="1">
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+            <ImageView
+                android:id="@+id/iv_agua"
+                android:layout_width="90dp"
+                android:layout_height="90dp"
+                android:scaleType="fitCenter"
+                android:src="@raw/impacto_agua"/>
+            <TextView
+                android:id="@+id/tv_agua"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="100 litros"
+                android:textSize="25dp"/>
+        </LinearLayout>
+
+
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+            <ImageView
+                android:id="@+id/iv_energia"
+                android:layout_width="90dp"
+                android:layout_height="90dp"
+                android:scaleType="fitCenter"
+                android:src="@raw/impacto_energia"/>
+            <TextView
+                android:id="@+id/tv_energia"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="100 kw"
+                android:textSize="25dp"/>
+        </LinearLayout>
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"/>
+    </LinearLayout>
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+            <ImageView
+                android:id="@+id/iv_arbol"
+                android:layout_width="90dp"
+                android:layout_height="90dp"
+                android:scaleType="fitCenter"
+                android:src="@raw/impacto_arbol"/>
+            <TextView
+                android:id="@+id/tv_arboles"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="3 árboles"
+                android:textSize="25dp"/>
+        </LinearLayout>
+
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+            <ImageView
+                android:id="@+id/iv_emisiones"
+                android:layout_width="90dp"
+                android:layout_height="90dp"
+                android:scaleType="fitCenter"
+                android:src="@raw/impacto_co2"/>
+            <TextView
+                android:id="@+id/tv_emisiones"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="1000 kg"
+                android:textSize="25dp"/>
+        </LinearLayout>
+
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+    </LinearLayout>
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"/>
+
+</LinearLayout>
