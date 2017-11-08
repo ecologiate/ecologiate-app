@@ -5,11 +5,11 @@ import android.os.Bundle;
 
 import com.app.ecologiate.R;
 
-public class trivia_preguntas extends AppCompatActivity {
+public class TriviaRespuestaActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_trivia_preguntas);
+        setContentView(R.layout.activity_trivia_respuestas);
     }
 }

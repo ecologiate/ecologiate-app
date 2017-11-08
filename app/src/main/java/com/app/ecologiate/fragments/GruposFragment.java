@@ -187,7 +187,7 @@ public class GruposFragment extends AbstractEcologiateFragment {
             }
         };
         //DVP: invoco al servicio del Back
-        apiCallService.getGruposDelUsuario(getContext(), usuarioLogueado.getId(), responseHandler);
+        apiCallService.getGruposDelUsuario(usuarioLogueado.getId(), responseHandler);
     }
 
     private void crearGrupo(String nombreGrupo){

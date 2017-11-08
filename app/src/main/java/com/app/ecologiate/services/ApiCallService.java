@@ -95,12 +95,12 @@ public class ApiCallService {
         put(url, context, entityBody, responseHandler);
     }
 
-    public void getGruposDelUsuario(Context context, Long idUsuario, JsonHttpResponseHandler responseHandler){
+    public void getGruposDelUsuario(Long idUsuario, JsonHttpResponseHandler responseHandler){
         String url = SERVER_URL + "/api/grupos/" + idUsuario;
         get(url, responseHandler);
     }
 
-    public void getObjetivos(Context context, JsonHttpResponseHandler responseHandler){
+    public void getObjetivos(JsonHttpResponseHandler responseHandler){
         String url = SERVER_URL + "/api/objetivo";
         get(url, responseHandler);
     }
@@ -115,6 +115,10 @@ public class ApiCallService {
         post(url, context, entityBody, responseHandler);
     }
 
+    public void getTriviaPreguntas(JsonHttpResponseHandler responseHandler){
+        String url = SERVER_URL + "/api/trivia";
+        get(url, responseHandler);
+    }
 
     /**
      ***************************************************************

@@ -75,7 +75,7 @@ public class ObjetivosManager {
             }
         };
 
-        apiCallService.getObjetivos(context, responseHandler);
+        apiCallService.getObjetivos(responseHandler);
     }
 
     private static void completarMaterialesConObjetivos(){
