@@ -19,6 +19,15 @@ public class ApiCallService {
 
     static final String SERVER_URL = EcologiateConstants.SERVER_URL;
 
+    private static ApiCallService INSTANCE;
+
+    public static ApiCallService getInstance(){
+        if(INSTANCE == null){
+            INSTANCE = new ApiCallService();
+        }
+        return INSTANCE;
+    }
+
     AsyncHttpClient client = new AsyncHttpClient();
 
     /**
