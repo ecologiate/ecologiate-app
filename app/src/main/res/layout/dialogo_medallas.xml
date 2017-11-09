@@ -21,7 +21,8 @@
         android:layout_height="80dp"
         android:layout_centerHorizontal="true"
         android:layout_below="@+id/titMed"
-        app:srcCompat="@drawable/ic_podio"/>
+        android:tint="@android:color/holo_blue_dark"
+        app:srcCompat="@raw/podio"/>
 
     <TextView
         android:id="@+id/cantMed"
@@ -54,7 +55,8 @@
             android:layout_height="80dp"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            app:srcCompat="@drawable/ic_medalla1"/>
+            android:tint="@color/medalla_oro"
+            app:srcCompat="@raw/medalla1"/>
         <TextView
             android:id="@+id/tvOro"
             android:gravity="center"
@@ -71,7 +73,8 @@
             android:layout_height="80dp"
             android:layout_centerHorizontal="true"
             android:layout_toRightOf="@+id/medalla1"
-            app:srcCompat="@drawable/ic_medalla2"/>
+            android:tint="@color/medalla_plata"
+            app:srcCompat="@raw/medalla2"/>
 
         <TextView
             android:id="@+id/tvPlata"
@@ -88,7 +91,8 @@
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:layout_toRightOf="@+id/medalla2"
-            app:srcCompat="@drawable/ic_medalla3"/>
+            android:tint="@color/medalla_bronce"
+            app:srcCompat="@raw/medalla3"/>
 
         <TextView
             android:id="@+id/tvBronce"

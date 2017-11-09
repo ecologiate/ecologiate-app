@@ -39,11 +39,12 @@
 
         <ImageView
             android:id="@+id/ivTachoVerde"
-            android:layout_width="140dp"
+            android:layout_width="130dp"
             android:layout_height="80dp"
+            android:padding="10dp"
             android:layout_below="@+id/tvTituloProducto"
             android:layout_alignParentLeft="true"
-            app:srcCompat="@drawable/ic_tacho_verde"
+            app:srcCompat="@raw/tacho_verde"
             />
 
         <Button
@@ -57,11 +58,12 @@
 
         <ImageView
             android:id="@+id/ivCompostera"
-            android:layout_width="140dp"
+            android:layout_width="130dp"
             android:layout_height="80dp"
+            android:padding="10dp"
             android:layout_below="@+id/tvTituloProducto"
             android:layout_alignParentRight="true"
-            app:srcCompat="@drawable/ic_compostera"
+            app:srcCompat="@raw/tacho_azul"
             />
 
         <Button
@@ -76,11 +78,12 @@
 
         <ImageView
             android:id="@+id/ivTachoNegro"
-            android:layout_width="140dp"
+            android:layout_width="130dp"
             android:layout_height="80dp"
+            android:padding="10dp"
             android:layout_below="@+id/btnTachoVerde"
             android:layout_alignParentLeft="true"
-            app:srcCompat="@drawable/ic_tacho_negro"
+            app:srcCompat="@raw/tacho_rojo"
             />
 
         <Button
@@ -96,15 +99,16 @@
             android:id="@+id/ivManejoEspecial"
             android:layout_width="140dp"
             android:layout_height="80dp"
+            android:padding="10dp"
             android:layout_below="@+id/btnCompostera"
             android:layout_alignParentRight="true"
-            app:srcCompat="@drawable/ic_manejo_especial"
+            app:srcCompat="@raw/tacho_amarillo"
             />
 
         <Button
             android:id="@+id/btnManejoEspecial"
             style="@style/triviaButtonEspecialStyle"
-            android:layout_width="wrap_content"
+            android:layout_width="140dp"
             android:layout_height="wrap_content"
             android:text="Manejo Especial"
             android:layout_alignParentRight="true"

@@ -24,7 +24,7 @@
             android:layout_height="100dp"
             android:layout_centerHorizontal="true"
             android:layout_below="@+id/tvTrivia"
-            app:srcCompat="@drawable/ic_trivia"
+            app:srcCompat="@raw/reciclador"
             />
 
         <TextView

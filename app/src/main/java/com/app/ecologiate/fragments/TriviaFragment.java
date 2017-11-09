@@ -1,5 +1,6 @@
 package com.app.ecologiate.fragments;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -151,7 +152,7 @@ public class TriviaFragment extends AbstractEcologiateFragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == REQUEST_TRIVIA){
+        if(requestCode == REQUEST_TRIVIA && resultCode == Activity.RESULT_OK){
             boolean correcta = (boolean) data.getExtras().get("correcta");
             if(correcta){
                 cantCorrectas++;

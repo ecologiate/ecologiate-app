@@ -13,7 +13,7 @@
         android:id="@+id/medalla"
         android:layout_width="70dp"
         android:layout_height="70dp"
-        app:srcCompat="@drawable/ic_medalla3"/>
+        app:srcCompat="@raw/medalla3"/>
     <TextView
         android:id="@+id/tvMedalla"
         android:gravity="center"
