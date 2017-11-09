@@ -27,8 +27,8 @@
             android:orientation="vertical">
             <ImageView
                 android:id="@+id/iv_agua"
-                android:layout_width="90dp"
-                android:layout_height="90dp"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
                 android:scaleType="fitCenter"
                 android:src="@raw/impacto_agua"/>
             <TextView
@@ -53,8 +53,8 @@
             android:orientation="vertical">
             <ImageView
                 android:id="@+id/iv_energia"
-                android:layout_width="90dp"
-                android:layout_height="90dp"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
                 android:scaleType="fitCenter"
                 android:src="@raw/impacto_energia"/>
             <TextView
@@ -94,8 +94,8 @@
             android:orientation="vertical">
             <ImageView
                 android:id="@+id/iv_arbol"
-                android:layout_width="90dp"
-                android:layout_height="90dp"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
                 android:scaleType="fitCenter"
                 android:src="@raw/impacto_arbol"/>
             <TextView
@@ -119,8 +119,8 @@
             android:orientation="vertical">
             <ImageView
                 android:id="@+id/iv_emisiones"
-                android:layout_width="90dp"
-                android:layout_height="90dp"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
                 android:scaleType="fitCenter"
                 android:src="@raw/impacto_co2"/>
             <TextView
