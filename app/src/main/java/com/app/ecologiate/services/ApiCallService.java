@@ -12,7 +12,10 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
+import cz.msebera.android.httpclient.Header;
 import cz.msebera.android.httpclient.HttpEntity;
+import cz.msebera.android.httpclient.message.BasicHeader;
+import cz.msebera.android.httpclient.protocol.HTTP;
 
 
 public class ApiCallService {
@@ -133,7 +136,6 @@ public class ApiCallService {
             e.printStackTrace();
             throw new ApiCallException("Error formateando URL "+url, e);
         }
-        client = new AsyncHttpClient();
         client.get(url, responseHandler);
     }
 

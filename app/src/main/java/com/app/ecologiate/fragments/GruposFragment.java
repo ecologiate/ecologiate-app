@@ -39,6 +39,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
+import cz.msebera.android.httpclient.entity.ContentType;
 import cz.msebera.android.httpclient.entity.StringEntity;
 
 
@@ -197,7 +198,7 @@ public class GruposFragment extends AbstractEcologiateFragment {
         try {
             jsonBody.put("usuario_id", usuarioId);
             jsonBody.put("nombre_grupo", nombreGrupo);
-            bodyEntity = new StringEntity(jsonBody.toString());
+            bodyEntity = new StringEntity(jsonBody.toString(), ContentType.APPLICATION_JSON);
         } catch (Exception e) {
             e.printStackTrace();
             Toast.makeText(getContext(), "Error armando Json", Toast.LENGTH_LONG).show();

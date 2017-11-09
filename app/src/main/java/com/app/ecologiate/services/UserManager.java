@@ -31,6 +31,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import cz.msebera.android.httpclient.Header;
+import cz.msebera.android.httpclient.entity.ContentType;
 import cz.msebera.android.httpclient.entity.StringEntity;
 
 public class UserManager {
@@ -58,7 +59,7 @@ public class UserManager {
             jsonBody.put("nombre", nombre);
             jsonBody.put("apellido", apellido);
             jsonBody.put("token", token);
-            bodyEntity = new StringEntity(jsonBody.toString());
+            bodyEntity = new StringEntity(jsonBody.toString(), ContentType.APPLICATION_JSON);
         } catch (Exception e) {
             e.printStackTrace();
             Toast.makeText(context, "Error armando Json", Toast.LENGTH_LONG).show();

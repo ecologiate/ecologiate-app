@@ -25,6 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
+import cz.msebera.android.httpclient.entity.ContentType;
 import cz.msebera.android.httpclient.entity.StringEntity;
 
 
@@ -118,7 +119,7 @@ public class AltaPuntoRecoleccionFragment extends AbstractEcologiateFragment {
                 jsonBody.put("materiales", arrayMateriales);
                 jsonBody.put("area", this.area);
                 jsonBody.put("pais", this.pais);
-                bodyEntity = new StringEntity(jsonBody.toString());
+                bodyEntity = new StringEntity(jsonBody.toString(), ContentType.APPLICATION_JSON);
             } catch (Exception e) {
                 e.printStackTrace();
                 Toast.makeText(getContext(), "Error armando Json", Toast.LENGTH_LONG).show();

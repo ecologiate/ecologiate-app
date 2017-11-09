@@ -30,6 +30,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cz.msebera.android.httpclient.Header;
+import cz.msebera.android.httpclient.entity.ContentType;
 import cz.msebera.android.httpclient.entity.StringEntity;
 
 
@@ -109,7 +110,7 @@ public class ResultadoFragment extends AbstractEcologiateFragment {
             jsonBody.put("user", userId);
             jsonBody.put("puntorec", puntoRecId);
             jsonBody.put("cant", cant);
-            bodyEntity = new StringEntity(jsonBody.toString());
+            bodyEntity = new StringEntity(jsonBody.toString(), ContentType.APPLICATION_JSON);
         } catch (Exception e) {
             e.printStackTrace();
             Toast.makeText(getContext(), "Error armando Json", Toast.LENGTH_LONG).show();

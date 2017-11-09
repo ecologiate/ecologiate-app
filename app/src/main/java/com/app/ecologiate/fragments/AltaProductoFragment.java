@@ -29,6 +29,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cz.msebera.android.httpclient.Header;
+import cz.msebera.android.httpclient.entity.ContentType;
 import cz.msebera.android.httpclient.entity.StringEntity;
 
 
@@ -128,7 +129,7 @@ public class AltaProductoFragment extends AbstractEcologiateFragment {
                 jsonBody.put("codigo_barra", codigoDeBarras);
                 jsonBody.put("categoria_id", categoriaId);
                 jsonBody.put("usuario_id", userId);
-                bodyEntity = new StringEntity(jsonBody.toString());
+                bodyEntity = new StringEntity(jsonBody.toString(), ContentType.APPLICATION_JSON);
             } catch (Exception e) {
                 e.printStackTrace();
                 Toast.makeText(getContext(), "Error armando Json", Toast.LENGTH_LONG).show();

@@ -32,6 +32,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
+import cz.msebera.android.httpclient.entity.ContentType;
 import cz.msebera.android.httpclient.entity.StringEntity;
 
 public class GrupoAdapter extends RecyclerView.Adapter<GrupoAdapter.ViewHolder>{
@@ -198,7 +199,7 @@ public class GrupoAdapter extends RecyclerView.Adapter<GrupoAdapter.ViewHolder>{
             jsonBody.put("usuario_id", usuarioId);
             jsonBody.put("email_invitado", emailAmigo);
             jsonBody.put("grupo_id", grupoId);
-            bodyEntity = new StringEntity(jsonBody.toString());
+            bodyEntity = new StringEntity(jsonBody.toString(), ContentType.APPLICATION_JSON);
         } catch (Exception e) {
             e.printStackTrace();
             Toast.makeText(context, "Error armando Json", Toast.LENGTH_LONG).show();
