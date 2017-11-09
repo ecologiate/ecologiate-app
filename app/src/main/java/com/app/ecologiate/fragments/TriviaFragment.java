@@ -2,9 +2,11 @@ package com.app.ecologiate.fragments;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +15,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.app.ecologiate.R;
+import com.app.ecologiate.activities.LoginActivity;
 import com.app.ecologiate.activities.TriviaPreguntaActivity;
 import com.app.ecologiate.models.ProductoEncontradoAdapter;
 import com.app.ecologiate.models.TriviaPregunta;
@@ -33,12 +36,16 @@ public class TriviaFragment extends AbstractEcologiateFragment {
 
 
     private OnFragmentInteractionListener mListener;
+    private static int REQUEST_TRIVIA = 8429;
 
     private ProgressDialog prgDialog;
 
     private ApiCallService apiCallService = ApiCallService.getInstance();
 
     private List<TriviaPregunta> preguntas;
+    private int preguntaIndex = 0;
+    private int cantCorrectas = 0;
+    private int cantIncorrectas = 0;
 
     public TriviaFragment() {
         // Required empty public constructor
@@ -81,19 +88,10 @@ public class TriviaFragment extends AbstractEcologiateFragment {
                             TriviaPregunta preg = TriviaPregunta.getFromJson(jsonTriviaPregunta);
                             preguntas.add(preg);
                         }
-
-                        TriviaPregunta primerPregunta = preguntas.get(0);
-                        Intent i = new Intent(getActivity(), TriviaPreguntaActivity.class);
-                        Bundle parametros = new Bundle();
-                        parametros.putLong("id", primerPregunta.getId());
-                        parametros.putString("descripcion", primerPregunta.getDescripcion());
-                        parametros.putString("explicacion", primerPregunta.getExplicacion());
-                        parametros.putString("imagen", primerPregunta.getImagen());
-                        parametros.putLong("respuesta_correcta_id", primerPregunta.getRespuestaCorrectaId());
-                        parametros.putString("respuesta_correcta_texto", primerPregunta.getRespuestaCorrectaTexto());
-                        i.putExtras(parametros);
-                        startActivity(i);
-
+                        preguntaIndex = 0; //arranco de cero
+                        cantCorrectas = 0;
+                        cantIncorrectas = 0;
+                        abrirPregunta();
                     }else {
                         Toast.makeText(getContext(), "No se encontraron resultados", Toast.LENGTH_LONG).show();
                     }
@@ -118,6 +116,51 @@ public class TriviaFragment extends AbstractEcologiateFragment {
         };
         //invoco al servicio del Back
         apiCallService.getTriviaPreguntas(responseHandler);
+    }
+
+    private void abrirPregunta(){
+        TriviaPregunta pregunta = getProximaPregunta();
+        if(pregunta != null) {
+            Intent i = TriviaPreguntaActivity.createIntent(getContext(), pregunta);
+            startActivityForResult(i, REQUEST_TRIVIA);
+        }else{
+            //ya no hay más preguntas, terminó la trivia
+            AlertDialog.Builder alertDialog = new AlertDialog.Builder(getContext());
+            alertDialog.setTitle(cantCorrectas>=3 ? "Muy bien" : "Buen intento");
+            alertDialog.setMessage("Respondiste "+cantCorrectas+" respuestas correctas. Seguí concientizándote para reducir la huella");
+            alertDialog.setPositiveButton("Entendido", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    //nada
+                }
+            });
+
+            alertDialog.show();
+        }
+    }
+
+    private TriviaPregunta getProximaPregunta(){
+        TriviaPregunta pregunta = null;
+        if(preguntaIndex < preguntas.size()) {
+            pregunta = preguntas.get(preguntaIndex);
+            preguntaIndex++; //incremento
+        }
+        return pregunta;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == REQUEST_TRIVIA){
+            boolean correcta = (boolean) data.getExtras().get("correcta");
+            if(correcta){
+                cantCorrectas++;
+            }else{
+                cantIncorrectas++;
+            }
+            //abro próxima pregunta, si hay
+            abrirPregunta();
+        }
     }
 
     public void onButtonPressed(Uri uri) {
