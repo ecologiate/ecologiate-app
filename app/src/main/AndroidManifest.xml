@@ -66,7 +66,6 @@
             android:label="@string/title_activity_menu_lateral"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".activities.TriviaPreguntaActivity" />
-        <activity android:name=".activities.TriviaRespuestaActivity"></activity>
     </application>
 
 </manifest>

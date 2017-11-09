@@ -1,11 +1,13 @@
 package com.app.ecologiate.models;
 
 
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.util.Log;
 
 import org.json.JSONObject;
 
-public class TriviaPregunta {
+public class TriviaPregunta implements Parcelable {
 
     private Long id;
     private String descripcion;
@@ -41,6 +43,25 @@ public class TriviaPregunta {
         this.imagen = imagen;
         this.respuestaCorrectaTexto = respuestaCorrectaTexto;
         this.respuestaCorrectaId = respuestaCorrectaId;
+    }
+
+    public TriviaPregunta(Parcel in) {
+        this.id = in.readLong();
+        this.descripcion = in.readString();
+        this.explicacion = in.readString();
+        this.imagen = in.readString();
+        this.respuestaCorrectaTexto = in.readString();
+        this.respuestaCorrectaId = in.readLong();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeLong(id);
+        dest.writeString(descripcion);
+        dest.writeString(explicacion);
+        dest.writeString(imagen);
+        dest.writeString(respuestaCorrectaTexto);
+        dest.writeLong(respuestaCorrectaId);
     }
 
     public Long getId() {
@@ -90,4 +111,22 @@ public class TriviaPregunta {
     public void setRespuestaCorrectaId(Long respuestaCorrectaId) {
         this.respuestaCorrectaId = respuestaCorrectaId;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    static final Parcelable.Creator<TriviaPregunta> CREATOR
+            = new Parcelable.Creator<TriviaPregunta>() {
+
+        @Override
+        public TriviaPregunta createFromParcel(Parcel in) {
+            return new TriviaPregunta(in);
+        }
+        @Override
+        public TriviaPregunta[] newArray(int size) {
+            return new TriviaPregunta[size];
+        }
+    };
 }
