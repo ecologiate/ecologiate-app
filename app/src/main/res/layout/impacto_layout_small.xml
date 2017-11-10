@@ -6,20 +6,21 @@
 
     <ImageView
         android:id="@+id/iv_agua"
-        android:layout_width="21dp"
-        android:layout_height="21dp"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
         android:scaleType="fitCenter"
         android:src="@raw/impacto_agua"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="5dp"/>
 
     <TextView
         android:id="@+id/tv_agua"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="100 litros de agua"
-        android:textSize="20dp"
+        android:textSize="18dp"
         android:layout_marginLeft="20dp"
         android:layout_marginStart="20dp"
         android:layout_alignParentTop="true"
@@ -35,14 +36,14 @@
         android:layout_below="@+id/iv_agua"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="20dp"/>
+        android:layout_marginTop="23dp"/>
 
     <TextView
         android:id="@+id/tv_energia"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="100 kw de energía"
-        android:textSize="20dp"
+        android:textSize="18dp"
         android:layout_marginLeft="20dp"
         android:layout_marginStart="20dp"
         android:layout_below="@+id/tv_agua"
@@ -53,7 +54,7 @@
     <ImageView
         android:id="@+id/iv_arbol"
         android:layout_width="21dp"
-        android:layout_height="20dp"
+        android:layout_height="21dp"
         android:scaleType="fitCenter"
         android:src="@raw/impacto_arbol"
         android:layout_below="@+id/iv_energia"
@@ -66,7 +67,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="3 árboles"
-        android:textSize="20dp"
+        android:textSize="18dp"
         android:layout_marginLeft="20dp"
         android:layout_marginStart="20dp"
         android:layout_below="@+id/tv_energia"
@@ -88,7 +89,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="1000 kg de emisiones"
-        android:textSize="20dp"
+        android:textSize="18dp"
         android:layout_marginLeft="20dp"
         android:layout_marginStart="20dp"
         android:layout_below="@+id/tv_arboles"

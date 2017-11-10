@@ -6,13 +6,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.app.ecologiate.R;
-import com.app.ecologiate.fragments.InicioFragment;
 import com.app.ecologiate.models.Impacto;
 import com.app.ecologiate.models.Nivel;
 import com.app.ecologiate.models.Usuario;
@@ -27,7 +24,6 @@ import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import cz.msebera.android.httpclient.Header;

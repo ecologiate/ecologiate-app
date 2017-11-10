@@ -36,6 +36,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
@@ -157,6 +159,15 @@ public class GruposFragment extends AbstractEcologiateFragment {
                         for (int i = 0; i < arrayGruposJson.length(); i++) {
                             JSONObject grupoJsonObject = arrayGruposJson.getJSONObject(i);
                             Grupo grupo = Grupo.getFromJson(grupoJsonObject);
+                            //ordeno de mayor puntaje a mayor
+                            List<Usuario> usuarios = grupo.getUsuarios();
+                            Collections.sort(usuarios, new Comparator<Usuario>() {
+                                @Override
+                                public int compare(Usuario u1, Usuario u2) {
+                                    return u2.getPuntos().compareTo(u1.getPuntos());
+                                }
+                            });
+                            grupo.setUsuarios(usuarios);
                             grupos.add(grupo);
                         }
 
