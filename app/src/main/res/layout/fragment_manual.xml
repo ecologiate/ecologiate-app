@@ -26,8 +26,9 @@
         android:layout_marginTop="10dp"
         android:layout_marginBottom="5dp"
         android:layout_below="@+id/etProductoBuscado"
-        android:text="Buscar Producto"
-        android:layout_alignParentLeft="true"/>
+        android:gravity="center"
+        android:layout_centerHorizontal="true"
+        android:text="Buscar Producto" />
 
     <Button
         android:id="@+id/btnAltaManual"
@@ -36,18 +37,16 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="5dp"
+        android:gravity="center"
+        android:layout_centerHorizontal="true"
         android:text="Agregar Producto"
-        android:layout_below="@+id/etProductoBuscado"
-        android:layout_toRightOf="@+id/btnBuscaManual"
-        android:layout_alignParentRight="true"/>
-
-
+        android:layout_below="@+id/btnBuscaManual"/>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/manualFragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/btnBuscaManual"
+        android:layout_below="@+id/btnAltaManual"
         android:scrollbars="vertical" />
 
     </RelativeLayout>

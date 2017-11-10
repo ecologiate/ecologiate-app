@@ -41,6 +41,7 @@
 
     /*Títulos y botones generales*/
     <string name="enviar">Enviar</string>
+    <string name="filtrar">Filtrar</string>
     <string name="buscar">Buscar</string>
     <string name="Reciclar">Reciclar</string>
     <string name="ver_mapa">Ver donde Reciclar</string>

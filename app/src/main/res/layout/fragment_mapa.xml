@@ -84,7 +84,7 @@
             android:src="@android:drawable/ic_menu_search"
             fab:fab_colorNormal="@color/colorBoton"
             fab:fab_colorPressed="@color/colorPrimaryLight"
-            fab:fab_label="Buscar"
+            fab:fab_label="Filtrar"
             fab:fab_size="mini" />
 
         <com.github.clans.fab.FloatingActionButton
