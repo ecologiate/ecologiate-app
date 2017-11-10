@@ -5,7 +5,7 @@
     <!-- Facebook -->
     <string name="facebook_app_id">149676695596008</string>
     <string name="fb_login_protocol_scheme">fb149676695596008</string>
-    <string name="fb_login">Iniciar sesión con Facebook</string>
+    <string name="fb_login">Acceder con Facebook</string>
     <!-- titulos de pantallas -->
     <string name="ajustes_fragment_title">Ajustes</string>
     <string name="altaprod_fragment_title">Producto</string>

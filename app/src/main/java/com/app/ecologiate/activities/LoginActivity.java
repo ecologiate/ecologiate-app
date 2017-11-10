@@ -26,7 +26,6 @@ import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
 import com.facebook.Profile;
 import com.facebook.appevents.AppEventsLogger;
-import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.auth.api.Auth;
@@ -52,8 +51,10 @@ public class LoginActivity extends AppCompatActivity implements
     CallbackManager mFacebookCallbackManager;
 
     private ProgressDialog mProgressDialog;
+    private LoginButton fbLoginButton;
+    private SignInButton mGoogleSignInButton;
 
-    private static final int GOOGLE_RC_SIGN_IN = 9001;
+    private static final int GOOGLE_RC_SIGN_IN = 9381;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,32 +67,32 @@ public class LoginActivity extends AppCompatActivity implements
 
         //Facebook's binding
         mFacebookCallbackManager = CallbackManager.Factory.create();
-        LoginButton fbLoginButton = (LoginButton) findViewById(R.id.fb_login_button);
+        fbLoginButton = (LoginButton) findViewById(R.id.fb_login_button);
         fbLoginButton.setReadPermissions(Arrays.asList("email","public_profile","user_friends"));
 
         fbLoginButton.registerCallback(mFacebookCallbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
                 AccessToken fbAccessToken = loginResult.getAccessToken();
-                handleFacebookSignInResult(fbAccessToken, false);
+                handleFacebookSignInResult(fbAccessToken, true);
             }
             @Override
             public void onCancel() {
                 Toast.makeText(getApplicationContext(), "Cancelled", Toast.LENGTH_LONG).show();
-                mostrarLoginViejo();
+                //mostrarLoginViejo();
             }
             @Override
             public void onError(FacebookException exception) {
                 Log.e(LoginActivity.class.getCanonicalName(), exception.getMessage());
                 Toast.makeText(getApplicationContext(), "ERROR: "+exception.getMessage(), Toast.LENGTH_LONG).show();
-                mostrarLoginViejo();
+                //mostrarLoginViejo();
             }
         });
 
         //Google's binding
         UserManager.setUpGoogleSignIn(this, this, this);
 
-        SignInButton mGoogleSignInButton = (SignInButton)findViewById(R.id.google_sign_in_button);
+        mGoogleSignInButton = (SignInButton)findViewById(R.id.google_sign_in_button);
         mGoogleSignInButton.setSize(SignInButton.SIZE_WIDE);
         mGoogleSignInButton.setOnClickListener(new OnClickListener() {
             @Override
@@ -99,13 +100,12 @@ public class LoginActivity extends AppCompatActivity implements
                 signInWithGoogle();
             }
         });
+
     }
 
     @Override
     public void onStart() {
         super.onStart();
-
-        showProgressDialog();
 
         //chequeo si está logueado con Facebook
         AccessToken fbToken = AccessToken.getCurrentAccessToken();
@@ -118,7 +118,12 @@ public class LoginActivity extends AppCompatActivity implements
         UserManager.googleSilentSignIn(new ResultCallback<GoogleSignInResult>() {
             @Override
             public void onResult(@NonNull GoogleSignInResult googleSignInResult) {
-                handleGoogleSignInResult(googleSignInResult, true);
+                if(googleSignInResult.isSuccess()) {
+                    handleGoogleSignInResult(googleSignInResult, true);
+                }else{
+                    mGoogleSignInButton.setVisibility(View.VISIBLE);
+                    fbLoginButton.setVisibility(View.VISIBLE);
+                }
             }
         });
 
@@ -126,7 +131,6 @@ public class LoginActivity extends AppCompatActivity implements
     }
 
     private void handleGoogleSignInResult(GoogleSignInResult result, Boolean silent) {
-        hideProgressDialog();
         if (result.isSuccess()) {
             GoogleSignInAccount account = result.getSignInAccount();
             String gToken = account.getIdToken();
@@ -165,23 +169,25 @@ public class LoginActivity extends AppCompatActivity implements
             });
         } else {
             //failed
+            hideProgressDialog();
             if(!silent) {
                 String msg = result.getStatus().getStatusMessage()+" - "+result.getStatus().toString();
                 Toast.makeText(getApplicationContext(), "Error: " + msg,
                         Toast.LENGTH_LONG).show();
-                mostrarLoginViejo();
+                //mostrarLoginViejo();
             }
         }
     }
 
     private void handleFacebookSignInResult(final AccessToken fbToken, Boolean silent){
+        showProgressDialog();
         final Profile fbProfile = Profile.getCurrentProfile();
         if(fbProfile == null){
             Profile.fetchProfileForCurrentAccessToken();
         }
         if(!silent) {
             Toast.makeText(getApplicationContext(),
-                    "Logueado con Facebook: " + (fbProfile != null ? fbProfile.getFirstName() : fbToken.getUserId()),
+                    "Bienvenido " + (fbProfile != null ? fbProfile.getFirstName() : ""),
                     Toast.LENGTH_LONG).show();
         }
 
@@ -231,6 +237,7 @@ public class LoginActivity extends AppCompatActivity implements
 
 
     private void signInWithGoogle() {
+        showProgressDialog();
         final Intent signInIntent = UserManager.createGoogleSignIntent();
         startActivityForResult(signInIntent, GOOGLE_RC_SIGN_IN);
     }
@@ -243,7 +250,7 @@ public class LoginActivity extends AppCompatActivity implements
         if (requestCode == GOOGLE_RC_SIGN_IN) {
             //Google's activity result
             GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
-            handleGoogleSignInResult(result, false);
+            handleGoogleSignInResult(result, true);
         } else {
             //Facebook's activity result
             mFacebookCallbackManager.onActivityResult(requestCode, resultCode, data);
@@ -256,11 +263,13 @@ public class LoginActivity extends AppCompatActivity implements
         Intent menuIntent = new Intent(getApplicationContext(),WelcomeMenuActivity.class);
         menuIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(menuIntent);
+        hideProgressDialog();
         finish();
     }
 
 
     public void goToNextActivity(View view){
+        hideProgressDialog();
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
         alertDialog.setTitle("Copate");
         alertDialog.setMessage("Usá el login con Facebook o Google");
@@ -287,10 +296,11 @@ public class LoginActivity extends AppCompatActivity implements
     private void showProgressDialog() {
         if (mProgressDialog == null) {
             mProgressDialog = new ProgressDialog(this);
-            mProgressDialog.setTitle("Obteniendo información del usuario");
+            mProgressDialog.setMessage("Obteniendo información");
             mProgressDialog.setIndeterminate(true);
         }
-        mProgressDialog.show();
+        if(!mProgressDialog.isShowing())
+            mProgressDialog.show();
     }
 
     private void hideProgressDialog() {
@@ -302,7 +312,7 @@ public class LoginActivity extends AppCompatActivity implements
     @Override
     protected void onResume() {
         super.onResume();
-        hideProgressDialog();
+        //hideProgressDialog();
     }
 
     @Override
@@ -314,6 +324,7 @@ public class LoginActivity extends AppCompatActivity implements
         UserManager.disconnect();
     }
 
+    @SuppressWarnings("unused")
     private void mostrarLoginViejo(){
         Button btn = (Button) findViewById(R.id.ecoCustomLogin);
         btn.setVisibility(View.VISIBLE);

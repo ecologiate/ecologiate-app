@@ -156,8 +156,8 @@ public class UserManager {
     }
 
     public static void logOut(ResultCallback<Status> callback){
+        //primero Google porque es async
         manager.signOutFromGoogle(callback);
-        manager.signOutFromFacebook(callback);
     }
 
     private void signOutFromGoogle(final ResultCallback<Status> callback) {
@@ -169,11 +169,15 @@ public class UserManager {
                 //FirebaseAuth.getInstance().signOut();
                 if(mGoogleApiClient.isConnected()) {
                     Auth.GoogleSignInApi.signOut(mGoogleApiClient).setResultCallback(callback);
+                }else{
+                    //si no estaba conectado con google, intento con FB
+                    signOutFromFacebook(callback);
                 }
             }
             @Override
             public void onConnectionSuspended(int i) {
                 Log.d("UserManager", "Google API Client Connection Suspended");
+                signOutFromFacebook(callback);
             }
         });
     }
@@ -185,11 +189,13 @@ public class UserManager {
 
 
     public static void connect(){
-        manager.mGoogleApiClient.connect();
+        if(!manager.mGoogleApiClient.isConnected())
+            manager.mGoogleApiClient.connect();
     }
 
     public static void disconnect(){
-        manager.mGoogleApiClient.disconnect();
+        if(manager.mGoogleApiClient.isConnected())
+            manager.mGoogleApiClient.disconnect();
     }
 
 
