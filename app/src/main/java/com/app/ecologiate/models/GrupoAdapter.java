@@ -90,7 +90,7 @@ public class GrupoAdapter extends RecyclerView.Adapter<GrupoAdapter.ViewHolder>{
         List<Usuario> integrantes = selectedGrupo.getUsuarios();
         for(int i=0; i< integrantes.size(); i++){
             Usuario usuario = integrantes.get(i);
-            htmlIntegrantes += usuario.getNombreCompleto()+" ("+NumberUtils.format(usuario.getPuntos())+") <br/>";
+            htmlIntegrantes += ((i+1)+"º:  "+usuario.getNombreCompleto()+" ("+NumberUtils.format(usuario.getPuntos())+") <br/>");
         }
         holder.txTitulo.setText(selectedGrupo.getNombre());
         holder.txIntegrantes.setText(Html.fromHtml(htmlIntegrantes));
