@@ -41,7 +41,6 @@ public class ManualFragment extends AbstractEcologiateFragment {
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private OnFragmentInteractionListener mListener;
-    private String codigoNoEncontrado = "0";
 
     //DVP: Defino Barra de progreso y ApiCall.
     ProgressDialog prgDialog;
@@ -67,22 +66,9 @@ public class ManualFragment extends AbstractEcologiateFragment {
                              Bundle savedInstanceState) {
         //DVP: Manejo el fragment como un view, creo el botón y en el onclick llamo
         //a la función que invocará al servicio del back.
-
         View view = inflater.inflate(R.layout.fragment_manual, container, false);
         Button botonBuscaManual = (Button) view.findViewById(R.id.btnBuscaManual);
         et = (EditText) view.findViewById(R.id.etProductoBuscado);
-        Button alta = (Button) view.findViewById(R.id.btnAltaManual) ;
-
-        alta.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Fragment altaProductoFragment = AltaProductoFragment.newInstance(codigoNoEncontrado);
-                getActivity().getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.contentFragment, altaProductoFragment)
-                        //.addToBackStack(String.valueOf(altaProductoFragment.getId())) no dejo volver
-                        .commit();
-            }
-        });
 
         mRecyclerView = (RecyclerView) view.findViewById(R.id.manualFragment);
         mRecyclerView.setHasFixedSize(true);
