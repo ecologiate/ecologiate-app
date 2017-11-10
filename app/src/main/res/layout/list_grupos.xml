@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
@@ -21,14 +22,17 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
-                android:textSize="24sp" />
+                android:textSize="24sp"
+                android:text="Nombre del grupo"/>
 
             <TextView
-            android:id="@+id/grupoIntegrantes"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/grupoTitulo"
-            android:textSize="18sp" />
+                android:id="@+id/grupoIntegrantes"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/grupoTitulo"
+                android:textSize="18sp"
+                android:padding="20dp"
+                android:text="Usuario 1 (1000 puntos)"/>
 
             <RelativeLayout
                 android:id="@+id/relativeMetricasGrupos"
@@ -44,79 +48,19 @@
                     android:gravity="center_horizontal"
                     android:padding="10dp"
                     android:text="@string/metricasgrupo"
-                    android:textSize="16dp" />
+                    android:textSize="20dp" />
 
-                <TextView
-                    android:id="@+id/tituloArboles"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                <com.app.ecologiate.fragments.ImpactoView
+                    android:id="@+id/grupo_impacto"
                     android:layout_below="@+id/tituloMetrica"
-                    android:padding="6dp"
-                    android:text="@string/arboles"
-                    android:textSize="16dp" />
-
-                <TextView
-                    android:id="@+id/grupoContenidoAboles"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/tituloMetrica"
-                    android:layout_toRightOf="@+id/tituloArboles"
-                    android:padding="6dp"
-                    android:textSize="16dp" />
-
-                <TextView
-                    android:id="@+id/tituloAgua"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/tituloArboles"
-                    android:padding="6dp"
-                    android:text="@string/agua"
-                    android:textSize="16dp" />
-
-                <TextView
-                    android:id="@+id/grupoContenidoAgua"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/tituloArboles"
-                    android:layout_toRightOf="@+id/tituloAgua"
-                    android:padding="6dp"
-                    android:textSize="16dp" />
-
-                <TextView
-                    android:id="@+id/tituloEnergia"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/tituloAgua"
-                    android:padding="6dp"
-                    android:text="@string/energia"
-                    android:textSize="16dp" />
-
-                <TextView
-                    android:id="@+id/grupoContenidoEnergia"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/tituloAgua"
-                    android:layout_toRightOf="@+id/tituloEnergia"
-                    android:padding="6dp"
-                    android:textSize="16dp" />
-
-                <TextView
-                    android:id="@+id/tituloEmisiones"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/tituloEnergia"
-                    android:padding="6dp"
-                    android:text="@string/emisiones"
-                    android:textSize="16dp" />
-
-                <TextView
-                    android:id="@+id/grupoContenidoEmisiones"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/tituloEnergia"
-                    android:layout_toRightOf="@+id/tituloEmisiones"
-                    android:padding="6dp"
-                    android:textSize="16dp" />
+                    android:layout_margin="10dp"
+                    app:impactoAgua="100 litros de agua"
+                    app:impactoEnergia="2000 kw de energía"
+                    app:impactoArboles="3 árboles"
+                    app:impactoEmisiones="350 kg de emisiones"
+                    app:style="small"/>
 
             </RelativeLayout>
 

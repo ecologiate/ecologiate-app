@@ -21,6 +21,7 @@ public class ImpactoView extends LinearLayout {
     private String impactoEnergia;
     private String impactoArboles;
     private String impactoEmisiones;
+    private String style;
 
     private TextView tvAgua;
     private TextView tvEnergia;
@@ -43,19 +44,6 @@ public class ImpactoView extends LinearLayout {
     }
 
     private void init(AttributeSet attrs, int defStyle) {
-        // Creamos la interfaz a partir del layout
-        String infService = Context.LAYOUT_INFLATER_SERVICE;
-        LayoutInflater li;
-        li = (LayoutInflater)getContext().getSystemService(infService);
-        li.inflate(R.layout.impacto_layout, this, true);
-
-        // Obtenemos las referencias a las vistas hijas
-        tvAgua = (TextView) findViewById(R.id.tv_agua);
-        tvEnergia = (TextView) findViewById(R.id.tv_energia);
-        tvArboles = (TextView) findViewById(R.id.tv_arboles);
-        tvEmisiones = (TextView) findViewById(R.id.tv_emisiones);
-
-
         // Load attributes
         final TypedArray a = getContext().obtainStyledAttributes(
                 attrs, R.styleable.ImpactoView, defStyle, 0);
@@ -68,8 +56,27 @@ public class ImpactoView extends LinearLayout {
                 R.styleable.ImpactoView_impactoArboles);
         impactoEmisiones = a.getString(
                 R.styleable.ImpactoView_impactoEmisiones);
+        style = a.getString(
+                R.styleable.ImpactoView_style);
 
         a.recycle();
+
+        // Creamos la interfaz a partir del layout
+        String infService = Context.LAYOUT_INFLATER_SERVICE;
+        LayoutInflater li;
+        li = (LayoutInflater)getContext().getSystemService(infService);
+        if("small".equals(style)){
+            li.inflate(R.layout.impacto_layout_small, this, true);
+        }else{
+            li.inflate(R.layout.impacto_layout, this, true);
+        }
+
+        // Obtenemos las referencias a las vistas hijas
+        tvAgua = (TextView) findViewById(R.id.tv_agua);
+        tvEnergia = (TextView) findViewById(R.id.tv_energia);
+        tvArboles = (TextView) findViewById(R.id.tv_arboles);
+        tvEmisiones = (TextView) findViewById(R.id.tv_emisiones);
+
 
         refreshUI();
     }

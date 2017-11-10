@@ -18,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.app.ecologiate.R;
+import com.app.ecologiate.fragments.ImpactoView;
 import com.app.ecologiate.services.ApiCallService;
 import com.app.ecologiate.services.UserManager;
 import com.app.ecologiate.utils.NumberUtils;
@@ -47,10 +48,7 @@ public class GrupoAdapter extends RecyclerView.Adapter<GrupoAdapter.ViewHolder>{
         // each data item is just a string in this case
         public TextView txTitulo;
         public TextView txIntegrantes;
-        public TextView txMetricaArboles;
-        public TextView txMetricaAgua;
-        public TextView txMetricaEnergia;
-        public TextView txMetricaEmisiones;
+        public ImpactoView impactoView;
         public Button btnInvitar;
         public Button btnSalir;
 
@@ -60,10 +58,7 @@ public class GrupoAdapter extends RecyclerView.Adapter<GrupoAdapter.ViewHolder>{
             super(v);
             txTitulo = (TextView) v.findViewById(R.id.grupoTitulo);
             txIntegrantes = (TextView) v.findViewById(R.id.grupoIntegrantes);
-            txMetricaArboles = (TextView) v.findViewById(R.id.grupoContenidoAboles);
-            txMetricaAgua = (TextView) v.findViewById(R.id.grupoContenidoAgua);
-            txMetricaEnergia = (TextView) v.findViewById(R.id.grupoContenidoEnergia);
-            txMetricaEmisiones = (TextView) v.findViewById(R.id.grupoContenidoEmisiones);
+            impactoView = (ImpactoView) v.findViewById(R.id.grupo_impacto);
             btnInvitar = (Button) v.findViewById(R.id.btnInvitarGrupo);
             btnSalir = (Button) v.findViewById(R.id.btnSalirGrupo);
         }
@@ -101,10 +96,10 @@ public class GrupoAdapter extends RecyclerView.Adapter<GrupoAdapter.ViewHolder>{
         holder.txIntegrantes.setText(Html.fromHtml(htmlIntegrantes));
         Impacto impactoDelGrupo = selectedGrupo.getImpacto();
 
-        holder.txMetricaArboles.setText(NumberUtils.format(impactoDelGrupo.getArboles()));
-        holder.txMetricaAgua.setText(NumberUtils.format(impactoDelGrupo.getAgua()));
-        holder.txMetricaEnergia.setText(NumberUtils.format(impactoDelGrupo.getEnergia()));
-        holder.txMetricaEmisiones.setText(NumberUtils.format(impactoDelGrupo.getEmisiones()));
+        holder.impactoView.setImpactoAgua(NumberUtils.format(impactoDelGrupo.getAgua())+" litros de agua");
+        holder.impactoView.setImpactoEnergia(NumberUtils.format(impactoDelGrupo.getEnergia())+" kw de energía");
+        holder.impactoView.setImpactoArboles(NumberUtils.format(impactoDelGrupo.getArboles())+" árboles");
+        holder.impactoView.setImpactoEmisiones(NumberUtils.format(impactoDelGrupo.getEmisiones())+" kg de emisiones");
 
         holder.btnInvitar.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -4,5 +4,6 @@
         <attr name="impactoEnergia" format="string" />
         <attr name="impactoArboles" format="string" />
         <attr name="impactoEmisiones" format="string" />
+        <attr name="style" format="string" />
     </declare-styleable>
 </resources>
