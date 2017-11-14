@@ -6,27 +6,15 @@
     android:layout_height="match_parent"
     tools:context=".fragments.MapaFragment">
 
-
-    <com.google.android.gms.maps.MapView
-        android:id="@+id/mapa"
-        android:name="com.google.android.gms.maps.MapFragment"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="2"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true" />
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_weight="1"
         android:layout_gravity="center_vertical|center_horizontal"
         android:gravity="center"
         android:background="@color/colorAccent"
-        android:padding="5dp"
+        android:padding="10dp"
         android:orientation="horizontal"
         android:id="@+id/lyEditMode">
         <TextView
@@ -34,9 +22,18 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:textAlignment="center"
-            android:textSize="16dp"
+            android:textSize="16sp"
             android:text="Pulse sobre el mapa para agregar" />
     </LinearLayout>
+
+    <com.google.android.gms.maps.MapView
+        android:id="@+id/mapa"
+        android:name="com.google.android.gms.maps.MapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true" />
 
     <com.github.clans.fab.FloatingActionMenu
         android:id="@+id/md_floating_action_menu"

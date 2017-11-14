@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <FrameLayout
+        android:id="@+id/marker_backgroud"
+        android:layout_width="24dp"
+        android:layout_height="43dp"
+        android:backgroundTint="@color/medalla_bronce"
+        android:background="@raw/ic_map_marker"
+        android:padding="3dp">
+
+        <android.support.v7.widget.AppCompatImageView
+            android:id="@+id/iv_material_marker"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_gravity="center_horizontal"
+            android:contentDescription="@null"
+            android:src="@drawable/ic_textil" />
+    </FrameLayout>
+
+</FrameLayout>

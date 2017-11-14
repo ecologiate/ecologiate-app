@@ -152,4 +152,33 @@ public class Material {
             default: return R.drawable.ic_reciclaje;
         }
     }
+
+    public int getBackgroundColor(){
+        switch (descripcion){
+            case "Papel y cartón": return R.color.marker_papelycarton;
+            case "Vidrio": return R.color.marker_vidrio;
+            case "Plástico": return R.color.marker_plastico;
+            case "Tetra-brik": return R.color.marker_tetra;
+            case "Tapitas": return R.color.marker_tapitas;
+            case "Pilas": return R.color.marker_pilas;
+            case "Neumáticos": return R.color.marker_neumaticos;
+            case "Electrónicos": return R.color.marker_electronicos;
+            case "Bronce": return R.color.marker_bronce;
+            case "Textiles": return R.color.marker_textil;
+            case "Aceite": return R.color.marker_aceite;
+            case "Telgopor": return R.color.marker_telgopor;
+            case "Metales": return R.color.marker_metal;
+            case "Orgánicos": return R.color.marker_organicos;
+            default: return R.color.marker_multiple;
+        }
+    }
+
+    public int getIconColor(){
+        switch (descripcion){
+            case "Tetra-brik": return R.color.white;
+            case "Pilas": return R.color.white;
+            case "Neumáticos": return R.color.white;
+            default: return R.color.black;
+        }
+    }
 }

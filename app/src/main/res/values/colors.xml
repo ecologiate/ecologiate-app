@@ -24,4 +24,23 @@
     <color name="medalla_disabled">#9e9e9e</color>
     <color name="medalla_icon_disabled">#424242</color>
     <color name="medalla_icon_enabled">#0e6012</color>
+
+    <color name="marker_multiple">#64dd17</color>
+    <color name="marker_papelycarton">#2196f3</color>
+    <color name="marker_plastico">#388e3c</color>
+    <color name="marker_organicos">#ff1744</color>
+    <color name="marker_vidrio">#ff8a65</color>
+    <color name="marker_tetra">#7c4dff</color>
+    <color name="marker_metal">#757575</color>
+    <color name="marker_tapitas">#ffea00</color>
+    <color name="marker_pilas">#000000</color>
+    <color name="marker_neumaticos">#263238</color>
+    <color name="marker_electronicos">#ffcc80</color>
+    <color name="marker_bronce">#a1887f</color>
+    <color name="marker_textil">#f48fb1</color>
+    <color name="marker_aceite">#fff59d</color>
+    <color name="marker_telgopor">#ffffff</color>
+
+    <color name="black">#000000</color>
+    <color name="white">#ffffff</color>
 </resources>

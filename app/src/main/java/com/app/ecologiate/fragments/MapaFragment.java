@@ -23,15 +23,17 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.app.ecologiate.R;
-import com.app.ecologiate.models.Material;
 import com.app.ecologiate.models.Producto;
+import com.app.ecologiate.models.PuntoRecoleccion;
 import com.app.ecologiate.services.ApiCallService;
+import com.app.ecologiate.utils.ImageUtils;
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -88,6 +90,15 @@ public class MapaFragment extends AbstractEcologiateFragment implements OnMapRea
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        modoAlta = false;
+        if(!modoAlta) {
+            editMessage.setVisibility(View.GONE);
+        }
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
@@ -95,7 +106,6 @@ public class MapaFragment extends AbstractEcologiateFragment implements OnMapRea
         View view = inflater.inflate(R.layout.fragment_mapa, container, false);
         ButterKnife.bind(this, view);
         context = view.getContext();
-        editMessage.setVisibility(View.GONE);
         FloatingActionButton fabBuscar = (FloatingActionButton) view.findViewById(R.id.buscarEnMapa);
         fabBuscar.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -155,9 +165,12 @@ public class MapaFragment extends AbstractEcologiateFragment implements OnMapRea
     }
 
 
+
+
     @Override
     public void onMapReady(GoogleMap googleMap) {
         gMap = googleMap;
+        gMap.getUiSettings().setMapToolbarEnabled(true);
 
         if (ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) {
@@ -229,8 +242,6 @@ public class MapaFragment extends AbstractEcologiateFragment implements OnMapRea
     private void getPuntosDeRecoleccion(){
 
         JsonHttpResponseHandler responseHandler = new JsonHttpResponseHandler() {
-
-
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 try {
@@ -239,11 +250,7 @@ public class MapaFragment extends AbstractEcologiateFragment implements OnMapRea
                         JSONArray puntosArray = response.getJSONArray("puntos");
                         if(puntosArray.length()>0){
                             for(int i = 0; i < puntosArray.length(); i++){
-                                JSONObject pdr = puntosArray.getJSONObject(i);
-                                LatLng pdrLatLng = new LatLng(pdr.getDouble("latitud"), pdr.getDouble("longitud"));
-                                String title = pdr.getString("descripcion");
-                                String direccion = pdr.getString("direccion");
-                                gMap.addMarker(new MarkerOptions().position(pdrLatLng).title(title).snippet(direccion));
+                                agregarMarcador(PuntoRecoleccion.getFromJson(puntosArray.getJSONObject(i)));
                             }
                         }else{
                             Toast.makeText(getContext(), "No se encontró ningún punto de recolección", Toast.LENGTH_LONG).show();
@@ -264,11 +271,7 @@ public class MapaFragment extends AbstractEcologiateFragment implements OnMapRea
                     // si me trajo algo
                     if(response != null){
                         for(int i = 0; i < response.length(); i++){
-                            JSONObject pdr = response.getJSONObject(i);
-                            LatLng pdrLatLng = new LatLng(pdr.getDouble("latitud"), pdr.getDouble("longitud"));
-                            String title = pdr.getString("descripcion");
-                            String direccion = pdr.getString("direccion");
-                            gMap.addMarker(new MarkerOptions().position(pdrLatLng).title(title).snippet(direccion));
+                            agregarMarcador(PuntoRecoleccion.getFromJson(response.getJSONObject(i)));
                         }
                     }else{
                         Toast.makeText(getContext(), "No se encontró ningún punto de recolección", Toast.LENGTH_LONG).show();
@@ -280,17 +283,14 @@ public class MapaFragment extends AbstractEcologiateFragment implements OnMapRea
                 }
             }
 
-            //Cuando no vuelve con un status code "200" del backend, o sea, una falla
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                 if(statusCode == 404){
                     Toast.makeText(getContext(), "Url no encontrada", Toast.LENGTH_LONG).show();
                 }
-                // When Http response code is '500'
                 else if(statusCode == 500){
                     Toast.makeText(getContext(), "Error en el backend", Toast.LENGTH_LONG).show();
                 }
-                // When Http response code other than 404, 500
                 else{
                     Toast.makeText(getContext(), throwable.getLocalizedMessage(), Toast.LENGTH_LONG).show();
                     Log.e("API_ERROR","Error inesperado ["+statusCode+"]", throwable);
@@ -307,6 +307,20 @@ public class MapaFragment extends AbstractEcologiateFragment implements OnMapRea
             materialIds.add(producto.getMaterial().getId().toString());
         }
         apiCallService.getPuntosDeRecoleccion(materialIds, pais, area, responseHandler);
+    }
+
+
+    private void agregarMarcador(PuntoRecoleccion pdr){
+        LatLng pdrLatLng = new LatLng(pdr.getLatitud(), pdr.getLongitud());
+        String title = pdr.getDescripcion();
+        String direccion = pdr.getDireccion();
+        MarkerOptions markerOptions = new MarkerOptions()
+                .position(pdrLatLng)
+                .title(title)
+                .snippet(direccion)
+                //.icon(BitmapDescriptorFactory.fromResource(pdr.getImageResourceId()));
+                .icon(ImageUtils.getMarkerIconFromPdr(getContext(), pdr));
+        gMap.addMarker(markerOptions);
     }
 
     @Override
@@ -357,17 +371,13 @@ public class MapaFragment extends AbstractEcologiateFragment implements OnMapRea
         }
     }
 
+
     @Override
     public void onDetach() {
         super.onDetach();
         mListener = null;
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        modoAlta = false;
-    }
 
     @Override
     public String getTitle() {

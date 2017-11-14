@@ -13,6 +13,7 @@ import android.widget.Toast;
 import com.app.ecologiate.models.Impacto;
 import com.app.ecologiate.models.Nivel;
 import com.app.ecologiate.models.Usuario;
+import com.facebook.AccessToken;
 import com.facebook.login.LoginManager;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -152,8 +153,13 @@ public class UserManager {
     }
 
     public static void logOut(ResultCallback<Status> callback){
-        //primero Google porque es async
-        manager.signOutFromGoogle(callback);
+        //pruebo con fb
+        if(AccessToken.getCurrentAccessToken() != null){
+            manager.signOutFromFacebook(callback);
+        }else {
+            //con Google que es async
+            manager.signOutFromGoogle(callback);
+        }
     }
 
     private void signOutFromGoogle(final ResultCallback<Status> callback) {
@@ -165,15 +171,11 @@ public class UserManager {
                 //FirebaseAuth.getInstance().signOut();
                 if(mGoogleApiClient.isConnected()) {
                     Auth.GoogleSignInApi.signOut(mGoogleApiClient).setResultCallback(callback);
-                }else{
-                    //si no estaba conectado con google, intento con FB
-                    signOutFromFacebook(callback);
                 }
             }
             @Override
             public void onConnectionSuspended(int i) {
                 Log.d("UserManager", "Google API Client Connection Suspended");
-                signOutFromFacebook(callback);
             }
         });
     }

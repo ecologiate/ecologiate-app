@@ -112,22 +112,21 @@ public class LoginActivity extends AppCompatActivity implements
         Profile fbProfile = Profile.getCurrentProfile();
         if(fbProfile != null && fbToken != null){
             handleFacebookSignInResult(fbToken, true);
-        }
-
-        //chequeo si puedo loguear automáticamente con Google
-        UserManager.googleSilentSignIn(new ResultCallback<GoogleSignInResult>() {
-            @Override
-            public void onResult(@NonNull GoogleSignInResult googleSignInResult) {
-                if(googleSignInResult.isSuccess()) {
-                    handleGoogleSignInResult(googleSignInResult, true);
-                }else{
-                    mGoogleSignInButton.setVisibility(View.VISIBLE);
-                    fbLoginButton.setVisibility(View.VISIBLE);
+        }else {
+            //chequeo si puedo loguear automáticamente con Google
+            UserManager.googleSilentSignIn(new ResultCallback<GoogleSignInResult>() {
+                @Override
+                public void onResult(@NonNull GoogleSignInResult googleSignInResult) {
+                    if (googleSignInResult.isSuccess()) {
+                        handleGoogleSignInResult(googleSignInResult, true);
+                    } else {
+                        mGoogleSignInButton.setVisibility(View.VISIBLE);
+                        fbLoginButton.setVisibility(View.VISIBLE);
+                    }
                 }
-            }
-        });
-
-        UserManager.connect();
+            });
+            UserManager.connect();
+        }
     }
 
     private void handleGoogleSignInResult(GoogleSignInResult result, Boolean silent) {
