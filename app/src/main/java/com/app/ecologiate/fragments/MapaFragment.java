@@ -6,8 +6,11 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
+import android.location.Criteria;
 import android.location.Geocoder;
 import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
@@ -69,6 +72,9 @@ public class MapaFragment extends AbstractEcologiateFragment implements OnMapRea
     private Boolean modoAlta = false;
     private Geocoder geocoder;
     private Address address;
+    private Location currentLocation;
+    private LocationManager locationManager;
+
 
     @BindView(R.id.lyEditMode)
     LinearLayout editMessage;
@@ -170,19 +176,25 @@ public class MapaFragment extends AbstractEcologiateFragment implements OnMapRea
     @Override
     public void onMapReady(GoogleMap googleMap) {
         gMap = googleMap;
-        gMap.getUiSettings().setMapToolbarEnabled(true);
+        gMap.getUiSettings().setMapToolbarEnabled(false);
+        gMap.setPadding(0, 35, 10, 0); //para cambiar la posición de los controles UI del mapa
 
         if (ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) {
             gMap.setMyLocationEnabled(true);
+            locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
+            //Criteria criteria = new Criteria();
+            //Location location = locationManager.getLastKnownLocation(locationManager.getBestProvider(criteria, false));
+            //recibo actualización de la posición cada 1 minuto o cada 50 metros!!!
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 60000, 50, buildLocationListener());
+            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 60000, 50, buildLocationListener());
+            locationManager.requestLocationUpdates(LocationManager.PASSIVE_PROVIDER, 60000, 50, buildLocationListener());
         } else {
             requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_GEO);
         }
 
         geocoder = new Geocoder(getContext(), Locale.getDefault());
 
-        LatLng utn = new LatLng(-34.598684, -58.419960);
-        gMap.animateCamera(CameraUpdateFactory.newLatLngZoom(utn, 12.0f));
         /*
         CameraPosition cameraPosition = new CameraPosition.Builder()
                 .target(utn)
@@ -352,6 +364,32 @@ public class MapaFragment extends AbstractEcologiateFragment implements OnMapRea
             editMessage.setVisibility(View.GONE);
         }
         fam.close(false);
+    }
+
+
+    private LocationListener buildLocationListener(){
+        return new LocationListener() {
+            @Override
+            public void onLocationChanged(Location location) {
+                LatLng latLang = new LatLng(location.getLatitude(), location.getLongitude());
+                gMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLang, 12.0f));
+            }
+
+            @Override
+            public void onStatusChanged(String provider, int status, Bundle extras) {
+
+            }
+
+            @Override
+            public void onProviderEnabled(String provider) {
+
+            }
+
+            @Override
+            public void onProviderDisabled(String provider) {
+
+            }
+        };
     }
 
     public void onButtonPressed(Uri uri) {

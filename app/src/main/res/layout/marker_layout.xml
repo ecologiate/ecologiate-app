@@ -5,7 +5,7 @@
 
     <FrameLayout
         android:id="@+id/marker_backgroud"
-        android:layout_width="24dp"
+        android:layout_width="26dp"
         android:layout_height="43dp"
         android:backgroundTint="@color/medalla_bronce"
         android:background="@raw/ic_map_marker"

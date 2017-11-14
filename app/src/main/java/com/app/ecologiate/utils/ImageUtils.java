@@ -21,7 +21,7 @@ import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 
 public class ImageUtils {
-    
+
 
     public static BitmapDescriptor getMarkerIconFromPdr(Context context, PuntoRecoleccion pdr){
         View customMarkerView = ((LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.marker_layout, null);
