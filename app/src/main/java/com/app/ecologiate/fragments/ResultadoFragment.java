@@ -67,7 +67,7 @@ public class ResultadoFragment extends AbstractEcologiateFragment {
 
         prgDialog = new ProgressDialog(getContext());
         prgDialog.setCancelable(false);
-        
+
     }
 
     @Override

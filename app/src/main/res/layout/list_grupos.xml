@@ -82,6 +82,7 @@
                 android:text="@string/invitargrupo" />
 
             <Button
+                android:visibility="gone"
                 android:id="@+id/btnSalirGrupo"
                 style="@style/ecoButtonStyle"
                 android:layout_width="wrap_content"
