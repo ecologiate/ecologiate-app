@@ -48,6 +48,8 @@ public class PerfilFragment extends AbstractEcologiateFragment implements Medall
     ProgressBar progressBarNivel;
     @BindView(R.id.perfil_impacto)
     ImpactoView impactoView;
+    @BindView(R.id.layoutCampanias)
+    View layoutCampanias;
 
     private MedallaAdapter medallaAdapter;
     private RecyclerView recyclerView;
@@ -87,6 +89,14 @@ public class PerfilFragment extends AbstractEcologiateFragment implements Medall
         medallaAdapter = new MedallaAdapter(getContext(), materialesConObjetivos);
         medallaAdapter.setClickListener(this);
         recyclerView.setAdapter(medallaAdapter);
+
+        //campañas
+        if(usuario.getCampaniasCumplidas() != null && !usuario.getCampaniasCumplidas().isEmpty()){
+            //TODO
+        }else{
+            //no hay campañas cumplidas
+            layoutCampanias.setVisibility(View.GONE);
+        }
 
 
         return view;

@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
@@ -107,26 +109,38 @@ public class LoginActivity extends AppCompatActivity implements
     public void onStart() {
         super.onStart();
 
-        //chequeo si está logueado con Facebook
-        AccessToken fbToken = AccessToken.getCurrentAccessToken();
-        Profile fbProfile = Profile.getCurrentProfile();
-        if(fbProfile != null && fbToken != null){
-            handleFacebookSignInResult(fbToken, true);
-        }else {
-            //chequeo si puedo loguear automáticamente con Google
-            UserManager.googleSilentSignIn(new ResultCallback<GoogleSignInResult>() {
-                @Override
-                public void onResult(@NonNull GoogleSignInResult googleSignInResult) {
-                    if (googleSignInResult.isSuccess()) {
-                        handleGoogleSignInResult(googleSignInResult, true);
-                    } else {
-                        mGoogleSignInButton.setVisibility(View.VISIBLE);
-                        fbLoginButton.setVisibility(View.VISIBLE);
+        //chequeo conexion
+        if(isOnline()) {
+            //chequeo si está logueado con Facebook
+            AccessToken fbToken = AccessToken.getCurrentAccessToken();
+            Profile fbProfile = Profile.getCurrentProfile();
+            if (fbProfile != null && fbToken != null) {
+                handleFacebookSignInResult(fbToken, true);
+            } else {
+                //chequeo si puedo loguear automáticamente con Google
+                UserManager.googleSilentSignIn(new ResultCallback<GoogleSignInResult>() {
+                    @Override
+                    public void onResult(@NonNull GoogleSignInResult googleSignInResult) {
+                        if (googleSignInResult.isSuccess()) {
+                            handleGoogleSignInResult(googleSignInResult, true);
+                        } else {
+                            mGoogleSignInButton.setVisibility(View.VISIBLE);
+                            fbLoginButton.setVisibility(View.VISIBLE);
+                        }
                     }
-                }
-            });
-            UserManager.connect();
+                });
+                UserManager.connect();
+            }
+        }else{
+            Toast.makeText(LoginActivity.this, "No hay conexión a Internet", Toast.LENGTH_LONG).show();
         }
+    }
+
+    public boolean isOnline() {
+        ConnectivityManager cm =
+                (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = cm.getActiveNetworkInfo();
+        return netInfo != null && netInfo.isConnectedOrConnecting();
     }
 
     private void handleGoogleSignInResult(GoogleSignInResult result, Boolean silent) {
