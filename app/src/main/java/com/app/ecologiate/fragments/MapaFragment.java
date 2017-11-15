@@ -464,7 +464,7 @@ public class MapaFragment extends AbstractEcologiateFragment implements OnMapRea
         materialesBar.removeAllViewsInLayout();
         if(materiales != null && !materiales.isEmpty()){
             //Snackbar.make(materialesBar, "Filtros activos", BaseTransientBottomBar.LENGTH_SHORT).show();
-            Toast.makeText(getContext(),"Filtros activos", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(),"Filtros activos", Toast.LENGTH_LONG).show();
             for(int i = 0; i<materiales.size(); i++){
                 Material m = materiales.get(i);
                 ImageView icon = new ImageView(getContext());

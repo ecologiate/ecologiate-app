@@ -20,7 +20,6 @@ import com.app.ecologiate.models.Producto;
 import com.app.ecologiate.services.ApiCallService;
 import com.app.ecologiate.services.UserManager;
 import com.app.ecologiate.utils.NumberUtils;
-import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.Result;
 import com.google.android.gms.common.api.ResultCallback;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -68,6 +67,7 @@ public class ResultadoFragment extends AbstractEcologiateFragment {
 
         prgDialog = new ProgressDialog(getContext());
         prgDialog.setCancelable(false);
+        
     }
 
     @Override

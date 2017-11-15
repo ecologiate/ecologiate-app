@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -84,6 +85,11 @@ public class ManualFragment extends AbstractEcologiateFragment {
             @Override
             public void onClick(View view) {
                // EditText et = (EditText) view.findViewById(R.id.etProductoBuscado);
+                View currentFocus = getActivity().getCurrentFocus();
+                if (currentFocus != null) {
+                    InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(currentFocus.getWindowToken(), 0);
+                }
                 getProductoManual(et.getText().toString());
             }
         });

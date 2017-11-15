@@ -328,11 +328,6 @@
         app:impactoArboles="3 árboles"
         app:impactoEmisiones="350 kg"/>
 
-        <View
-            android:layout_width="wrap_content"
-            android:layout_height="2dip"
-            android:background="@color/violetaOscuro"
-            android:layout_marginBottom="5dp"/>
 
         </LinearLayout>
     </ScrollView>
