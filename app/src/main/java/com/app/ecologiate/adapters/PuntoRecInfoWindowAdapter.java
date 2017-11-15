@@ -61,10 +61,10 @@ public class PuntoRecInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
         TextView materialesUI = ((TextView) view.findViewById(R.id.tvMateriales));
 
         String txtMateriales = "Materiales: ";
+        materialesBar.removeAllViewsInLayout();
         for(int i = 0; i<pdr.getMateriales().size(); i++){
             Material m = pdr.getMateriales().get(i);
             //barrita de íconos
-            materialesBar.removeAllViewsInLayout();
             ImageView icon = new ImageView(context);
             icon.setImageResource(m.getImageResourceId());
             materialesBar.addView(icon);
