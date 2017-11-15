@@ -54,7 +54,7 @@
             <Button
                 android:id="@+id/btnTachoVerde"
                 style="@style/triviaButtonVerdeStyle"
-                android:layout_width="wrap_content"
+                android:layout_width="120dp"
                 android:textSize="12sp"
                 android:layout_height="30dp"
                 android:text="Tacho Verde" />
@@ -82,7 +82,7 @@
             <Button
                 android:id="@+id/btnCompostera"
                 style="@style/triviaButtonComposteraStyle"
-                android:layout_width="wrap_content"
+                android:layout_width="120dp"
                 android:textSize="12sp"
                 android:layout_height="30dp"
                 android:text="Compostera" />
@@ -113,7 +113,7 @@
             <Button
                 android:id="@+id/btnTachoNegro"
                 style="@style/triviaButtonNegroStyle"
-                android:layout_width="wrap_content"
+                android:layout_width="120dp"
                 android:text="Tacho Negro"
                 android:textSize="12sp"
                 android:layout_height="30dp"
@@ -142,7 +142,7 @@
             <Button
                 android:id="@+id/btnManejoEspecial"
                 style="@style/triviaButtonEspecialStyle"
-                android:layout_width="140dp"
+                android:layout_width="120dp"
                 android:text="Manejo Especial"
                 android:textSize="12sp"
                 android:layout_height="30dp"
