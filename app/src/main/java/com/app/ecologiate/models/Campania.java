@@ -17,6 +17,8 @@ public class Campania {
     private Date fechaInicio;
     private Date fechaFin;
     private Medalla medalla;
+    private Material material;
+    private Producto producto;
 
     public static Campania getFromJson(JSONObject jsonObject){
         try {
@@ -28,7 +30,9 @@ public class Campania {
                     jsonObject.has("cant_meta") ? jsonObject.getInt("cant_meta") : 0,
                     jsonObject.has("fecha_inicio") ? sdf.parse(jsonObject.getString("fecha_inicio")) : null,
                     jsonObject.has("fecha_fin") ? sdf.parse(jsonObject.getString("fecha_fin")) : null,
-                    jsonObject.has("medalla") ? Medalla.getFromJson(jsonObject.getJSONObject("medalla")) : null
+                    jsonObject.has("medalla") ? Medalla.getFromJson(jsonObject.getJSONObject("medalla")) : null,
+                    jsonObject.has("material") ? Material.getFromJson(jsonObject.getJSONObject("material")) : null,
+                    jsonObject.has("producto") ? Producto.getFromJson(jsonObject.getJSONObject("producto")) : null
             );
         }catch (Exception e){
             Log.e("JSON_ERROR", e.getMessage());
@@ -37,7 +41,8 @@ public class Campania {
     }
 
     public Campania(Long id, String titulo, String descripcion, Integer cantMeta,
-                    Date fechaInicio, Date fechaFin, Medalla medalla) {
+                    Date fechaInicio, Date fechaFin, Medalla medalla, Material material,
+                    Producto producto) {
         this.id = id;
         this.titulo = titulo;
         this.descripcion = descripcion;
@@ -45,6 +50,8 @@ public class Campania {
         this.fechaInicio = fechaInicio;
         this.fechaFin = fechaFin;
         this.medalla = medalla;
+        this.material = material;
+        this.producto = producto;
     }
 
 
@@ -102,5 +109,21 @@ public class Campania {
 
     public void setMedalla(Medalla medalla) {
         this.medalla = medalla;
+    }
+
+    public Material getMaterial() {
+        return material;
+    }
+
+    public void setMaterial(Material material) {
+        this.material = material;
+    }
+
+    public Producto getProducto() {
+        return producto;
+    }
+
+    public void setProducto(Producto producto) {
+        this.producto = producto;
     }
 }

@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -14,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.app.ecologiate.R;
@@ -67,7 +69,8 @@ public class ManualFragment extends AbstractEcologiateFragment {
         //DVP: Manejo el fragment como un view, creo el botón y en el onclick llamo
         //a la función que invocará al servicio del back.
         View view = inflater.inflate(R.layout.fragment_manual, container, false);
-        Button botonBuscaManual = (Button) view.findViewById(R.id.btnBuscaManual);
+        ImageView botonBuscaManual = (ImageView) view.findViewById(R.id.btnBuscaManual);
+        FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.btnAltaManual);
         et = (EditText) view.findViewById(R.id.etProductoBuscado);
 
         mRecyclerView = (RecyclerView) view.findViewById(R.id.manualFragment);
@@ -82,6 +85,16 @@ public class ManualFragment extends AbstractEcologiateFragment {
             public void onClick(View view) {
                // EditText et = (EditText) view.findViewById(R.id.etProductoBuscado);
                 getProductoManual(et.getText().toString());
+            }
+        });
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Fragment altaProductoFragment = AltaProductoFragment.newInstance(null);
+                getActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.contentFragment, altaProductoFragment)
+                        //.addToBackStack(String.valueOf(altaProductoFragment.getId())) no dejo volver
+                        .commit();
             }
         });
         return view;

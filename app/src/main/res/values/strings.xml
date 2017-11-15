@@ -45,10 +45,10 @@
     <string name="filtrar">Filtrar</string>
     <string name="buscar">Buscar</string>
     <string name="Reciclar">Reciclar</string>
-    <string name="ver_mapa">Ver donde Reciclar</string>
+    <string name="ver_mapa">¿Dónde lo tiro?</string>
     <string name="buscando">Buscando...</string>
     <string name="nivel">Nivel:</string>
-    <string name="metricas">Mi impacto por reciclar</string>
+    <string name="metricas">Impacto de mis reciclajes</string>
     <string name="metricasgrupo">Metricas del Grupo</string>
     <string name="campanias">Campañas Activas</string>
     <string name="arboles">Árboles Salvados:</string>

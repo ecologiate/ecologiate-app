@@ -18,17 +18,22 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.app.ecologiate.R;
+import com.app.ecologiate.models.Campania;
 import com.app.ecologiate.models.CampaniaAdapter;
 import com.app.ecologiate.models.Impacto;
+import com.app.ecologiate.models.Material;
 import com.app.ecologiate.models.Nivel;
 import com.app.ecologiate.models.Tip;
 import com.app.ecologiate.models.Usuario;
+import com.app.ecologiate.services.MaterialsManager;
 import com.app.ecologiate.services.UserManager;
 import com.app.ecologiate.utils.NumberUtils;
 import com.squareup.picasso.Picasso;
 
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
@@ -81,9 +86,18 @@ public class InicioFragment extends AbstractEcologiateFragment {
         mRecyclerViewCampania.setLayoutManager(mLayoutManager);
 
         //creo mis campanias
-        List<Tip> myDataset = new ArrayList<>();
-        myDataset.add(new Tip("Garrahan", "Juntemos las tapitas para ayudar a los chicos. Meta: 100 tapitas", R.raw.tapitas));
-        myDataset.add(new Tip("Electrónicos", "Desechá tus electrónicos viejos para que no hagan cortocircuito y se corte la looz. Meta: 100 electrónicos", R.raw.fort));
+        List<Campania> myDataset = new ArrayList<>();
+        //todo esto es un mock
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+        Date fechaInicio = new Date();
+        Date fechaFin = new Date();
+        try {
+            fechaInicio = sdf.parse("2017-09-20T00:00:00.000Z");
+            fechaFin = sdf.parse("2018-11-11T00:00:00.000Z");
+        }catch (Exception e){}
+        myDataset.add(new Campania(1L,"Garrahan","Juntemos tapitas para ayudar a los chicos",200,fechaInicio,fechaFin, null,
+                new Material(5L,"Tapitas",0d,0d,0d,0d,0d,null), null));
+
 
         // specify an adapter (see also next example)
         mAdapter = new CampaniaAdapter(myDataset);

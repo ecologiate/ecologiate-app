@@ -16,12 +16,13 @@ import android.widget.TextView;
 import com.app.ecologiate.R;
 import com.app.ecologiate.fragments.ResultadoFragment;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 
 public class CampaniaAdapter extends RecyclerView.Adapter<CampaniaAdapter.ViewHolder>{
 
-    private List<Tip> mDataset;
+    private List<Campania> mDataset;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
@@ -29,6 +30,10 @@ public class CampaniaAdapter extends RecyclerView.Adapter<CampaniaAdapter.ViewHo
         public TextView txTitulo;
         public TextView txDescripcion;
         public Context holderContext;
+        public Campania campania;
+
+        SimpleDateFormat formatter =  new SimpleDateFormat("dd/MM/yy");
+
         public ViewHolder(View v) {
             super(v);
             ivFoto = (ImageView) v.findViewById(R.id.campaniaFoto);
@@ -38,24 +43,10 @@ public class CampaniaAdapter extends RecyclerView.Adapter<CampaniaAdapter.ViewHo
                 @Override
                 public void onClick(View v) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(holderContext);
-                    LayoutInflater inflater = LayoutInflater.from(holderContext);
-                    View view1 = inflater.inflate(R.layout.dialogo_salirgrupo,null);
-                    builder.setView(view1);
-                    builder.setTitle("Seguro que deseas abandonar el grupo ");
-                    builder.setPositiveButton("OK",
-                            new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    //salir
-                                }
-                            })
-                            .setNegativeButton("CANCELAR",
-                                    new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialog, int which) {
-                                            //no hacer nada supongo
-                                        }
-                                    });
+                    builder.setTitle("Campaña: "+campania.getTitulo());
+                    String fechaStr = formatter.format(campania.getFechaFin());
+                    builder.setMessage(campania.getDescripcion()+". Tienes tiempo hasta el "+fechaStr
+                            +" para juntar "+campania.getCantMeta()+" "+campania.getMaterial().getDescripcion().toLowerCase());
                     Dialog dialog = builder.create();
                     dialog.show();
                 }
@@ -65,7 +56,7 @@ public class CampaniaAdapter extends RecyclerView.Adapter<CampaniaAdapter.ViewHo
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public CampaniaAdapter(List<Tip> myDataset) {
+    public CampaniaAdapter(List<Campania> myDataset) {
         this.mDataset = myDataset;
     }
 
@@ -84,11 +75,10 @@ public class CampaniaAdapter extends RecyclerView.Adapter<CampaniaAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        Tip model = mDataset.get(position);
-        holder.ivFoto.setImageResource(model.getFoto());
+        Campania model = mDataset.get(position);
         holder.txTitulo.setText(model.getTitulo());
         holder.txDescripcion.setText(model.getDescripcion());
-
+        holder.campania = model;
     }
 
 

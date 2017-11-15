@@ -23,7 +23,7 @@ public class Producto {
                     jsonObject.has("id") ? jsonObject.getLong("id") : null ,
                     jsonObject.has("nombre_producto") ? jsonObject.getString("nombre_producto") : null,
                     jsonObject.has("cant_material") ? jsonObject.getInt("cant_material") : null,
-                    jsonObject.has("codigo_barra") ? jsonObject.getLong("codigo_barra") : null,
+                    (jsonObject.has("codigo_barra") && !jsonObject.isNull("codigo_barra")) ? jsonObject.getLong("codigo_barra") : null,
                     jsonObject.has("estado") ? jsonObject.getString("estado") : null,
                     jsonObject.has("categoria") ? Categoria.getFromJson(jsonObject.getJSONObject("categoria")) : null,
                     jsonObject.has("material") ? Material.getFromJson(jsonObject.getJSONObject("material")) : null,

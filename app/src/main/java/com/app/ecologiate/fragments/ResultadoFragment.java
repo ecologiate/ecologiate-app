@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,6 +20,7 @@ import com.app.ecologiate.models.Producto;
 import com.app.ecologiate.services.ApiCallService;
 import com.app.ecologiate.services.UserManager;
 import com.app.ecologiate.utils.NumberUtils;
+import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.Result;
 import com.google.android.gms.common.api.ResultCallback;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -44,6 +46,10 @@ public class ResultadoFragment extends AbstractEcologiateFragment {
 
     @BindView(R.id.textViewResultado)
     TextView tvResultado;
+    @BindView(R.id.impactoLayout)
+    LinearLayout impactoLayout;
+    @BindView(R.id.impactoView)
+    ImpactoView impactoView;
 
     ProgressDialog prgDialog;
 
@@ -70,19 +76,23 @@ public class ResultadoFragment extends AbstractEcologiateFragment {
         View view = inflater.inflate(R.layout.fragment_resultado, container, false);
         ButterKnife.bind(this, view);
 
-        double arboles = producto.getMaterial()!=null ? (producto.getCantMaterial() * producto.getMaterial().getEquArboles()) : 0d;
-        double agua = producto.getMaterial()!=null ? (producto.getCantMaterial() * producto.getMaterial().getEquAgua()) : 0d;
-        double energia = producto.getMaterial()!=null ? (producto.getCantMaterial() * producto.getMaterial().getEquEnergia()) : 0d;
-        double emisiones = producto.getMaterial()!=null ? (producto.getCantMaterial() * producto.getMaterial().getEquEmisiones()) : 0d;
+        if(producto.getCategoria() != null && producto.getCategoria().getDescripcion().toLowerCase().contains("no ")){
+            tvResultado.setText("Lamentáblemente el producto no es reciclable");
+        }else{
+            impactoLayout.setVisibility(View.VISIBLE);
 
-        String mensajeResultado = "<b>Nombre del producto</b><br/> "+ producto.getNombreProducto() + "<br/><br/>"+
-                "<b>Categoría</b><br/> "+ (producto.getCategoria()!=null ? producto.getCategoria().getDescripcion() : "?") + "<br/><br/>"+
-                "<b>Material</b><br/> "+ (producto.getMaterial()!=null ? producto.getMaterial().getDescripcion() : "?") + "<br/><br/>"+
-                "<b>Arboles por salvar: </b>"+ NumberUtils.format(arboles)+ "<br/><br/>"+
-                "<b>Agua por ahorrar: </b>"+ NumberUtils.format(agua)+ "<br/><br/>"+
-                "<b>Energia por ahorrar: </b>"+ NumberUtils.format(energia)+ "<br/><br/>"+
-                "<b>Emisiones por ahorrar: </b>"+ NumberUtils.format(emisiones);
-        tvResultado.setText(Html.fromHtml(mensajeResultado));
+            double arboles = producto.getMaterial()!=null ? (producto.getCantMaterial() * producto.getMaterial().getEquArboles()) : 0d;
+            double agua = producto.getMaterial()!=null ? (producto.getCantMaterial() * producto.getMaterial().getEquAgua()) : 0d;
+            double energia = producto.getMaterial()!=null ? (producto.getCantMaterial() * producto.getMaterial().getEquEnergia()) : 0d;
+            double emisiones = producto.getMaterial()!=null ? (producto.getCantMaterial() * producto.getMaterial().getEquEmisiones()) : 0d;
+            String mensajeResultado = "<b>"+producto.getNombreProducto() + "<b/>";
+            tvResultado.setText(Html.fromHtml(mensajeResultado));
+
+            impactoView.setImpactoAgua(NumberUtils.format(agua)+" litros");
+            impactoView.setImpactoEnergia(NumberUtils.format(energia)+" kw");
+            impactoView.setImpactoArboles(NumberUtils.format(arboles)+" árboles");
+            impactoView.setImpactoEmisiones(NumberUtils.format(emisiones)+" kg");
+        }
 
         return view;
     }

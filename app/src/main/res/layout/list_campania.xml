@@ -22,7 +22,8 @@
                 android:layout_height="50dp"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentTop="true"
-                android:layout_marginRight="16dp" />
+                android:layout_marginRight="16dp"
+                android:src="@raw/icon_campania"/>
 
             <TextView
                 android:id="@+id/campaniaTitulo"
