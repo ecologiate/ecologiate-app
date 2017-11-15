@@ -75,33 +75,6 @@ public class PuntoRecInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
             }
         }
         materialesUI.setText(txtMateriales);
-
-        Button btnMasInfo = (Button) view.findViewById(R.id.linkMasInfo);
-        btnMasInfo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                View viewDialog = inflater.inflate(R.layout.dialogo_opiniones,null);
-                RecyclerView recyclerView = (RecyclerView) viewDialog.findViewById(R.id.recyclerViewOpiniones);
-                builder.setView(viewDialog);
-                builder.setTitle("Opiniones de punto de recolección");
-                builder.setPositiveButton("Agregar", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        //TODO agrego mi review
-
-                    }
-                });
-                builder.setNegativeButton("Cerrar", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        //nada
-                    }
-                });
-                builder.create().show();
-            }
-        });
-
     }
 
 }

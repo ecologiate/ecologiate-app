@@ -66,6 +66,7 @@
         android:text="Materiales: papel y cartón"/>
 
     <Button
+        android:visibility="gone"
         android:id="@+id/linkMasInfo"
         android:layout_marginTop="10dp"
         android:layout_width="wrap_content"

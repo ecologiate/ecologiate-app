@@ -20,6 +20,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -68,6 +69,7 @@ public class MapaFragment extends AbstractEcologiateFragment implements
         OnMapReadyCallback,
         LocationListener,
         GoogleMap.OnMarkerClickListener,
+        GoogleMap.OnInfoWindowClickListener,
         GoogleMap.OnInfoWindowCloseListener{
 
 
@@ -211,6 +213,7 @@ public class MapaFragment extends AbstractEcologiateFragment implements
 
         //eventos sobre el marker
         gMap.setOnMarkerClickListener(this);
+        gMap.setOnInfoWindowClickListener(this);
         gMap.setOnInfoWindowCloseListener(this);
 
         if(!zoomToMyPosition(INITIAL_ZOOM)){
@@ -533,6 +536,34 @@ public class MapaFragment extends AbstractEcologiateFragment implements
         return false;
     }
 
+    @Override
+    public void onInfoWindowClick(Marker marker) {
+        //lo comento para la presentacion porque no está terminado
+        /*
+        PuntoRecoleccion pdr = mapaMarkerPdr.get(marker.getTitle());
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        LayoutInflater inflater = getActivity().getLayoutInflater();
+        View viewDialog = inflater.inflate(R.layout.dialogo_opiniones,null);
+        RecyclerView recyclerView = (RecyclerView) viewDialog.findViewById(R.id.recyclerViewOpiniones);
+        builder.setView(viewDialog);
+        builder.setTitle("Opiniones de punto de recolección");
+        builder.setPositiveButton("Agregar", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                //TODO agrego mi review
+
+            }
+        });
+        builder.setNegativeButton("Cerrar", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                //nada
+            }
+        });
+        builder.create().show();
+        */
+    }
 
     @Override
     public void onInfoWindowClose(Marker marker) {
