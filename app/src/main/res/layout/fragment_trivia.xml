@@ -1,20 +1,18 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.app.ecologiate.fragments.TriviaFragment">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
 
     <TextView
         android:id="@+id/tvTrivia"
         android:layout_width="wrap_content"
-        android:layout_height="50dp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
         android:gravity="center"
         android:text="¿SABÉS SEPARAR TUS RESIDUOS?" />
 
@@ -22,8 +20,7 @@
             android:id="@+id/ivTrivia"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:layout_centerHorizontal="true"
-            android:layout_below="@+id/tvTrivia"
+            android:layout_margin="20dp"
             app:srcCompat="@raw/reciclador"
             />
 
@@ -31,20 +28,20 @@
             android:id="@+id/tvTextoTrivia"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
             android:gravity="center"
-            android:layout_below="@+id/ivTrivia"
             android:text="Poné a prueba tus conocimientos de separación en origen en 10 pasos. Averiguá si sos un reciclador principiante, avanzado o experto con un simple testeo. Seguramente todos los días te preguntás dónde tirar algo, hoy es el día en el que podés encontrar las respuestas." />
 
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"/>
         <Button
             android:id="@+id/btnEmpezarTrivia"
             style="@style/ecoButtonStyle"
+            android:layout_margin="20dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="42dp"
-            android:text="Empezar"
-            android:layout_below="@+id/tvTextoTrivia"
-            android:layout_centerHorizontal="true" />
+            android:text="Empezar" />
 
-    </RelativeLayout>
-</FrameLayout>
+</LinearLayout>
