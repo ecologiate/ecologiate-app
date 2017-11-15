@@ -1,7 +1,6 @@
 package com.app.ecologiate.fragments;
 
 import android.Manifest;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -14,10 +13,10 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.SystemClock;
 import android.provider.Settings;
 import android.support.annotation.Nullable;
-import android.support.design.widget.BaseTransientBottomBar;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
@@ -25,11 +24,14 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.BounceInterpolator;
+import android.view.animation.Interpolator;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.app.ecologiate.R;
+import com.app.ecologiate.adapters.PuntoRecInfoWindowAdapter;
 import com.app.ecologiate.models.Material;
 import com.app.ecologiate.models.Producto;
 import com.app.ecologiate.models.PuntoRecoleccion;
@@ -41,8 +43,8 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
@@ -51,6 +53,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
@@ -61,7 +64,11 @@ import butterknife.ButterKnife;
 import cz.msebera.android.httpclient.Header;
 
 
-public class MapaFragment extends AbstractEcologiateFragment implements OnMapReadyCallback, LocationListener{
+public class MapaFragment extends AbstractEcologiateFragment implements
+        OnMapReadyCallback,
+        LocationListener,
+        GoogleMap.OnMarkerClickListener,
+        GoogleMap.OnInfoWindowCloseListener{
 
 
     private ApiCallService apiCallService = new ApiCallService();
@@ -72,9 +79,11 @@ public class MapaFragment extends AbstractEcologiateFragment implements OnMapRea
     private List<Material> materiales;
 
     private OnFragmentInteractionListener mListener;
+    private HashMap<String, PuntoRecoleccion> mapaMarkerPdr;
 
     private static int REQUEST_GEO = 567;
     private static float INITIAL_ZOOM = 12.0f;
+    private static boolean BOUNCE_ANIMATION_ENABLED = true;
 
     private Context context;
     private GoogleMap gMap;
@@ -200,6 +209,10 @@ public class MapaFragment extends AbstractEcologiateFragment implements OnMapRea
         gMap.getUiSettings().setMapToolbarEnabled(false);
         gMap.setPadding(0, 35, 10, 0); //para cambiar la posición de los controles UI del mapa
 
+        //eventos sobre el marker
+        gMap.setOnMarkerClickListener(this);
+        gMap.setOnInfoWindowCloseListener(this);
+
         if(!zoomToMyPosition(INITIAL_ZOOM)){
             //si no obtuve la última posición, me subscribo para cuando la tenga
             subscribeToLocationUpdates();
@@ -264,6 +277,7 @@ public class MapaFragment extends AbstractEcologiateFragment implements OnMapRea
     }
 
     private void getPuntosDeRecoleccion(){
+        mapaMarkerPdr = new HashMap<>();
 
         JsonHttpResponseHandler responseHandler = new JsonHttpResponseHandler() {
             @Override
@@ -276,6 +290,8 @@ public class MapaFragment extends AbstractEcologiateFragment implements OnMapRea
                             for(int i = 0; i < puntosArray.length(); i++){
                                 agregarMarcador(PuntoRecoleccion.getFromJson(puntosArray.getJSONObject(i)));
                             }
+                            //adapter de la ventana de los marcadores
+                            gMap.setInfoWindowAdapter(new PuntoRecInfoWindowAdapter(getContext(), mapaMarkerPdr));
                         }else{
                             Toast.makeText(getContext(), "No se encontró ningún punto de recolección", Toast.LENGTH_LONG).show();
                         }
@@ -337,16 +353,15 @@ public class MapaFragment extends AbstractEcologiateFragment implements OnMapRea
 
 
     private void agregarMarcador(PuntoRecoleccion pdr){
+        //IMPORTANTE: la manera en que vinculo el marker con el pdr es poniendole como title el id
         LatLng pdrLatLng = new LatLng(pdr.getLatitud(), pdr.getLongitud());
-        String title = pdr.getDescripcion();
-        String direccion = pdr.getDireccion();
         MarkerOptions markerOptions = new MarkerOptions()
                 .position(pdrLatLng)
-                .title(title)
-                .snippet(direccion)
+                .title(pdr.getId().toString())
                 //.icon(BitmapDescriptorFactory.fromResource(pdr.getImageResourceId()));
                 .icon(ImageUtils.getMarkerIconFromPdr(getContext(), pdr));
         gMap.addMarker(markerOptions);
+        mapaMarkerPdr.put(pdr.getId().toString(), pdr);
     }
 
     @Override
@@ -483,6 +498,60 @@ public class MapaFragment extends AbstractEcologiateFragment implements OnMapRea
         gMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLang, 12.0f));
     }
 
+
+
+    //Animación piola si quiero hacer rebotar un marker recién creado
+    private void makeMarkerBounce(final Marker marker){
+        // This causes the marker at Perth to bounce into position when it is clicked.
+        final Handler handler = new Handler();
+        final long start = SystemClock.uptimeMillis();
+        final long duration = 1500;
+
+        final Interpolator interpolator = new BounceInterpolator();
+
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                long elapsed = SystemClock.uptimeMillis() - start;
+                float t = Math.max(
+                        1 - interpolator.getInterpolation((float) elapsed / duration), 0);
+                marker.setAnchor(0.5f, 1.0f + 2 * t);
+
+                if (t > 0.0) {
+                    // Post again 16ms later.
+                    handler.postDelayed(this, 16);
+                }
+            }
+        });
+    }
+
+    @Override
+    public boolean onMarkerClick(final Marker marker) {
+        // We return false to indicate that we have not consumed the event and that we wish
+        // for the default behavior to occur (which is for the camera to move such that the
+        // marker is centered and for the marker's info window to open, if it has one).
+        return false;
+    }
+
+
+    @Override
+    public void onInfoWindowClose(Marker marker) {
+
+    }
+
+
+    @Override
+    public String getTitle() {
+        return getResources().getString(R.string.mapa_fragment_title);
+    }
+
+    @Override
+    public String getSubTitle() {
+        return null;
+    }
+
+
+
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);
@@ -506,18 +575,6 @@ public class MapaFragment extends AbstractEcologiateFragment implements OnMapRea
         super.onDetach();
         mListener = null;
     }
-
-
-    @Override
-    public String getTitle() {
-        return getResources().getString(R.string.mapa_fragment_title);
-    }
-
-    @Override
-    public String getSubTitle() {
-        return null;
-    }
-
 
 
     @Override

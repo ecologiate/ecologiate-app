@@ -133,6 +133,18 @@ public class LoginActivity extends AppCompatActivity implements
             }
         }else{
             Toast.makeText(LoginActivity.this, "No hay conexión a Internet", Toast.LENGTH_LONG).show();
+            Thread thread = new Thread(){
+                @Override
+                public void run() {
+                    try {
+                        Thread.sleep(3500); // As I am using LENGTH_LONG in Toast
+                        finish();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            };
+            thread.start();
         }
     }
 
