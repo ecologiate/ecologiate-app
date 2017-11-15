@@ -97,6 +97,9 @@ public class WelcomeMenuActivity extends AppCompatActivity
     }
 
     private void inicializarDatos(){
+        //trae todos los objetivos existentes
+        //por ende también todos los materiales porque hay objetivos para todos los materiales
+        //y los completa en sus respectivos managers
         ObjetivosManager.init(this, null);
     }
 

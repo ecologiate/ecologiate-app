@@ -105,9 +105,9 @@ public class AltaProductoFragment extends AbstractEcologiateFragment {
         Long userId = UserManager.getUser().getId();
         Long materialId = null;
         Long categoriaId = null;
-        for(int i = 0; i < MaterialsManager.materiales.size(); i++){
-            if(MaterialsManager.materiales.get(MaterialsManager.materiales.keyAt(i)).equals(materialSelected)){
-                materialId = MaterialsManager.materiales.keyAt(i);
+        for(int i = 0; i < MaterialsManager.materialesMap.size(); i++){
+            if(MaterialsManager.materialesMap.get(MaterialsManager.materialesMap.keyAt(i)).equals(materialSelected)){
+                materialId = MaterialsManager.materialesMap.keyAt(i);
             }
         }
         for(int i = 0; i < CategoryManager.categorias.size(); i++){

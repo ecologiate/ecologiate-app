@@ -95,6 +95,7 @@ public class ObjetivosManager {
             }
             objetivosMap.get(materialId).add(ob);
         }
+        //completo la lista de materiales existentes
         MaterialsManager.init(new ArrayList<>(materiales));
 
         for(int i = 0; i < objetivosMap.size(); i++){

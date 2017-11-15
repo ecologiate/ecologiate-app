@@ -1,5 +1,6 @@
 package com.app.ecologiate.fragments;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
@@ -14,6 +15,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.app.ecologiate.R;
+import com.app.ecologiate.models.Material;
 import com.app.ecologiate.services.ApiCallService;
 import com.app.ecologiate.services.UserManager;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -38,10 +40,13 @@ public class AltaPuntoRecoleccionFragment extends AbstractEcologiateFragment {
     private String pais;
     private double latitud;
     private double longitud;
+    private SeleccionMateriales seleccionMateriales;
 
     private OnFragmentInteractionListener mListener;
 
     private View myView;
+
+    private ProgressDialog mProgressDialog;
 
 
     public AltaPuntoRecoleccionFragment() {}
@@ -81,6 +86,9 @@ public class AltaPuntoRecoleccionFragment extends AbstractEcologiateFragment {
             ((EditText) myView.findViewById(R.id.etDireccion)).setText(direccionSugerida);
         }
 
+        seleccionMateriales = (SeleccionMateriales) myView.findViewById(R.id.seleccionMateriales);
+
+
         return myView;
     }
 
@@ -89,17 +97,9 @@ public class AltaPuntoRecoleccionFragment extends AbstractEcologiateFragment {
         String direccion = ((EditText) myView.findViewById(R.id.etDireccion)).getText().toString();
         long usuarioId = UserManager.getUser().getId();
         List<Long> materialIds = new ArrayList<>();
-        CheckBox checkPapelYCarton = (CheckBox) myView.findViewById(R.id.checkPapel);
-        if(checkPapelYCarton.isChecked()){
-            materialIds.add(1L);
-        }
-        CheckBox checkVidrio = (CheckBox) myView.findViewById(R.id.checkVidrio);
-        if(checkVidrio.isChecked()){
-            materialIds.add(2L);
-        }
-        CheckBox checkPlastico = (CheckBox) myView.findViewById(R.id.checkPlastico);
-        if(checkPlastico.isChecked()){
-            materialIds.add(3L);
+        List<Material> selectedMaterials = new ArrayList<>(seleccionMateriales.getSelectedMaterials());
+        for(int i = 0; i< selectedMaterials.size(); i++){
+            materialIds.add(selectedMaterials.get(i).getId());
         }
 
         if(!(latitud != 0 && longitud!= 0 && usuarioId != 0 && descripcion.length()>0 &&
@@ -129,17 +129,22 @@ public class AltaPuntoRecoleccionFragment extends AbstractEcologiateFragment {
             JsonHttpResponseHandler responseHandler = new JsonHttpResponseHandler() {
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                    hideProgressDialog();
                     if (response != null) {
-                        Toast.makeText(getContext(), "Punto creado", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getContext(), "Punto creado", Toast.LENGTH_SHORT).show();
                         //vuelvo al mapa
-                        getActivity().onBackPressed();
+                        MapaFragment fragment = new MapaFragment();
+                        getActivity().getSupportFragmentManager().beginTransaction()
+                                .replace(R.id.contentFragment, fragment)
+                                .commit();
                     } else {
-                        Toast.makeText(getContext(), "Punto no creado", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getContext(), "Punto no creado", Toast.LENGTH_SHORT).show();
                     }
                 }
 
                 @Override
                 public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                    hideProgressDialog();
                     if (statusCode == 404) {
                         Toast.makeText(getContext(), "URL no encontrada", Toast.LENGTH_LONG).show();
                     } else if (statusCode == 500) {
@@ -151,10 +156,34 @@ public class AltaPuntoRecoleccionFragment extends AbstractEcologiateFragment {
                 }
             };
 
+            showProgressDialog();
             apiCallService.postPuntoDeRecoleccion(getContext(), bodyEntity, responseHandler);
         }
     }
 
+    private void showProgressDialog() {
+        if (mProgressDialog == null) {
+            mProgressDialog = new ProgressDialog(getContext());
+            mProgressDialog.setMessage("Guardando");
+            mProgressDialog.setIndeterminate(true);
+        }
+        if(!mProgressDialog.isShowing())
+            mProgressDialog.show();
+    }
+
+    private void hideProgressDialog() {
+        if (mProgressDialog != null && mProgressDialog.isShowing()) {
+            mProgressDialog.hide();
+        }
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (mProgressDialog != null) {
+            mProgressDialog.dismiss();
+        }
+    }
 
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {

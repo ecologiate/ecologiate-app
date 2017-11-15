@@ -14,44 +14,54 @@ import java.util.List;
 
 public class MaterialsManager {
 
-    public static SimpleArrayMap<Long, String> materiales = new SimpleArrayMap<>();
+    private static List<Material> materiales;
+
+    public static SimpleArrayMap<Long, String> materialesMap = new SimpleArrayMap<>();
     static {
         //inicializo con hardcodeo, luego se completa desde el backend
-        materiales.put(1L, "Papel y cartón");
-        materiales.put(2L, "Vidrio");
-        materiales.put(3L, "Plástico");
-        materiales.put(4L, "Tetra-brik");
-        materiales.put(5L, "Tapitas");
-        materiales.put(6L, "Pilas");
-        materiales.put(7L, "Neumáticos");
-        materiales.put(8L, "Electrónicos");
-        materiales.put(9L, "Bronce");
-        materiales.put(10L, "Textiles");
-        materiales.put(11L, "Aceite");
-        materiales.put(12L, "Telgopor");
-        materiales.put(13L, "Metales");
-        materiales.put(14L, "Orgánicos");
+        materialesMap.put(1L, "Papel y cartón");
+        materialesMap.put(2L, "Vidrio");
+        materialesMap.put(3L, "Plástico");
+        materialesMap.put(4L, "Tetra-brik");
+        materialesMap.put(5L, "Tapitas");
+        materialesMap.put(6L, "Pilas");
+        materialesMap.put(7L, "Neumáticos");
+        materialesMap.put(8L, "Electrónicos");
+        materialesMap.put(9L, "Bronce");
+        materialesMap.put(10L, "Textiles");
+        materialesMap.put(11L, "Aceite");
+        materialesMap.put(12L, "Telgopor");
+        materialesMap.put(13L, "Metales");
+        materialesMap.put(14L, "Orgánicos");
     }
 
     public static List<String> array = new ArrayList<>();
     static{
-        for(int i = 0; i < materiales.size(); i++){
-            array.add(materiales.get(materiales.keyAt(i)));
+        for(int i = 0; i < materialesMap.size(); i++){
+            array.add(materialesMap.get(materialesMap.keyAt(i)));
         }
     }
 
     public static void init(List<Material> listMateriales){
+        materiales = listMateriales;
+
         //limpio
-        materiales = new SimpleArrayMap<>();
+        materialesMap = new SimpleArrayMap<>();
         array = new ArrayList<>();
 
         //completo
         for(int i = 0; i<listMateriales.size(); i++){
             Material material = listMateriales.get(i);
-            materiales.put(material.getId(), material.getDescripcion());
+            materialesMap.put(material.getId(), material.getDescripcion());
         }
-        for(int i = 0; i < materiales.size(); i++){
-            array.add(materiales.get(materiales.keyAt(i)));
+        for(int i = 0; i < materialesMap.size(); i++){
+            array.add(materialesMap.get(materialesMap.keyAt(i)));
         }
     }
+
+    public static List<Material> getMateriales() {
+        return materiales;
+    }
+
+
 }

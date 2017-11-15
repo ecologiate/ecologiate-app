@@ -43,7 +43,6 @@ public class Categoria {
     public Categoria(Long id, String descripcion) {
         this.id = id;
         this.descripcion = descripcion;
-        this.materiales = materiales;
     }
 
     public Long getId() {

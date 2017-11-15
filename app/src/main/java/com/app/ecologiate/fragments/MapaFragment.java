@@ -1,6 +1,7 @@
 package com.app.ecologiate.fragments;
 
 import android.Manifest;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -15,6 +16,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.annotation.Nullable;
+import android.support.design.widget.BaseTransientBottomBar;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
@@ -22,10 +25,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.app.ecologiate.R;
+import com.app.ecologiate.models.Material;
 import com.app.ecologiate.models.Producto;
 import com.app.ecologiate.models.PuntoRecoleccion;
 import com.app.ecologiate.services.ApiCallService;
@@ -46,25 +51,30 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cz.msebera.android.httpclient.Header;
 
 
-public class MapaFragment extends AbstractEcologiateFragment implements OnMapReadyCallback{
+public class MapaFragment extends AbstractEcologiateFragment implements OnMapReadyCallback, LocationListener{
 
 
     private ApiCallService apiCallService = new ApiCallService();
 
-    //si vengo a buscar puntos para un producto
+    //si vengo con un producto
     private Producto producto;
+    //materiales a filtrar
+    private List<Material> materiales;
 
     private OnFragmentInteractionListener mListener;
 
     private static int REQUEST_GEO = 567;
+    private static float INITIAL_ZOOM = 12.0f;
 
     private Context context;
     private GoogleMap gMap;
@@ -72,7 +82,6 @@ public class MapaFragment extends AbstractEcologiateFragment implements OnMapRea
     private Boolean modoAlta = false;
     private Geocoder geocoder;
     private Address address;
-    private Location currentLocation;
     private LocationManager locationManager;
 
 
@@ -80,6 +89,8 @@ public class MapaFragment extends AbstractEcologiateFragment implements OnMapRea
     LinearLayout editMessage;
     @BindView(R.id.md_floating_action_menu)
     FloatingActionMenu fam;
+    @BindView(R.id.barraFiltros)
+    LinearLayout materialesBar;
 
 
     public MapaFragment() {}
@@ -87,6 +98,14 @@ public class MapaFragment extends AbstractEcologiateFragment implements OnMapRea
     public static MapaFragment newInstance(Producto producto) {
         MapaFragment fragment = new MapaFragment();
         fragment.producto = producto;
+        fragment.materiales = new ArrayList<>();
+        fragment.materiales.add(producto.getMaterial());
+        return fragment;
+    }
+
+    public static MapaFragment newInstance(List<Material> materiales) {
+        MapaFragment fragment = new MapaFragment();
+        fragment.materiales = materiales;
         return fragment;
     }
 
@@ -116,7 +135,7 @@ public class MapaFragment extends AbstractEcologiateFragment implements OnMapRea
         fabBuscar.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                //TODO
+                abrirDialogoMateriales();
             }
         });
         FloatingActionButton fabAltaPunto = (FloatingActionButton) view.findViewById(R.id.agregarPuntoRecoleccion);
@@ -155,6 +174,8 @@ public class MapaFragment extends AbstractEcologiateFragment implements OnMapRea
             alertDialog.show();
         }
 
+        updateMaterialesBar();
+
         return view;
     }
 
@@ -179,18 +200,9 @@ public class MapaFragment extends AbstractEcologiateFragment implements OnMapRea
         gMap.getUiSettings().setMapToolbarEnabled(false);
         gMap.setPadding(0, 35, 10, 0); //para cambiar la posición de los controles UI del mapa
 
-        if (ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION)
-                == PackageManager.PERMISSION_GRANTED) {
-            gMap.setMyLocationEnabled(true);
-            locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
-            //Criteria criteria = new Criteria();
-            //Location location = locationManager.getLastKnownLocation(locationManager.getBestProvider(criteria, false));
-            //recibo actualización de la posición cada 1 minuto o cada 50 metros!!!
-            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 60000, 50, buildLocationListener());
-            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 60000, 50, buildLocationListener());
-            locationManager.requestLocationUpdates(LocationManager.PASSIVE_PROVIDER, 60000, 50, buildLocationListener());
-        } else {
-            requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_GEO);
+        if(!zoomToMyPosition(INITIAL_ZOOM)){
+            //si no obtuve la última posición, me subscribo para cuando la tenga
+            subscribeToLocationUpdates();
         }
 
         geocoder = new Geocoder(getContext(), Locale.getDefault());
@@ -229,7 +241,7 @@ public class MapaFragment extends AbstractEcologiateFragment implements OnMapRea
                             "CP: "+address.getPostalCode() + "\n" +
                             "Sub Admin Area: "+address.getSubAdminArea() + "\n" +
                             "Sub Locality: "+address.getSubLocality();
-                    Toast.makeText(getContext(), infoMarker, Toast.LENGTH_LONG).show();
+                    Log.d("POSITION", infoMarker);
                     gMap.addMarker(new MarkerOptions().position(latLng).title("Nuevo").snippet(address.getAddressLine(0)));
 
                     Fragment fragment = AltaPuntoRecoleccionFragment.newInstance(latLng.latitude, latLng.longitude,
@@ -314,9 +326,11 @@ public class MapaFragment extends AbstractEcologiateFragment implements OnMapRea
         List<String> materialIds = null;
         String pais = null;
         String area = null;
-        if(producto != null && producto.getMaterial() != null){
+        if(materiales != null && !materiales.isEmpty()){
             materialIds = new ArrayList<>();
-            materialIds.add(producto.getMaterial().getId().toString());
+            for(int i = 0; i<materiales.size(); i++){
+                materialIds.add(materiales.get(i).getId().toString());
+            }
         }
         apiCallService.getPuntosDeRecoleccion(materialIds, pais, area, responseHandler);
     }
@@ -342,7 +356,7 @@ public class MapaFragment extends AbstractEcologiateFragment implements OnMapRea
                 if (permissions[i].equals(Manifest.permission.ACCESS_FINE_LOCATION)
                         && grantResults[i] == PackageManager.PERMISSION_GRANTED) {
 
-                    onMapReady(gMap);
+                    zoomToMyPosition(INITIAL_ZOOM);
                 }
             }
         }
@@ -353,43 +367,120 @@ public class MapaFragment extends AbstractEcologiateFragment implements OnMapRea
         if(modoAlta) {
             editMessage.setVisibility(View.VISIBLE);
             //hacer zoom donde estoy parado
-            try {
-                Location myLocation = gMap.getMyLocation();
+            if (ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION)
+                    == PackageManager.PERMISSION_GRANTED) {
+                if(locationManager == null) {
+                    locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
+                }
+                Location l = locationManager.getLastKnownLocation(locationManager.getBestProvider(new Criteria(), true));
+                if(l != null) {
+                    gMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(l.getLatitude(), l.getLongitude()), 12.0f));
+                }else {
+                    //recibo actualización de la posición cada 5 minutos y cada 1 km!!!
+                    locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 300000, 1000, this);
+                    locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 300000, 1000, this);
+                    locationManager.requestLocationUpdates(LocationManager.PASSIVE_PROVIDER, 300000, 1000, this);
+                }
+            } else {
+                requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_GEO);
+            }
+
+                Location myLocation = locationManager.getLastKnownLocation(locationManager.getBestProvider(new Criteria(), true));
                 LatLng myLocationLatLng = new LatLng(myLocation.getLatitude(), myLocation.getLongitude());
                 gMap.animateCamera(CameraUpdateFactory.newLatLngZoom(myLocationLatLng, (gMap.getMaxZoomLevel() - 2)));
-            }catch (Exception e){
-                Toast.makeText(getContext(), "No se pudo obtener ubicación", Toast.LENGTH_LONG);
-            }
+
         }else {
             editMessage.setVisibility(View.GONE);
         }
         fam.close(false);
     }
 
-
-    private LocationListener buildLocationListener(){
-        return new LocationListener() {
-            @Override
-            public void onLocationChanged(Location location) {
-                LatLng latLang = new LatLng(location.getLatitude(), location.getLongitude());
-                gMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLang, 12.0f));
+    private boolean zoomToMyPosition(float zoomLevel){
+        boolean zoomed = false;
+        if (ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION)
+                == PackageManager.PERMISSION_GRANTED) {
+            gMap.setMyLocationEnabled(true);
+            if(locationManager == null) {
+                locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
             }
-
-            @Override
-            public void onStatusChanged(String provider, int status, Bundle extras) {
-
+            Location l = locationManager.getLastKnownLocation(locationManager.getBestProvider(new Criteria(), true));
+            if(l != null) {
+                gMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(l.getLatitude(), l.getLongitude()), zoomLevel));
+                zoomed = true;
             }
+        } else {
+            requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_GEO);
+        }
+        return zoomed;
+    }
 
-            @Override
-            public void onProviderEnabled(String provider) {
-
+    private void subscribeToLocationUpdates(){
+        //recibo actualización de la posición cada 5 minutos y cada 1 km!!!
+        if (ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION)
+                == PackageManager.PERMISSION_GRANTED) {
+            if(locationManager == null) {
+                locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
             }
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 300000, 1000, this);
+            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 300000, 1000, this);
+            locationManager.requestLocationUpdates(LocationManager.PASSIVE_PROVIDER, 300000, 1000, this);
+        } else {
+            requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_GEO);
+        }
+    }
 
+    private void abrirDialogoMateriales(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        LayoutInflater inflater = getActivity().getLayoutInflater();
+        View viewDialog = inflater.inflate(R.layout.dialogo_materiales,null);
+        final SeleccionMateriales seleccionMateriales = (SeleccionMateriales) viewDialog.findViewById(R.id.seleccionMateriales);
+        if(materiales != null && !materiales.isEmpty()){
+            Set<Material> selectedMaterial = new HashSet<>(materiales);
+            seleccionMateriales.setSelectedMaterials(selectedMaterial);
+        }
+        builder.setView(viewDialog);
+        builder.setTitle("Seleccione materiales a filtrar");
+        builder.setPositiveButton("Filtrar", new DialogInterface.OnClickListener() {
             @Override
-            public void onProviderDisabled(String provider) {
-
+            public void onClick(DialogInterface dialog, int which) {
+                //vuelvo a crear el fragment porque tengo sueño
+                Set<Material> selected = seleccionMateriales.getSelectedMaterials();
+                MapaFragment fragment = MapaFragment.newInstance(new ArrayList<>(selected));
+                getActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.contentFragment, fragment)
+                        .commit();
             }
-        };
+        });
+        builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                //nada
+            }
+        });
+        builder.create().show();
+    }
+
+    private void updateMaterialesBar(){
+        materialesBar.removeAllViewsInLayout();
+        if(materiales != null && !materiales.isEmpty()){
+            //Snackbar.make(materialesBar, "Filtros activos", BaseTransientBottomBar.LENGTH_SHORT).show();
+            Toast.makeText(getContext(),"Filtros activos", Toast.LENGTH_SHORT).show();
+            for(int i = 0; i<materiales.size(); i++){
+                Material m = materiales.get(i);
+                ImageView icon = new ImageView(getContext());
+                icon.setImageResource(m.getImageResourceId());
+                icon.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorAccent));
+                icon.setColorFilter(ContextCompat.getColor(getContext(), R.color.black));
+                materialesBar.addView(icon);
+            }
+        }
+    }
+
+
+    @Override
+    public void onLocationChanged(Location location) {
+        LatLng latLang = new LatLng(location.getLatitude(), location.getLongitude());
+        gMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLang, 12.0f));
     }
 
     public void onButtonPressed(Uri uri) {
@@ -426,6 +517,17 @@ public class MapaFragment extends AbstractEcologiateFragment implements OnMapRea
     public String getSubTitle() {
         return null;
     }
+
+
+
+    @Override
+    public void onStatusChanged(String provider, int status, Bundle extras) {}
+
+    @Override
+    public void onProviderEnabled(String provider) {}
+
+    @Override
+    public void onProviderDisabled(String provider) {}
 
     public interface OnFragmentInteractionListener {
         void onFragmentInteraction(Uri uri);

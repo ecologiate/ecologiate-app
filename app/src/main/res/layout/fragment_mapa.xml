@@ -17,6 +17,27 @@
         android:layout_alignParentTop="true" />
 
     <LinearLayout
+        android:layout_width="40dp"
+        android:layout_height="match_parent"
+        android:paddingTop="40dp"
+        android:paddingBottom="20dp"
+        android:gravity="center">
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:id="@+id/barraFiltros"
+                android:orientation="vertical"
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:alpha="0.5"
+                android:gravity="center"/>
+        </ScrollView>
+    </LinearLayout>
+
+
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
@@ -97,5 +118,6 @@
 
 
     </com.github.clans.fab.FloatingActionMenu>
+
 
 </RelativeLayout>
