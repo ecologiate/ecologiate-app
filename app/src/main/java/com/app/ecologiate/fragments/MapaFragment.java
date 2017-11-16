@@ -212,9 +212,9 @@ public class MapaFragment extends AbstractEcologiateFragment implements
         gMap.setPadding(0, 35, 10, 0); //para cambiar la posición de los controles UI del mapa
 
         //eventos sobre el marker
-        gMap.setOnMarkerClickListener(this);
-        gMap.setOnInfoWindowClickListener(this);
-        gMap.setOnInfoWindowCloseListener(this);
+        //gMap.setOnMarkerClickListener(this);
+        //gMap.setOnInfoWindowClickListener(this);
+        //gMap.setOnInfoWindowCloseListener(this);
 
         if(!zoomToMyPosition(INITIAL_ZOOM)){
             //si no obtuve la última posición, me subscribo para cuando la tenga

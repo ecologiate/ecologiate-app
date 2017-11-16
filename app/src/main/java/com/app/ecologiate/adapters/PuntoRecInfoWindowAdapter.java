@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.app.ecologiate.R;
 import com.app.ecologiate.models.Material;
@@ -75,6 +76,14 @@ public class PuntoRecInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
             }
         }
         materialesUI.setText(txtMateriales);
+
+        TextView btnMasInfo = (TextView) view.findViewById(R.id.linkMasInfo);
+        btnMasInfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(context, "On Click", Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
 }

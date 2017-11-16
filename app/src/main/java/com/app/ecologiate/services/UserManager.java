@@ -85,6 +85,18 @@ public class UserManager {
             }
 
             @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                if (statusCode == 404) {
+                    Toast.makeText(context, "Servicio no encontrado", Toast.LENGTH_LONG).show();
+                } else if (statusCode == 500) {
+                    Toast.makeText(context, "Error de conexión con el Servidor, intente más tarde.", Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(context, throwable.getLocalizedMessage(), Toast.LENGTH_LONG).show();
+                    Log.e("API_ERROR", "Error de Servidor Inesperado [" + statusCode + "]", throwable);
+                }
+            }
+
+            @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                 if (statusCode == 404) {
                     Toast.makeText(context, "URL no encontrada", Toast.LENGTH_LONG).show();

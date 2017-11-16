@@ -17,6 +17,7 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:gravity="center"
+    android:padding="5dp"
     android:orientation="vertical">
 
     <TextView
@@ -65,17 +66,41 @@
         android:textSize="14sp"
         android:text="Materiales: papel y cartón"/>
 
-    <Button
-        android:visibility="gone"
-        android:id="@+id/linkMasInfo"
-        android:layout_marginTop="10dp"
-        android:layout_width="wrap_content"
-        android:layout_height="25dp"
-        android:textSize="12sp"
-        android:background="@drawable/borde_redondo"
-        android:backgroundTint="@color/colorBoton"
-        android:textColor="@color/white"
-        android:text="Ver opiniones"/>
+    <LinearLayout
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="3dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center">
+        <TextView
+            android:id="@+id/linkMasInfo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:paddingBottom="2dp"
+            android:paddingTop="2dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:textSize="12sp"
+            android:background="@drawable/borde_redondo"
+            android:textColor="@color/com_facebook_blue"
+            android:text="OPINIONES"/>
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"/>
+        <ImageView
+            android:id="@+id/btnReciclar"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_reciclaje"
+            android:background="@color/colorAccent"/>
+    </LinearLayout>
 
 
 </LinearLayout>
