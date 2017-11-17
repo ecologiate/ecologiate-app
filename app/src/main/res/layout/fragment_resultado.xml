@@ -76,7 +76,7 @@
         <Button
             android:id="@+id/btnResultReciclar"
             style="@style/ecoButtonStyle"
-            android:layout_width="210dp"
+            android:layout_width="230dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:drawableLeft="@drawable/ic_reciclaje"
@@ -88,7 +88,7 @@
         <Button
             android:id="@+id/btnResultVerPdR"
             style="@style/ecoButtonStyle"
-            android:layout_width="210dp"
+            android:layout_width="230dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:drawableLeft="@drawable/ic_mapa"
