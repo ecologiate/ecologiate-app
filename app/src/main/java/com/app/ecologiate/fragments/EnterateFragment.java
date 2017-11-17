@@ -57,8 +57,8 @@ public class EnterateFragment extends AbstractEcologiateFragment {
 
     private void poblarViewPager(ViewPager viewPager) {
         AdaptadorSecciones adapter = new AdaptadorSecciones(getFragmentManager());
-        adapter.addFragment(new TipsFragment(), "Tips");
         adapter.addFragment(new TriviaFragment(), "Trivia");
+        adapter.addFragment(new TipsFragment(), "Tips");
         viewPager.setAdapter(adapter);
     }
 

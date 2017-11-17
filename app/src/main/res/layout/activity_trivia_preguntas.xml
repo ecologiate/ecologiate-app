@@ -18,13 +18,22 @@
             android:gravity="center"
             android:text="¿DÓNDE LO TIRO?" />
 
+    <LinearLayout
+        android:layout_width="155dp"
+        android:layout_height="155dp"
+        android:background="@color/negro">
+
         <ImageView
             android:id="@+id/ivImagenTrivia"
             android:layout_width="150dp"
             android:layout_height="150dp"
+            android:layout_marginLeft="2.5dp"
+            android:layout_marginBottom="2.5dp"
+            android:layout_marginTop="2.5dp"
             android:maxHeight="200dp"
             />
 
+    </LinearLayout>
         <TextView
             android:id="@+id/tvTituloProducto"
             android:layout_width="wrap_content"
@@ -51,6 +60,7 @@
                 android:padding="10dp"
                 app:srcCompat="@raw/tacho_verde"
                 />
+
             <Button
                 android:id="@+id/btnTachoVerde"
                 style="@style/triviaButtonVerdeStyle"
