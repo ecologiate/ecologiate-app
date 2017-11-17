@@ -21,8 +21,8 @@
     <color name="medalla_oro">#ffd700</color>
     <color name="medalla_plata">#b0bec5</color>
     <color name="medalla_bronce">#a1887f</color>
-    <color name="medalla_disabled">#9e9e9e</color>
-    <color name="medalla_icon_disabled">#424242</color>
+    <color name="medalla_disabled">#b7b7b7</color>
+    <color name="medalla_icon_disabled">#b7b7b7</color>
     <color name="medalla_icon_enabled">#0e6012</color>
 
     <color name="marker_multiple">#64dd17</color>
