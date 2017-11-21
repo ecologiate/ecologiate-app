@@ -77,4 +77,14 @@ public class SoundService {
         Vibrator vibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
         vibrator.vibrate(VIBRATE_DURATION);
     }
+
+    public static void vibrate(Context context, long duration){
+        Vibrator vibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
+        vibrator.vibrate(duration);
+    }
+
+    public static void vibrate(Context context){
+        Vibrator vibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
+        vibrator.vibrate(VIBRATE_DURATION);
+    }
 }

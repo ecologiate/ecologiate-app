@@ -34,7 +34,6 @@
     <color name="marker_metal">#757575</color>
     <color name="marker_tapitas">#ffea00</color>
     <color name="marker_pilas">#000000</color>
-    <color name="negro">#000000</color>
     <color name="marker_neumaticos">#263238</color>
     <color name="marker_electronicos">#ffcc80</color>
     <color name="marker_bronce">#a1887f</color>
@@ -42,6 +41,7 @@
     <color name="marker_aceite">#fff59d</color>
     <color name="marker_telgopor">#ffffff</color>
 
+    <color name="negro">#000000</color>
     <color name="black">#000000</color>
     <color name="white">#ffffff</color>
 </resources>

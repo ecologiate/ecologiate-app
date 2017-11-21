@@ -26,6 +26,7 @@ import com.app.ecologiate.models.Material;
 import com.app.ecologiate.models.Producto;
 import com.app.ecologiate.models.ProductoEncontradoAdapter;
 import com.app.ecologiate.services.ApiCallService;
+import com.app.ecologiate.services.SoundService;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
 import org.json.JSONArray;
@@ -76,7 +77,7 @@ public class ManualFragment extends AbstractEcologiateFragment {
 
         mRecyclerView = (RecyclerView) view.findViewById(R.id.manualFragment);
         mRecyclerView.setHasFixedSize(true);
-        mRecyclerView.addItemDecoration(new DividerItemDecoration(view.getContext(), DividerItemDecoration.VERTICAL));
+        //mRecyclerView.addItemDecoration(new DividerItemDecoration(view.getContext(), DividerItemDecoration.VERTICAL));
         // use a linear layout manager
         mLayoutManager = new LinearLayoutManager(view.getContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
@@ -84,7 +85,7 @@ public class ManualFragment extends AbstractEcologiateFragment {
         botonBuscaManual.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               // EditText et = (EditText) view.findViewById(R.id.etProductoBuscado);
+                SoundService.vibrate(getContext(), 50L);
                 View currentFocus = getActivity().getCurrentFocus();
                 if (currentFocus != null) {
                     InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
