@@ -19,6 +19,7 @@ public class PuntoRecoleccion {
     private Double longitud;
     private Usuario usuarioAlta;
     private List<Material> materiales;
+    private List<Opinion> opiniones;
 
     public static PuntoRecoleccion getFromJson(JSONObject jsonObject){
         try {
@@ -40,6 +41,16 @@ public class PuntoRecoleccion {
                     materialesFromJson.add(mat);
                 }
                 punto.setMateriales(materialesFromJson);
+            }
+            if(jsonObject.has("opiniones")){
+                JSONArray arrayOpiniones = jsonObject.getJSONArray("opiniones");
+                List<Opinion> opinionesFromJson = new ArrayList<>();
+                for(int i = 0; i < arrayOpiniones.length(); i++){
+                    JSONObject opinionJsonObject = arrayOpiniones.getJSONObject(i);
+                    Opinion o = Opinion.getFromJson(opinionJsonObject);
+                    opinionesFromJson.add(o);
+                }
+                punto.setOpiniones(opinionesFromJson);
             }
             return punto;
         }catch (Exception e){
@@ -140,6 +151,14 @@ public class PuntoRecoleccion {
 
     public void setMateriales(List<Material> materiales) {
         this.materiales = materiales;
+    }
+
+    public List<Opinion> getOpiniones() {
+        return opiniones;
+    }
+
+    public void setOpiniones(List<Opinion> opiniones) {
+        this.opiniones = opiniones;
     }
 
     public int getImageResourceId(){

@@ -2,7 +2,13 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:layout_marginTop="5dp"
+    android:layout_marginBottom="5dp"
+    android:layout_marginRight="20dp"
+    android:layout_marginEnd="20dp"
+    android:layout_marginLeft="20dp"
+    android:layout_marginStart="20dp">
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerViewOpiniones"
@@ -10,5 +16,40 @@
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:alignmentMode="alignBounds"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center">
+
+        <EditText
+            android:id="@+id/tvComentario"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxLength="280"
+            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
+            android:hint="Comentario"
+            android:layout_weight="1"/>
+        <ImageView
+            android:id="@+id/ivUp"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginRight="5dp"
+            android:src="@drawable/thumb_up_off"/>
+        <ImageView
+            android:id="@+id/ivDown"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginRight="5dp"
+            android:src="@drawable/thumb_down_off"/>
+    </LinearLayout>
 
 </LinearLayout>

@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -49,9 +50,9 @@ public class GruposFragment extends AbstractEcologiateFragment {
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
-    private OnFragmentInteractionListener mListener;
     private ProgressDialog prgDialog;
     private ResultCallback resultCallback;
+    private FloatingActionButton fab;
 
     private ApiCallService apiCallService = new ApiCallService();
 
@@ -71,6 +72,7 @@ public class GruposFragment extends AbstractEcologiateFragment {
         View view = inflater.inflate(R.layout.fragment_grupos, container, false);
 
         mRecyclerView = (RecyclerView) view.findViewById(R.id.grupoFragment);
+        fab = (FloatingActionButton) view.findViewById(R.id.btnCrearGrupo) ;
 
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.addItemDecoration(new DividerItemDecoration(view.getContext(), DividerItemDecoration.VERTICAL));
@@ -88,26 +90,10 @@ public class GruposFragment extends AbstractEcologiateFragment {
             }
         };
 
-        return  view;
-    }
 
-    @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        setHasOptionsMenu(true); //para que me agregue un menu, tiene que ir lo más al final posible
-    }
-
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.menu_superior_grupos, menu);
-    }
-
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.menu_crear_grupo:
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 //crear grupo
                 AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
                 LayoutInflater inflater = getActivity().getLayoutInflater();
@@ -135,11 +121,12 @@ public class GruposFragment extends AbstractEcologiateFragment {
                                 });
                 Dialog dialog = builder.create();
                 dialog.show();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
+            }
+        });
+
+        return  view;
     }
+
 
 
     private void obtenerGruposDelUsuario(){

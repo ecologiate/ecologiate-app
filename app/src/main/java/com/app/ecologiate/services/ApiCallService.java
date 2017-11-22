@@ -123,6 +123,16 @@ public class ApiCallService {
         get(url, responseHandler);
     }
 
+    public void getOpinionesDePdr(Long pdrId, JsonHttpResponseHandler responseHandler){
+        String url = SERVER_URL + "/api/pdr/review/" + pdrId;
+        get(url, responseHandler);
+    }
+
+    public void postOpinionPuntoDeRecoleccion(Context context, HttpEntity entityBody, JsonHttpResponseHandler responseHandler){
+        String url = SERVER_URL + "/api/pdr/review";
+        post(url, context, entityBody, responseHandler);
+    }
+
     /**
      ***************************************************************
      Métodos genéricos
