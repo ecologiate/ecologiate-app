@@ -16,11 +16,13 @@ import android.widget.Toast;
 
 import com.app.ecologiate.R;
 import com.app.ecologiate.models.Material;
+import com.app.ecologiate.models.PuntoRecoleccion;
 import com.app.ecologiate.services.ApiCallService;
 import com.app.ecologiate.services.UserManager;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -130,15 +132,22 @@ public class AltaPuntoRecoleccionFragment extends AbstractEcologiateFragment {
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                     hideProgressDialog();
-                    if (response != null) {
-                        Toast.makeText(getContext(), "Punto creado", Toast.LENGTH_SHORT).show();
-                        //vuelvo al mapa
-                        MapaFragment fragment = new MapaFragment();
-                        getActivity().getSupportFragmentManager().beginTransaction()
-                                .replace(R.id.contentFragment, fragment)
-                                .commit();
-                    } else {
-                        Toast.makeText(getContext(), "Punto no creado", Toast.LENGTH_SHORT).show();
+                    try {
+                        if (response != null && response.has("status_code") && response.getInt("status_code")==200) {
+                            Toast.makeText(getContext(), "Punto creado", Toast.LENGTH_SHORT).show();
+                            //vuelvo al mapa con el punto creado
+                            PuntoRecoleccion puntoCreado = PuntoRecoleccion.getFromJson(response.getJSONObject("punto"));
+
+                            MapaFragment fragment = MapaFragment.newInstance(puntoCreado);
+                            getActivity().getSupportFragmentManager().beginTransaction()
+                                    .replace(R.id.contentFragment, fragment)
+                                    .commit();
+                        } else {
+                            Toast.makeText(getContext(), "Punto no creado", Toast.LENGTH_SHORT).show();
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                        Toast.makeText(getContext(), "Error en formato de respuesta", Toast.LENGTH_LONG).show();
                     }
                 }
 

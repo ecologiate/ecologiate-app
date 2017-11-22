@@ -2,6 +2,7 @@ package com.app.ecologiate.fragments;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -11,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -49,6 +51,14 @@ public class ResultadoFragment extends AbstractEcologiateFragment {
     LinearLayout impactoLayout;
     @BindView(R.id.impactoView)
     ImpactoView impactoView;
+    @BindView(R.id.layoutReciclable)
+    LinearLayout layoutReciclable;
+    @BindView(R.id.tvCategoria)
+    TextView tvCategoria;
+    @BindView(R.id.tvMaterial)
+    TextView tvMaterial;
+    @BindView(R.id.ivTacho)
+    ImageView ivTacho;
 
     ProgressDialog prgDialog;
 
@@ -76,23 +86,32 @@ public class ResultadoFragment extends AbstractEcologiateFragment {
         View view = inflater.inflate(R.layout.fragment_resultado, container, false);
         ButterKnife.bind(this, view);
 
-        if(producto.getCategoria() != null && producto.getCategoria().getDescripcion().toLowerCase().contains("no ")){
-            tvResultado.setText("Lamentáblemente el producto no es reciclable");
-        }else{
-            impactoLayout.setVisibility(View.VISIBLE);
+        if(producto != null){
+            tvCategoria.setText(producto.getCategoria().getDescripcion());
+            ivTacho.setImageResource(producto.getCategoria().getImageTachoResourceId());
 
-            double arboles = producto.getMaterial()!=null ? (producto.getCantMaterial() * producto.getMaterial().getEquArboles()) : 0d;
-            double agua = producto.getMaterial()!=null ? (producto.getCantMaterial() * producto.getMaterial().getEquAgua()) : 0d;
-            double energia = producto.getMaterial()!=null ? (producto.getCantMaterial() * producto.getMaterial().getEquEnergia()) : 0d;
-            double emisiones = producto.getMaterial()!=null ? (producto.getCantMaterial() * producto.getMaterial().getEquEmisiones()) : 0d;
-            String mensajeResultado = "<b>"+producto.getNombreProducto() + "<b/>";
-            tvResultado.setText(Html.fromHtml(mensajeResultado));
+            if(producto.getCategoria() != null && producto.getCategoria().getDescripcion().toLowerCase().contains("no ")){
+                tvResultado.setText("Lamentáblemente el producto no es reciclable");
+                layoutReciclable.setVisibility(View.GONE);
+                tvMaterial.setVisibility(View.GONE);
+                tvCategoria.setVisibility(View.GONE);
+            }else{
+                tvMaterial.setText(producto.getMaterial().getDescripcion());
 
-            impactoView.setImpactoAgua(NumberUtils.format(agua)+" litros");
-            impactoView.setImpactoEnergia(NumberUtils.format(energia)+" kw");
-            impactoView.setImpactoArboles(NumberUtils.format(arboles)+" árboles");
-            impactoView.setImpactoEmisiones(NumberUtils.format(emisiones)+" kg");
+                double arboles = producto.getMaterial()!=null ? (producto.getCantMaterial() * producto.getMaterial().getEquArboles()) : 0d;
+                double agua = producto.getMaterial()!=null ? (producto.getCantMaterial() * producto.getMaterial().getEquAgua()) : 0d;
+                double energia = producto.getMaterial()!=null ? (producto.getCantMaterial() * producto.getMaterial().getEquEnergia()) : 0d;
+                double emisiones = producto.getMaterial()!=null ? (producto.getCantMaterial() * producto.getMaterial().getEquEmisiones()) : 0d;
+                tvResultado.setText(producto.getNombreProducto());
+                tvResultado.setTypeface(tvResultado.getTypeface(), Typeface.BOLD);
+
+                impactoView.setImpactoAgua(NumberUtils.format(agua)+" litros");
+                impactoView.setImpactoEnergia(NumberUtils.format(energia)+" kw");
+                impactoView.setImpactoArboles(NumberUtils.format(arboles)+" árboles");
+                impactoView.setImpactoEmisiones(NumberUtils.format(emisiones)+" kg");
+            }
         }
+
 
         return view;
     }
@@ -110,7 +129,7 @@ public class ResultadoFragment extends AbstractEcologiateFragment {
 
         Long userId = UserManager.getUser().getId();
         Long productId = producto.getId();
-        Long puntoRecId = null; //TODO falta integrar con el mapa
+        Long puntoRecId = null;
         Integer cant = 1; //TODO siempre va 1 por ahora, no está en el front
 
         JSONObject jsonBody = new JSONObject();
@@ -132,21 +151,19 @@ public class ResultadoFragment extends AbstractEcologiateFragment {
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 prgDialog.hide();
                 if (response != null) {
-                    Toast.makeText(getContext(), "Producto reciclado", Toast.LENGTH_LONG).show();
                     Double puntosSumados = 0d;
                     try{
                         puntosSumados = response.getDouble("puntos_sumados");
                     }catch (JSONException e){
                         Toast.makeText(getContext(), "Error en json de respuesta", Toast.LENGTH_LONG).show();
                     }
-                    Toast.makeText(getContext(), "Puntos sumados: "+puntosSumados, Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(), "¡Sumaste "+puntosSumados+ " puntos!", Toast.LENGTH_LONG).show();
                     UserManager.updateUser(getContext(), new ResultCallback() {
                         @Override
                         public void onResult(@NonNull Result result) {
                             Fragment inicioFragment = new InicioFragment();
                             getActivity().getSupportFragmentManager().beginTransaction()
                                     .replace(R.id.contentFragment, inicioFragment)
-                                    //.addToBackStack(String.valueOf(resultadoFragment.getId())) //no quiero que pueda volver
                                     .commit();
                         }
                     });

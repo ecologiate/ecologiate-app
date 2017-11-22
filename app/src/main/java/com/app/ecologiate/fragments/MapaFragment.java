@@ -32,6 +32,7 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.app.ecologiate.R;
+import com.app.ecologiate.adapters.MapWrapperLayout;
 import com.app.ecologiate.adapters.PuntoRecInfoWindowAdapter;
 import com.app.ecologiate.models.Material;
 import com.app.ecologiate.models.Producto;
@@ -79,6 +80,8 @@ public class MapaFragment extends AbstractEcologiateFragment implements
     private Producto producto;
     //materiales a filtrar
     private List<Material> materiales;
+    //pdr recién creado para animación
+    private PuntoRecoleccion nuevoPuntoCreado;
 
     private OnFragmentInteractionListener mListener;
     private HashMap<String, PuntoRecoleccion> mapaMarkerPdr;
@@ -102,6 +105,8 @@ public class MapaFragment extends AbstractEcologiateFragment implements
     FloatingActionMenu fam;
     @BindView(R.id.barraFiltros)
     LinearLayout materialesBar;
+    @BindView(R.id.mapWrapperLayout)
+    MapWrapperLayout mapWrapperLayout;
 
 
     public MapaFragment() {}
@@ -117,6 +122,12 @@ public class MapaFragment extends AbstractEcologiateFragment implements
     public static MapaFragment newInstance(List<Material> materiales) {
         MapaFragment fragment = new MapaFragment();
         fragment.materiales = materiales;
+        return fragment;
+    }
+
+    public static MapaFragment newInstance(PuntoRecoleccion pdrCreado) {
+        MapaFragment fragment = new MapaFragment();
+        fragment.nuevoPuntoCreado = pdrCreado;
         return fragment;
     }
 
@@ -216,6 +227,12 @@ public class MapaFragment extends AbstractEcologiateFragment implements
         //gMap.setOnInfoWindowClickListener(this);
         //gMap.setOnInfoWindowCloseListener(this);
 
+        //wraper para poder manejar los clicks del infowindow
+        int markerHeightInPixels = (int) getResources().getDimension(R.dimen.market_height);
+        //le sumo 20dp que es maso la distancia entre el marker y el infowindow
+        int offset = markerHeightInPixels + getPixelsFromDp(context, 20f);
+        mapWrapperLayout.init(gMap, offset);
+
         if(!zoomToMyPosition(INITIAL_ZOOM)){
             //si no obtuve la última posición, me subscribo para cuando la tenga
             subscribeToLocationUpdates();
@@ -239,33 +256,33 @@ public class MapaFragment extends AbstractEcologiateFragment implements
                 if(modoAlta) {
                     try {
                         address = geocoder.getFromLocation(latLng.latitude, latLng.longitude, 1).get(0);
+                        //obtengo dirección, ciudad, país, CP, etc
+                        String direcciones = "";
+                        for(int i=0; i <= address.getMaxAddressLineIndex(); i++){
+                            direcciones += "("+i+") "+address.getAddressLine(i)+"\n";
+                        }
+                        String infoMarker =
+                                "Direcciones: "+direcciones+
+                                        "Admin Area: "+address.getAdminArea() + "\n" +
+                                        "Cod Pais: "+address.getCountryCode() + "\n" +
+                                        "Pais nombre: "+address.getCountryName() + "\n" +
+                                        "Localidad: "+address.getLocality() + "\n" +
+                                        "CP: "+address.getPostalCode() + "\n" +
+                                        "Sub Admin Area: "+address.getSubAdminArea() + "\n" +
+                                        "Sub Locality: "+address.getSubLocality();
+                        Log.d("POSITION", infoMarker);
+                        gMap.addMarker(new MarkerOptions().position(latLng).title("Nuevo").snippet(address.getAddressLine(0)));
+
+                        Fragment fragment = AltaPuntoRecoleccionFragment.newInstance(latLng.latitude, latLng.longitude,
+                                address.getAddressLine(0), address.getAdminArea(), address.getCountryName());
+                        getActivity().getSupportFragmentManager().beginTransaction()
+                                .replace(R.id.contentFragment, fragment)
+                                //.addToBackStack(String.valueOf(fragment.getId()))
+                                .commit();
                     } catch (Exception e) {
                         e.printStackTrace();
                         Toast.makeText(getContext(), "Error obteniendo dirección", Toast.LENGTH_LONG).show();
                     }
-                    //obtengo dirección, ciudad, país, CP, etc
-                    String direcciones = "";
-                    for(int i=0; i <= address.getMaxAddressLineIndex(); i++){
-                        direcciones += "("+i+") "+address.getAddressLine(i)+"\n";
-                    }
-                    String infoMarker =
-                            "Direcciones: "+direcciones+
-                            "Admin Area: "+address.getAdminArea() + "\n" +
-                            "Cod Pais: "+address.getCountryCode() + "\n" +
-                            "Pais nombre: "+address.getCountryName() + "\n" +
-                            "Localidad: "+address.getLocality() + "\n" +
-                            "CP: "+address.getPostalCode() + "\n" +
-                            "Sub Admin Area: "+address.getSubAdminArea() + "\n" +
-                            "Sub Locality: "+address.getSubLocality();
-                    Log.d("POSITION", infoMarker);
-                    gMap.addMarker(new MarkerOptions().position(latLng).title("Nuevo").snippet(address.getAddressLine(0)));
-
-                    Fragment fragment = AltaPuntoRecoleccionFragment.newInstance(latLng.latitude, latLng.longitude,
-                            address.getAddressLine(0), address.getAdminArea(), address.getCountryName());
-                    getActivity().getSupportFragmentManager().beginTransaction()
-                            .replace(R.id.contentFragment, fragment)
-                            //.addToBackStack(String.valueOf(fragment.getId()))
-                            .commit();
                 }
             }
         });
@@ -294,7 +311,8 @@ public class MapaFragment extends AbstractEcologiateFragment implements
                                 agregarMarcador(PuntoRecoleccion.getFromJson(puntosArray.getJSONObject(i)));
                             }
                             //adapter de la ventana de los marcadores
-                            gMap.setInfoWindowAdapter(new PuntoRecInfoWindowAdapter(getContext(), mapaMarkerPdr));
+                            PuntoRecInfoWindowAdapter adapter = new PuntoRecInfoWindowAdapter(getContext(), mapaMarkerPdr, mapWrapperLayout, producto);
+                            gMap.setInfoWindowAdapter(adapter);
                         }else{
                             Toast.makeText(getContext(), "No se encontró ningún punto de recolección", Toast.LENGTH_LONG).show();
                         }
@@ -363,8 +381,12 @@ public class MapaFragment extends AbstractEcologiateFragment implements
                 .title(pdr.getId().toString())
                 //.icon(BitmapDescriptorFactory.fromResource(pdr.getImageResourceId()));
                 .icon(ImageUtils.getMarkerIconFromPdr(getContext(), pdr));
-        gMap.addMarker(markerOptions);
+        Marker marker = gMap.addMarker(markerOptions);
         mapaMarkerPdr.put(pdr.getId().toString(), pdr);
+        //animo el nuevo punto creado
+        if(nuevoPuntoCreado != null && nuevoPuntoCreado.equals(pdr)){
+            makeMarkerBounce(marker);
+        }
     }
 
     @Override
@@ -538,31 +560,7 @@ public class MapaFragment extends AbstractEcologiateFragment implements
 
     @Override
     public void onInfoWindowClick(Marker marker) {
-        //lo comento para la presentacion porque no está terminado
-        /*
-        PuntoRecoleccion pdr = mapaMarkerPdr.get(marker.getTitle());
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        LayoutInflater inflater = getActivity().getLayoutInflater();
-        View viewDialog = inflater.inflate(R.layout.dialogo_opiniones,null);
-        RecyclerView recyclerView = (RecyclerView) viewDialog.findViewById(R.id.recyclerViewOpiniones);
-        builder.setView(viewDialog);
-        builder.setTitle("Opiniones de punto de recolección");
-        builder.setPositiveButton("Agregar", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                //TODO agrego mi review
-
-            }
-        });
-        builder.setNegativeButton("Cerrar", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                //nada
-            }
-        });
-        builder.create().show();
-        */
     }
 
     @Override
@@ -570,6 +568,10 @@ public class MapaFragment extends AbstractEcologiateFragment implements
 
     }
 
+    public static int getPixelsFromDp(Context context, float dp) {
+        final float scale = context.getResources().getDisplayMetrics().density;
+        return (int)(dp * scale + 0.5f);
+    }
 
     @Override
     public String getTitle() {

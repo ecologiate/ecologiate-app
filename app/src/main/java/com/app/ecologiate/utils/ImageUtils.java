@@ -7,6 +7,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v4.view.ViewCompat;
@@ -30,9 +31,16 @@ public class ImageUtils {
 
         markerImageView.setImageResource(pdr.getImageResourceId());
         Drawable iconito = DrawableCompat.wrap(markerImageView.getDrawable());
-        DrawableCompat.setTintList(iconito, ContextCompat.getColorStateList(context, pdr.getIconColor()));
         markerImageView.setImageDrawable(iconito);
-        ViewCompat.setBackgroundTintList(markerBackground, ContextCompat.getColorStateList(context, pdr.getBackgroundColor()));
+
+
+        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.LOLLIPOP) {
+            //markerBackground.setSupportBackgroundTintList(ContextCompat.getColorStateList(context, pdr.getBackgroundColor()));
+        } else {
+            ViewCompat.setBackgroundTintList(markerBackground, ContextCompat.getColorStateList(context, pdr.getBackgroundColor()));
+            DrawableCompat.setTintList(iconito, ContextCompat.getColorStateList(context, pdr.getIconColor()));
+        }
+
         customMarkerView.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
         customMarkerView.layout(0, 0, customMarkerView.getMeasuredWidth(), customMarkerView.getMeasuredHeight());
         customMarkerView.buildDrawingCache();

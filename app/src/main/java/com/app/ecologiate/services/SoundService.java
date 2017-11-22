@@ -20,7 +20,8 @@ public class SoundService {
     private static final String TAG = SoundService.class.getSimpleName();
 
     private static final float SOUND_VOLUME = 1.0f;
-    private static final long VIBRATE_DURATION = 200L;
+    private static final long VIBRATE_DURATION_LONG = 200L;
+    private static final long VIBRATE_DURATION_SHORT = 50L;
 
     public SoundService(Activity activity) {
         activity.setVolumeControlStream(AudioManager.STREAM_MUSIC);
@@ -31,7 +32,7 @@ public class SoundService {
     public void playBastaChicos(Boolean vibrate){
         playSound(R.raw.basta_chicos);
         if(vibrate){
-            vibrate();
+            vibrateLong();
         }
     }
 
@@ -73,9 +74,9 @@ public class SoundService {
         }
     }
 
-    private void vibrate(){
+    private void vibrateLong(){
         Vibrator vibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
-        vibrator.vibrate(VIBRATE_DURATION);
+        vibrator.vibrate(VIBRATE_DURATION_LONG);
     }
 
     public static void vibrate(Context context, long duration){
@@ -83,8 +84,8 @@ public class SoundService {
         vibrator.vibrate(duration);
     }
 
-    public static void vibrate(Context context){
+    public static void vibrateShort(Context context){
         Vibrator vibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
-        vibrator.vibrate(VIBRATE_DURATION);
+        vibrator.vibrate(VIBRATE_DURATION_SHORT);
     }
 }

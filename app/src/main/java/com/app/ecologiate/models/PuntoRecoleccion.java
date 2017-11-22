@@ -59,6 +59,33 @@ public class PuntoRecoleccion {
         this.usuarioAlta = usuarioAlta;
     }
 
+    public PuntoRecoleccion(Double latitud, Double longitud) {
+        this.latitud = latitud;
+        this.longitud = longitud;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        PuntoRecoleccion that = (PuntoRecoleccion) o;
+
+        if (id != null ? !id.equals(that.id) : that.id != null) return false;
+        if (descripcion != null ? !descripcion.equals(that.descripcion) : that.descripcion != null)
+            return false;
+        return direccion != null ? direccion.equals(that.direccion) : that.direccion == null;
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (descripcion != null ? descripcion.hashCode() : 0);
+        result = 31 * result + (direccion != null ? direccion.hashCode() : 0);
+        return result;
+    }
+
     public Long getId() {
         return id;
     }

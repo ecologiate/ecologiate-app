@@ -3,6 +3,8 @@ package com.app.ecologiate.models;
 
 import android.util.Log;
 
+import com.app.ecologiate.R;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -67,5 +69,15 @@ public class Categoria {
 
     public void setMateriales(List<Material> materiales) {
         this.materiales = materiales;
+    }
+
+    public int getImageTachoResourceId(){
+        switch (descripcion.toLowerCase()){
+            case "reciclable": return R.raw.tacho_verde;
+            case "orgánicos": return R.raw.tacho_azul;
+            case "orgánico": return R.raw.tacho_azul;
+            case "manejo especial": return R.raw.tacho_amarillo;
+            default: return R.raw.tacho_negro;
+        }
     }
 }

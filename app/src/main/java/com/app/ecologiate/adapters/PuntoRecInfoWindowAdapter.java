@@ -1,24 +1,46 @@
 package com.app.ecologiate.adapters;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.support.annotation.NonNull;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.MotionEventCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.app.ecologiate.R;
+import com.app.ecologiate.fragments.InicioFragment;
 import com.app.ecologiate.models.Material;
+import com.app.ecologiate.models.Producto;
 import com.app.ecologiate.models.PuntoRecoleccion;
+import com.app.ecologiate.services.ApiCallService;
+import com.app.ecologiate.services.SoundService;
+import com.app.ecologiate.services.UserManager;
+import com.google.android.gms.common.api.Result;
+import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.Marker;
+import com.loopj.android.http.JsonHttpResponseHandler;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.HashMap;
+
+import cz.msebera.android.httpclient.Header;
+import cz.msebera.android.httpclient.entity.ContentType;
+import cz.msebera.android.httpclient.entity.StringEntity;
 
 
 public class PuntoRecInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
@@ -29,12 +51,19 @@ public class PuntoRecInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
     private HashMap<String, PuntoRecoleccion> mapaMarkerPdr;
     private final Context context;
     private final LayoutInflater inflater;
+    private final MapWrapperLayout mapWrapperLayout;
+    private final Producto producto;
+    private final ApiCallService apiCallService = ApiCallService.getInstance();
 
-    public PuntoRecInfoWindowAdapter(Context context, HashMap<String, PuntoRecoleccion> mapaMarkerPdr) {
-        this.inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE );
+    public PuntoRecInfoWindowAdapter(Context context, HashMap<String, PuntoRecoleccion> mapaMarkerPdr,
+                                     MapWrapperLayout wrapperLayout, Producto producto) {
+
+        this.inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         this.mContent = inflater.inflate(R.layout.marker_info_window, null);
         this.mapaMarkerPdr = mapaMarkerPdr;
         this.context = context;
+        this.mapWrapperLayout = wrapperLayout;
+        this.producto = producto;
     }
 
     @Override
@@ -45,18 +74,22 @@ public class PuntoRecInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
     @Override
     public View getInfoContents(Marker marker) {
         render(marker, mContent);
+        mapWrapperLayout.setMarkerWithInfoWindow(marker, mContent);
         return mContent;
     }
 
     private void render(Marker marker, View view) {
         //la manera de vincular que tengo es poniendo en el title el id del pdr
-        PuntoRecoleccion pdr = mapaMarkerPdr.get(marker.getTitle());
+        final PuntoRecoleccion pdr = mapaMarkerPdr.get(marker.getTitle());
 
         TextView titleUi = ((TextView) view.findViewById(R.id.tvDescripcion));
         titleUi.setText(pdr.getDescripcion());
 
         TextView direccionUI = ((TextView) view.findViewById(R.id.tvDireccion));
         direccionUI.setText(pdr.getDireccion());
+
+        TextView creadorUI = ((TextView) view.findViewById(R.id.tvOwner));
+        creadorUI.setText("Registrado por "+pdr.getUsuarioAlta().getNombreCompleto());
 
         LinearLayout materialesBar = (LinearLayout) view.findViewById(R.id.layoutMateriales);
         TextView materialesUI = ((TextView) view.findViewById(R.id.tvMateriales));
@@ -77,13 +110,127 @@ public class PuntoRecInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
         }
         materialesUI.setText(txtMateriales);
 
-        TextView btnMasInfo = (TextView) view.findViewById(R.id.linkMasInfo);
-        btnMasInfo.setOnClickListener(new View.OnClickListener() {
+        final TextView btnMasInfo = (TextView) view.findViewById(R.id.linkMasInfo);
+        btnMasInfo.setOnTouchListener(new View.OnTouchListener() {
             @Override
-            public void onClick(View v) {
-                Toast.makeText(context, "On Click", Toast.LENGTH_LONG).show();
+            public boolean onTouch(View v, MotionEvent event) {
+                int action = MotionEventCompat.getActionMasked(event);
+                switch (action){
+                    case MotionEvent.ACTION_UP:
+                        SoundService.vibrateShort(context);
+                        abrirOpiniones(pdr);
+                        break;
+                }
+                return true;
             }
         });
+
+        final ImageView btnReciclar = (ImageView) view.findViewById(R.id.btnReciclar);
+        if(producto == null){
+            btnReciclar.setVisibility(View.GONE);
+        }
+        btnReciclar.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                int action = MotionEventCompat.getActionMasked(event);
+                switch (action){
+                    case MotionEvent.ACTION_UP:
+                        SoundService.vibrateShort(context);
+                        reciclarProducto(producto, pdr);
+                        break;
+                }
+                return true;
+            }
+        });
+    }
+
+    private void abrirOpiniones(PuntoRecoleccion pdr){
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View viewDialog = inflater.inflate(R.layout.dialogo_opiniones,null);
+        RecyclerView recyclerView = (RecyclerView) viewDialog.findViewById(R.id.recyclerViewOpiniones);
+
+        builder.setView(viewDialog);
+        builder.setTitle("Opiniones de punto de recolección");
+        builder.setPositiveButton("Agregar", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                //TODO agrego mi review
+
+            }
+        });
+        builder.setNegativeButton("Cerrar", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                //nada
+            }
+        });
+        builder.create().show();
+    }
+
+    private void reciclarProducto(Producto producto, PuntoRecoleccion pdr){
+        final ProgressDialog prgDialog = new ProgressDialog(context);
+        prgDialog.setCancelable(false);
+
+        Long userId = UserManager.getUser().getId();
+        Long productId = producto.getId();
+        Long puntoRecId = pdr.getId();
+        Integer cant = 1; //TODO siempre va 1 por ahora
+
+        JSONObject jsonBody = new JSONObject();
+        StringEntity bodyEntity = null;
+        try {
+            jsonBody.put("product_id", productId);
+            jsonBody.put("user", userId);
+            jsonBody.put("puntorec", puntoRecId);
+            jsonBody.put("cant", cant);
+            bodyEntity = new StringEntity(jsonBody.toString(), ContentType.APPLICATION_JSON);
+        } catch (Exception e) {
+            e.printStackTrace();
+            Toast.makeText(context, "Error armando Json", Toast.LENGTH_LONG).show();
+        }
+
+        prgDialog.show();
+        JsonHttpResponseHandler responseHandler = new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                prgDialog.hide();
+                if (response != null) {
+                    Double puntosSumados = 0d;
+                    try{
+                        puntosSumados = response.getDouble("puntos_sumados");
+                    }catch (JSONException e){
+                        Toast.makeText(context, "Error en json de respuesta", Toast.LENGTH_LONG).show();
+                    }
+                    Toast.makeText(context, "¡Sumaste "+puntosSumados+ " puntos!", Toast.LENGTH_LONG).show();
+                    UserManager.updateUser(context, new ResultCallback() {
+                        @Override
+                        public void onResult(@NonNull Result result) {
+                            Fragment inicioFragment = new InicioFragment();
+                            ((FragmentActivity)context).getSupportFragmentManager().beginTransaction()
+                                    .replace(R.id.contentFragment, inicioFragment)
+                                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                                    .commit();
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                prgDialog.hide();
+                if (statusCode == 404) {
+                    Toast.makeText(context, "URL no encontrada", Toast.LENGTH_LONG).show();
+                } else if (statusCode == 500) {
+                    Toast.makeText(context, "Error en el Backend", Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(context, throwable.getLocalizedMessage(), Toast.LENGTH_LONG).show();
+                    Log.e("API_ERROR", "Error Inesperado [" + statusCode + "]", throwable);
+                }
+            }
+        };
+
+        apiCallService.postReciclaje(context, bodyEntity, responseHandler);
     }
 
 }

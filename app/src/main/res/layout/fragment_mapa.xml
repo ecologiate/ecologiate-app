@@ -7,20 +7,27 @@
     tools:context=".fragments.MapaFragment">
 
 
-    <com.google.android.gms.maps.MapView
-        android:id="@+id/mapa"
-        android:name="com.google.android.gms.maps.MapFragment"
+    <com.app.ecologiate.adapters.MapWrapperLayout
+        android:id="@+id/mapWrapperLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true" />
+        android:layout_height="match_parent">
+
+        <com.google.android.gms.maps.MapView
+            android:id="@+id/mapa"
+            android:name="com.google.android.gms.maps.MapFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true" />
+
+    </com.app.ecologiate.adapters.MapWrapperLayout>
 
     <LinearLayout
         android:layout_width="40dp"
         android:layout_height="match_parent"
         android:paddingTop="40dp"
-        android:paddingBottom="20dp"
+        android:paddingBottom="40dp"
         android:gravity="center">
         <ScrollView
             android:layout_width="match_parent"

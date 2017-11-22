@@ -117,7 +117,7 @@ public class TriviaPregunta implements Parcelable {
         return 0;
     }
 
-    static final Parcelable.Creator<TriviaPregunta> CREATOR
+    public static final Parcelable.Creator<TriviaPregunta> CREATOR
             = new Parcelable.Creator<TriviaPregunta>() {
 
         @Override

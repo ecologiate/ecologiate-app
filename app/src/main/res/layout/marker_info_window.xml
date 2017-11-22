@@ -39,6 +39,15 @@
         android:textSize="14sp"
         android:text="dirección del pdr"/>
 
+    <TextView
+        android:id="@+id/tvOwner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="14sp"
+        android:layout_margin="2dp"
+        android:textStyle="italic|bold"
+        android:text="Registrado por "/>
+
 
     <LinearLayout
         android:layout_width="match_parent"

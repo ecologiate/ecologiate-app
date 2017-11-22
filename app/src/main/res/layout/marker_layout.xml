@@ -6,7 +6,7 @@
     <FrameLayout
         android:id="@+id/marker_backgroud"
         android:layout_width="26dp"
-        android:layout_height="43dp"
+        android:layout_height="@dimen/market_height"
         android:backgroundTint="@color/medalla_bronce"
         android:background="@raw/ic_map_marker"
         android:padding="3dp">

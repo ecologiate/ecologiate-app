@@ -85,7 +85,7 @@ public class ManualFragment extends AbstractEcologiateFragment {
         botonBuscaManual.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                SoundService.vibrate(getContext(), 50L);
+                SoundService.vibrateShort(getContext());
                 View currentFocus = getActivity().getCurrentFocus();
                 if (currentFocus != null) {
                     InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);

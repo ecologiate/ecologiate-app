@@ -33,10 +33,11 @@
                 android:src="@raw/impacto_agua"/>
             <TextView
                 android:id="@+id/tv_agua"
-                android:layout_width="wrap_content"
+                android:layout_width="150dp"
                 android:layout_height="wrap_content"
+                android:textAlignment="center"
                 android:text="100 litros"
-                android:textSize="18dp"/>
+                android:textSize="18sp"/>
         </LinearLayout>
 
 
@@ -59,10 +60,11 @@
                 android:src="@raw/impacto_energia"/>
             <TextView
                 android:id="@+id/tv_energia"
-                android:layout_width="wrap_content"
+                android:layout_width="150dp"
                 android:layout_height="wrap_content"
+                android:textAlignment="center"
                 android:text="100 kw"
-                android:textSize="18dp"/>
+                android:textSize="18sp"/>
         </LinearLayout>
         <Space
             android:layout_width="wrap_content"
@@ -101,10 +103,11 @@
                 android:src="@raw/impacto_arbol"/>
             <TextView
                 android:id="@+id/tv_arboles"
-                android:layout_width="wrap_content"
+                android:layout_width="150dp"
                 android:layout_height="wrap_content"
-                android:text="3 árboles"
-                android:textSize="18dp"/>
+                android:textAlignment="center"
+                android:text="0,44 árboles"
+                android:textSize="18sp"/>
         </LinearLayout>
 
         <Space
@@ -126,10 +129,11 @@
                 android:src="@raw/impacto_co2"/>
             <TextView
                 android:id="@+id/tv_emisiones"
-                android:layout_width="wrap_content"
+                android:layout_width="150dp"
                 android:layout_height="wrap_content"
+                android:textAlignment="center"
                 android:text="1000 kg"
-                android:textSize="18dp"/>
+                android:textSize="18sp"/>
         </LinearLayout>
 
         <Space

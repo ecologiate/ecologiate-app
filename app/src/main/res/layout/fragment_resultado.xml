@@ -7,14 +7,57 @@
     android:orientation="vertical"
     tools:context="com.app.ecologiate.fragments.ResultadoFragment">
 
+    <TextView
+        android:id="@+id/textViewResultado"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="15dp"
+        android:layout_marginTop="15dp"
+        android:gravity="center"
+        android:text="@string/buscando"
+        android:textSize="20sp" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="15dp">
+
+        <TextView
+            android:id="@id/tvCategoria"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="Reciclable"
+            android:layout_toLeftOf="@+id/ivTacho"
+            />
+        <ImageView
+            android:id="@+id/ivTacho"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:src="@raw/tacho_verde"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            />
+        <TextView
+            android:id="@+id/tvMaterial"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/ivTacho"
+            android:text="Plástico"/>
+
+    </RelativeLayout>
 
     <LinearLayout
+        android:id="@+id/layoutReciclable"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:gravity="center"
-        android:layout_weight="0.8">
-
+        android:layout_margin="5dp"
+        android:layout_weight="1"
+        android:gravity="center">
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -23,22 +66,8 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:gravity="center">
-                <Space
-                    android:layout_width="wrap_content"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"/>
-                <TextView
-                    android:id="@+id/textViewResultado"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="20dp"
-                    android:layout_marginTop="10dp"
-                    android:gravity="center"
-                    android:text="@string/buscando"
-                    android:textSize="20sp" />
                 <LinearLayout
                     android:id="@+id/impactoLayout"
-                    android:visibility="visible"
                     android:orientation="vertical"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -47,9 +76,11 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="¿Qué ahorro si lo reciclo?"
+                        android:textStyle="bold"
                         android:textSize="18sp"/>
                     <com.app.ecologiate.fragments.ImpactoView
                         android:id="@+id/impactoView"
+                        android:minHeight="20dp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_margin="20dp"
@@ -63,33 +94,31 @@
                 </LinearLayout>
             </LinearLayout>
         </ScrollView>
-    </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="0.2"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:weightSum="1">
 
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"/>
         <Button
+            android:layout_weight="1"
             android:id="@+id/btnResultReciclar"
             style="@style/ecoButtonStyle"
             android:layout_width="230dp"
             android:layout_height="wrap_content"
+            android:maxHeight="60dp"
             android:layout_marginTop="10dp"
             android:drawableLeft="@drawable/ic_reciclaje"
             android:drawableStart="@drawable/ic_reciclaje"
             android:text="@string/Reciclar"
-            android:textSize="20sp"
-            android:layout_weight="0.30" />
+            android:textSize="20sp"/>
 
         <Button
             android:id="@+id/btnResultVerPdR"
             style="@style/ecoButtonStyle"
             android:layout_width="230dp"
             android:layout_height="wrap_content"
+            android:maxHeight="40dp"
             android:layout_marginTop="5dp"
             android:drawableLeft="@drawable/ic_mapa"
             android:drawableStart="@drawable/ic_mapa"
