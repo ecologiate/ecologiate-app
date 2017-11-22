@@ -158,8 +158,7 @@ public class PuntoRecInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
 
     private void abrirOpiniones(final PuntoRecoleccion pdr){
         prgDialog.show();
-        final Opinion currentOpinion = new Opinion();
-        mapaOpinionPdr.put(pdr.getId(), currentOpinion);
+        mapaOpinionPdr.put(pdr.getId(), new Opinion());
 
         JsonHttpResponseHandler responseHandler = new JsonHttpResponseHandler() {
             @Override
@@ -194,29 +193,29 @@ public class PuntoRecInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
                         ivUp.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                currentOpinion.setPuntuacion(true);
-                                ivUp.setImageResource(currentOpinion.getIconResourceId());
+                                mapaOpinionPdr.get(pdr.getId()).setPuntuacion(true);
+                                ivUp.setImageResource(mapaOpinionPdr.get(pdr.getId()).getIconResourceId());
                                 ivDown.setImageResource(R.drawable.thumb_down_off);
                             }
                         });
                         ivDown.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                currentOpinion.setPuntuacion(false);
-                                ivDown.setImageResource(currentOpinion.getIconResourceId());
+                                mapaOpinionPdr.get(pdr.getId()).setPuntuacion(false);
+                                ivDown.setImageResource(mapaOpinionPdr.get(pdr.getId()).getIconResourceId());
                                 ivUp.setImageResource(R.drawable.thumb_up_off);
                             }
                         });
                         final EditText etComentario = (EditText) viewDialog.findViewById(R.id.tvComentario);
 
-                        if(currentOpinion != null){
-                            etComentario.setText(currentOpinion.getComentario());
-                            if(currentOpinion.getPuntuacion() != null){
-                                if(currentOpinion.getPuntuacion()){
-                                    ivUp.setImageResource(currentOpinion.getIconResourceId());
+                        if(mapaOpinionPdr.get(pdr.getId()) != null){
+                            etComentario.setText(mapaOpinionPdr.get(pdr.getId()).getComentario());
+                            if(mapaOpinionPdr.get(pdr.getId()).getPuntuacion() != null){
+                                if(mapaOpinionPdr.get(pdr.getId()).getPuntuacion()){
+                                    ivUp.setImageResource(mapaOpinionPdr.get(pdr.getId()).getIconResourceId());
                                     ivDown.setImageResource(R.drawable.thumb_down_off);
                                 }else{
-                                    ivDown.setImageResource(currentOpinion.getIconResourceId());
+                                    ivDown.setImageResource(mapaOpinionPdr.get(pdr.getId()).getIconResourceId());
                                     ivUp.setImageResource(R.drawable.thumb_up_off);
                                 }
                             }
@@ -227,9 +226,9 @@ public class PuntoRecInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
                         builder.setPositiveButton("Agregar", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                if(etComentario.getText().length()>0 && currentOpinion.getPuntuacion()!=null){
+                                if(etComentario.getText().length()>0 && mapaOpinionPdr.get(pdr.getId()).getPuntuacion()!=null){
                                     String comment = etComentario.getText().toString();
-                                    Boolean puntuacion = currentOpinion.getPuntuacion();
+                                    Boolean puntuacion = mapaOpinionPdr.get(pdr.getId()).getPuntuacion();
                                     Long userId = UserManager.getUser().getId();
                                     Long pdrId = pdr.getId();
                                     saveOpinion(comment, puntuacion, userId, pdrId, pdr);
