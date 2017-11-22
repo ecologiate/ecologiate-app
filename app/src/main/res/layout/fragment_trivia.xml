@@ -28,6 +28,7 @@
             android:id="@+id/tvTextoTrivia"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_margin="15dp"
             android:gravity="center"
             android:text="Poné a prueba tus conocimientos de separación en origen en 10 pasos. Averiguá si sos un reciclador principiante, avanzado o experto con un simple testeo. Seguramente todos los días te preguntás dónde tirar algo, hoy es el día en el que podés encontrar las respuestas." />
 
