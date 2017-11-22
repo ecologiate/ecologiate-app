@@ -61,7 +61,7 @@ public class PuntoRecInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
     private final Producto producto;
     private final ApiCallService apiCallService = ApiCallService.getInstance();
     private final ProgressDialog prgDialog;
-    private Opinion currentOpinion = new Opinion();
+    private HashMap<Long, Opinion> mapaOpinionPdr;
 
     public PuntoRecInfoWindowAdapter(Context context, HashMap<String, PuntoRecoleccion> mapaMarkerPdr,
                                      MapWrapperLayout wrapperLayout, Producto producto) {
@@ -75,6 +75,7 @@ public class PuntoRecInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
 
         prgDialog = new ProgressDialog(context);
         prgDialog.setCancelable(false);
+        mapaOpinionPdr = new HashMap<>();
     }
 
     @Override
@@ -157,6 +158,9 @@ public class PuntoRecInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
 
     private void abrirOpiniones(final PuntoRecoleccion pdr){
         prgDialog.show();
+        final Opinion currentOpinion = new Opinion();
+        mapaOpinionPdr.put(pdr.getId(), currentOpinion);
+
         JsonHttpResponseHandler responseHandler = new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
@@ -171,7 +175,7 @@ public class PuntoRecInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
                             for(int i = 0; i<opiniones.size(); i++){
                                 Opinion o = opiniones.get(i);
                                 if(UserManager.getUser().getId().equals(o.getUsuario().getId())){
-                                    currentOpinion = o;
+                                    mapaOpinionPdr.put(pdr.getId(), o);
                                 }
                             }
                         }
