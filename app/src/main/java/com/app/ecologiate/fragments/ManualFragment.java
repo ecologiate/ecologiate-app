@@ -85,13 +85,15 @@ public class ManualFragment extends AbstractEcologiateFragment {
         botonBuscaManual.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                SoundService.vibrateShort(getContext());
-                View currentFocus = getActivity().getCurrentFocus();
-                if (currentFocus != null) {
-                    InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-                    imm.hideSoftInputFromWindow(currentFocus.getWindowToken(), 0);
+                if(et.length() > 0){
+                    SoundService.vibrateShort(getContext());
+                    View currentFocus = getActivity().getCurrentFocus();
+                    if (currentFocus != null) {
+                        InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                        imm.hideSoftInputFromWindow(currentFocus.getWindowToken(), 0);
+                    }
+                    getProductoManual(et.getText().toString());
                 }
-                getProductoManual(et.getText().toString());
             }
         });
         fab.setOnClickListener(new View.OnClickListener() {

@@ -34,12 +34,12 @@ public class ImageUtils {
         markerImageView.setImageDrawable(iconito);
 
 
-        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.LOLLIPOP) {
+        //if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.LOLLIPOP) {
             //markerBackground.setSupportBackgroundTintList(ContextCompat.getColorStateList(context, pdr.getBackgroundColor()));
-        } else {
+        //} else {
             ViewCompat.setBackgroundTintList(markerBackground, ContextCompat.getColorStateList(context, pdr.getBackgroundColor()));
             DrawableCompat.setTintList(iconito, ContextCompat.getColorStateList(context, pdr.getIconColor()));
-        }
+        //}
 
         customMarkerView.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
         customMarkerView.layout(0, 0, customMarkerView.getMeasuredWidth(), customMarkerView.getMeasuredHeight());

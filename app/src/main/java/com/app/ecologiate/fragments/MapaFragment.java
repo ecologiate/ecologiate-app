@@ -87,7 +87,6 @@ public class MapaFragment extends AbstractEcologiateFragment implements
 
     private static int REQUEST_GEO = 567;
     private static float INITIAL_ZOOM = 12.0f;
-    private static boolean BOUNCE_ANIMATION_ENABLED = true;
 
     private Context context;
     private GoogleMap gMap;
@@ -406,28 +405,7 @@ public class MapaFragment extends AbstractEcologiateFragment implements
         if(modoAlta) {
             editMessage.setVisibility(View.VISIBLE);
             //hacer zoom donde estoy parado
-            if (ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION)
-                    == PackageManager.PERMISSION_GRANTED) {
-                if(locationManager == null) {
-                    locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
-                }
-                Location l = locationManager.getLastKnownLocation(locationManager.getBestProvider(new Criteria(), true));
-                if(l != null) {
-                    gMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(l.getLatitude(), l.getLongitude()), 12.0f));
-                }else {
-                    //recibo actualización de la posición cada 5 minutos y cada 1 km!!!
-                    locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 300000, 1000, this);
-                    locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 300000, 1000, this);
-                    locationManager.requestLocationUpdates(LocationManager.PASSIVE_PROVIDER, 300000, 1000, this);
-                }
-            } else {
-                requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_GEO);
-            }
-
-                Location myLocation = locationManager.getLastKnownLocation(locationManager.getBestProvider(new Criteria(), true));
-                LatLng myLocationLatLng = new LatLng(myLocation.getLatitude(), myLocation.getLongitude());
-                gMap.animateCamera(CameraUpdateFactory.newLatLngZoom(myLocationLatLng, (gMap.getMaxZoomLevel() - 2)));
-
+            zoomToMyPosition((gMap.getMaxZoomLevel() - 2));
         }else {
             editMessage.setVisibility(View.GONE);
         }
